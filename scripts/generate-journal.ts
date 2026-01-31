@@ -98,7 +98,8 @@ function saveJournalEntry(entry: JournalEntry): string {
 }
 
 // Export for use by Clawdbot
-export { JournalEntry, saveJournalEntry, generateMarkdown, formatDate, DOCUMENTS_DIR };
+export type { JournalEntry };
+export { saveJournalEntry, generateMarkdown, formatDate, DOCUMENTS_DIR };
 
 // CLI mode - receives JSON input from stdin or args
 if (require.main === module) {
