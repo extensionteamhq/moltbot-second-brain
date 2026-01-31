@@ -49,6 +49,7 @@ export default function Home() {
     newsletters: 'bg-amber-500',
     scripts: 'bg-pink-500',
     ideas: 'bg-violet-500',
+    concepts: 'bg-cyan-500',
   };
 
   return (
