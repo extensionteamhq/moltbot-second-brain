@@ -74,6 +74,15 @@ Historical record of scheduled job executions.
 
 ---
 
+## Changes
+
+| Date | Change |
+|------|--------|
+| Jan 31, 2026 | 🗑️ Removed **OC Board Meeting Reminder** (no longer needed) |
+| Jan 31, 2026 | 🔧 Investigating **Daily Accountability Check-in** failures |
+
+---
+
 ## Statistics (January 2026)
 
 | Metric | Value |
@@ -81,7 +90,7 @@ Historical record of scheduled job executions.
 | **Total Scheduled Runs** | 8 |
 | **Successful** | 4 (50%) |
 | **Skipped/Failed** | 4 (50%) |
-| **Most Common Error** | `empty-heartbeat-file` |
+| **Most Common Error** | `timeout waiting for main lane` |
 
 ---
 

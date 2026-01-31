@@ -49,13 +49,15 @@ All scheduled automations managed by Molly.
 |-------|-------|
 | **Schedule** | Daily at 8:30 PM Eastern (1:30 UTC) |
 | **Cron Expression** | `30 1 * * *` |
-| **Status** | ✅ Enabled |
+| **Status** | ⚠️ Enabled (Needs Fix) |
 
 **Purpose:** Quick accountability ping asking about:
 - Workout (6am goal)
 - Morning reading/Bible time (5am goal)
 
 **Format:** Simple ✅/❌ response tracking.
+
+**Known Issue:** Has been skipping due to `timeout waiting for main lane to become idle` — needs investigation.
 
 ---
 
@@ -70,17 +72,6 @@ All scheduled automations managed by Molly.
 
 ---
 
-## 🏢 OC Board Meeting Reminder
-| Field | Value |
-|-------|-------|
-| **Schedule** | January 28th at 4:30 PM Eastern (21:30 UTC) |
-| **Cron Expression** | `30 21 28 1 *` |
-| **Status** | ✅ Enabled |
-
-**Purpose:** 90-minute warning before OC 24LLC Board Meeting.
-
----
-
 ## ⚙️ Technical Notes
 
 **Cron Timezone:** All cron expressions run in UTC. Eastern conversions:
@@ -90,7 +81,7 @@ All scheduled automations managed by Molly.
 **Error Handling:** If a job fails, Molly should notify via Telegram rather than failing silently.
 
 **Known Issues:**
-- `empty-heartbeat-file` error can cause jobs to skip — ensure HEARTBEAT.md has content
+- `empty-heartbeat-file` error can cause jobs to skip — ensure HEARTBEAT.md has content or use `wakeMode: now`
 - `timeout waiting for main lane` — happens when another task is blocking
 
 ---

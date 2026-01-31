@@ -84,6 +84,48 @@ body {
   font-style: italic;
 }
 
+/* Table Styles */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.95em;
+}
+
+.prose thead {
+  background: var(--card);
+  border-bottom: 2px solid var(--accent);
+}
+
+.prose th {
+  padding: 0.75em 1em;
+  text-align: left;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.prose td {
+  padding: 0.75em 1em;
+  border-bottom: 1px solid var(--border);
+}
+
+.prose tbody tr:hover {
+  background: var(--card);
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Alternating row colors */
+.prose tbody tr:nth-child(even) {
+  background: rgba(39, 39, 42, 0.3);
+}
+
+.prose tbody tr:nth-child(even):hover {
+  background: var(--card);
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
