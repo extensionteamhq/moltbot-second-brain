@@ -19,6 +19,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [allTags, setAllTags] = useState<string[]>([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/documents')
@@ -52,12 +53,51 @@ export default function Home() {
     concepts: 'bg-cyan-500',
   };
 
+  const handleDocSelect = (doc: Document) => {
+    setSelectedDoc(doc);
+    setSidebarOpen(false); // Close sidebar on mobile when doc selected
+  };
+
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen relative">
+      {/* Mobile Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-30 bg-[var(--sidebar)] border-b border-[var(--border)] px-4 py-3 flex items-center justify-between">
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="p-2 -ml-2 hover:bg-[var(--card)] rounded-lg transition"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {sidebarOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+        <h1 className="text-lg font-semibold flex items-center gap-2">
+          <span>🧠</span> Second Brain
+        </h1>
+        <div className="w-10" /> {/* Spacer for centering */}
+      </div>
+
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/50 z-30"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-72 bg-[var(--sidebar)] border-r border-[var(--border)] flex flex-col">
-        {/* Header */}
-        <div className="p-4 border-b border-[var(--border)]">
+      <aside className={`
+        fixed md:relative inset-y-0 left-0 z-40
+        w-72 bg-[var(--sidebar)] border-r border-[var(--border)] flex flex-col
+        transform transition-transform duration-200 ease-in-out
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        pt-14 md:pt-0
+      `}>
+        {/* Header - hidden on mobile (we have the fixed header) */}
+        <div className="hidden md:block p-4 border-b border-[var(--border)]">
           <h1 className="text-xl font-semibold flex items-center gap-2">
             <span>🧠</span> Second Brain
           </h1>
@@ -109,7 +149,7 @@ export default function Home() {
                   key={doc.slug}
                   doc={doc}
                   isSelected={selectedDoc?.slug === doc.slug}
-                  onClick={() => setSelectedDoc(doc)}
+                  onClick={() => handleDocSelect(doc)}
                   tagColors={tagColors}
                 />
               ))}
@@ -126,7 +166,7 @@ export default function Home() {
                   key={doc.slug}
                   doc={doc}
                   isSelected={selectedDoc?.slug === doc.slug}
-                  onClick={() => setSelectedDoc(doc)}
+                  onClick={() => handleDocSelect(doc)}
                   tagColors={tagColors}
                 />
               ))}
@@ -147,12 +187,12 @@ export default function Home() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto pt-14 md:pt-0 md:ml-0">
         {selectedDoc ? (
-          <article className="max-w-4xl mx-auto p-8">
+          <article className="max-w-4xl mx-auto p-4 md:p-8">
             {/* Document Header */}
-            <header className="mb-8 pb-6 border-b border-[var(--border)]">
-              <div className="flex items-center gap-2 mb-3">
+            <header className="mb-6 md:mb-8 pb-4 md:pb-6 border-b border-[var(--border)]">
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
                 {selectedDoc.tags.map(tag => (
                   <span
                     key={tag}
@@ -162,12 +202,12 @@ export default function Home() {
                   </span>
                 ))}
               </div>
-              <h1 className="text-3xl font-bold mb-2">{selectedDoc.title}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">{selectedDoc.title}</h1>
               <time className="text-[var(--muted)] text-sm">{selectedDoc.date}</time>
             </header>
 
             {/* Document Content */}
-            <div className="prose">
+            <div className="prose prose-sm md:prose-base">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {selectedDoc.content}
               </ReactMarkdown>
