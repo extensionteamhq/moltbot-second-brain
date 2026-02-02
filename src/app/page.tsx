@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -20,6 +20,7 @@ export default function Home() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const mainContentRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     fetch('/api/documents')
@@ -56,6 +57,43 @@ export default function Home() {
   const handleDocSelect = (doc: Document) => {
     setSelectedDoc(doc);
     setSidebarOpen(false); // Close sidebar on mobile when doc selected
+    // Scroll to top when switching documents
+    if (mainContentRef.current) {
+      mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleTagSelect = (tag: string | null) => {
+    setSelectedTag(tag);
+    // Scroll to top when switching tags
+    if (mainContentRef.current) {
+      mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleDownload = () => {
+    if (!selectedDoc) return;
+    
+    // Reconstruct markdown with frontmatter
+    const frontmatter = `---
+title: "${selectedDoc.title}"
+tags: [${selectedDoc.tags.join(', ')}]
+date: ${selectedDoc.date}
+---
+
+`;
+    const fullContent = frontmatter + selectedDoc.content;
+    
+    // Create blob and download
+    const blob = new Blob([fullContent], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${selectedDoc.slug}.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -117,7 +155,7 @@ export default function Home() {
         {/* Tags */}
         <div className="px-3 pb-3 flex flex-wrap gap-1">
           <button
-            onClick={() => setSelectedTag(null)}
+            onClick={() => handleTagSelect(null)}
             className={`px-2 py-1 text-xs rounded-full transition ${
               selectedTag === null ? 'bg-[var(--accent)] text-white' : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
             }`}
@@ -127,7 +165,7 @@ export default function Home() {
           {allTags.map(tag => (
             <button
               key={tag}
-              onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+              onClick={() => handleTagSelect(selectedTag === tag ? null : tag)}
               className={`px-2 py-1 text-xs rounded-full transition ${
                 selectedTag === tag ? 'bg-[var(--accent)] text-white' : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
               }`}
@@ -187,20 +225,32 @@ export default function Home() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pt-14 md:pt-0 md:ml-0">
+      <main ref={mainContentRef} className="flex-1 overflow-y-auto pt-14 md:pt-0 md:ml-0">
         {selectedDoc ? (
           <article className="max-w-4xl mx-auto p-4 md:p-8">
             {/* Document Header */}
             <header className="mb-6 md:mb-8 pb-4 md:pb-6 border-b border-[var(--border)]">
-              <div className="flex items-center gap-2 mb-3 flex-wrap">
-                {selectedDoc.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className={`px-2 py-0.5 text-xs rounded-full text-white ${tagColors[tag] || 'bg-gray-500'}`}
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {selectedDoc.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className={`px-2 py-0.5 text-xs rounded-full text-white ${tagColors[tag] || 'bg-gray-500'}`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <button
+                  onClick={handleDownload}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-[var(--card)] hover:bg-[var(--border)] border border-[var(--border)] rounded-lg transition"
+                  title="Download as Markdown"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  <span className="hidden sm:inline">Download</span>
+                </button>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold mb-2">{selectedDoc.title}</h1>
               <time className="text-[var(--muted)] text-sm">{selectedDoc.date}</time>

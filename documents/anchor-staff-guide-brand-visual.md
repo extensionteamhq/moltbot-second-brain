@@ -100,6 +100,7 @@ Everything someone needs to use your logo correctly in any situation.
 | **One-color (black)** | When color printing isn't available | logo-black.svg |
 | **One-color (white)** | For use on dark backgrounds, photos | logo-white.svg |
 | **Icon only** | Social media avatars, favicons, small spaces | logo-icon.svg |
+| **Social media (1:1)** | Profile pictures, square format posts | logo-social-1x1.png |
 | **Horizontal lockup** | Wide spaces (email headers, website nav) | logo-horizontal.svg |
 | **Stacked/vertical lockup** | Tall spaces (signage, narrow columns) | logo-stacked.svg |
 
@@ -487,6 +488,9 @@ How to access and organize brand assets.
 >   /Logo
 >     /Primary
 >     /Variations
+>     /Social Media
+>       logo-social-1x1.png (800x800px - profile pictures)
+>       logo-social-1x1@2x.png (1600x1600px - high-res displays)
 >     /Favicon
 >   /Colors
 >     /Swatches
@@ -502,6 +506,17 @@ How to access and organize brand assets.
 >   /Guidelines
 >     /This Document
 > ```
+>
+> **Social Media Logo Specifications:**
+> | Platform | Recommended Size | File Format |
+> |----------|-----------------|-------------|
+> | Facebook/Instagram | 800x800px | PNG (transparent bg) |
+> | Twitter/X | 400x400px | PNG or JPG |
+> | LinkedIn | 800x800px | PNG (transparent bg) |
+> | TikTok | 200x200px minimum | PNG or JPG |
+> | YouTube | 800x800px | PNG (transparent bg) |
+>
+> **Note:** Always export social logos with padding built in (don't let the logo touch the edges). Include safe zone of approximately 10% on all sides for platform cropping variations.
 
 ### 8.2 File Naming Convention
 
