@@ -1,10 +1,10 @@
 ---
-title: Weekly Newsletter #001 - Building in Public
-tags: [newsletters]
+title: "Dirt Roamers Newsletter #001 - Building in Public"
+tags: [newsletters, dirt-roamers]
 date: 2026-01-31
 ---
 
-# Weekly Newsletter #001
+# Dirt Roamers Newsletter #001
 
 **Subject Line**: What I learned from 100 cold calls to landowners
 

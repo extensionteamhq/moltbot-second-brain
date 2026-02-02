@@ -1,6 +1,6 @@
 ---
 title: "Cron Jobs Reference"
-tags: [notes]
+tags: [reference]
 date: 2026-01-31
 ---
 

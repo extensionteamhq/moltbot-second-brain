@@ -1,6 +1,6 @@
 ---
 title: "SOP: Accounting & Finance Process"
-tags: [notes, ideas]
+tags: [sops, anchor-staff]
 date: 2026-02-02
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: YouTube Intro Script - Land Flipping 101
-tags: [scripts]
+tags: [scripts, dirt-roamers]
 date: 2026-01-31
 ---
 

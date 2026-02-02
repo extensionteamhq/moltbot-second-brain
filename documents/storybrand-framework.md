@@ -1,6 +1,6 @@
 ---
 title: StoryBrand Framework
-tags: [concepts]
+tags: [concepts, anchor-staff]
 date: 2026-01-31
 ---
 

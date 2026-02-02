@@ -1,6 +1,6 @@
 ---
 title: "GEO - Generative Engine Optimization"
-tags: [notes, ideas]
+tags: [notes, dirt-roamers]
 date: 2026-01-30
 ---
 
