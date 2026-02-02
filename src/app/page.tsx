@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -21,6 +21,7 @@ export default function Home() {
   const [allTags, setAllTags] = useState<string[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const mainContentRef = useRef<HTMLElement>(null);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     fetch('/api/documents')
@@ -55,20 +56,30 @@ export default function Home() {
   };
 
   const handleDocSelect = (doc: Document) => {
-    setSelectedDoc(doc);
     setSidebarOpen(false); // Close sidebar on mobile when doc selected
-    // Scroll to top when switching documents
-    if (mainContentRef.current) {
-      mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // Use transition to avoid blocking the main thread
+    startTransition(() => {
+      setSelectedDoc(doc);
+    });
+    // Defer scroll to next frame for better INP
+    requestAnimationFrame(() => {
+      if (mainContentRef.current) {
+        mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
   };
 
   const handleTagSelect = (tag: string | null) => {
-    setSelectedTag(tag);
-    // Scroll to top when switching tags
-    if (mainContentRef.current) {
-      mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // Use transition to avoid blocking the main thread
+    startTransition(() => {
+      setSelectedTag(tag);
+    });
+    // Defer scroll to next frame for better INP
+    requestAnimationFrame(() => {
+      if (mainContentRef.current) {
+        mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
   };
 
   const handleDownload = () => {
