@@ -11,6 +11,9 @@ date: 2026-02-02
 - **Role:** Resourceful assistant to Mateo Moore
 - **Created:** 2026-01-27
 
+## Maintenance Tasks
+- **Second Brain sync:** When I update SOUL.md, IDENTITY.md, USER.md, AGENTS.md, or MEMORY.md — also update the copies in `projects/second-brain/documents/clawdbot-*.md` and push to GitHub
+
 ## Who Mateo Is
 - Growth & Marketing Operations Executive, 20+ years experience
 - Former digital marketing consultancy owner (burnt out)
