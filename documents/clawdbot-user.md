@@ -56,6 +56,62 @@ date: 2026-02-02
   - **Track:** Workout, morning reading/Bible time
   - **Don't track/show in briefs:** Routine stuff (wake up, meals, bedtime)
 
+### Dirt Roamers — Detailed Strategy
+
+**Target Properties:**
+- 5-50 acres (larger parcels for subdivision into 5-10 acre lots)
+- Just outside metro areas OR small towns with growth/people moving in
+- Areas where people want to build dream homes or homesteads
+
+**Target Sellers:**
+- 40+ years old
+- Owned land 10+ years
+- Inherited via probate
+- Tax liens or foreclosure situations
+
+**Acquisition Offers (Two-Option Strategy):**
+1. **Cash offer:** 40-50% of market value
+2. **Seller financing:** 80-90% of market value (if terms work)
+
+**Exit Strategy:**
+- Cash/financed buyers: List at 80-95% market value (instant equity for buyer)
+- Seller financing to buyer: 100-120% market value (cash flow play)
+- Require 20-30% down from buyer to pay off/reduce acquisition debt
+
+**Long-Term Vision — Homesteading Community:**
+- Buy larger parcels, subdivide, place homesteaders on lots
+- Self-sufficient community: grow food, raise livestock (chickens, ducks, goats, pigs, cattle)
+- Shared responsibilities — families can vacation while others cover
+- Revenue streams: seller financing cash flow, produce/eggs/dairy/meat sales, flowers, honey, agritourism (hunting, camping, RV parks)
+- Secondary business model after enough flips generate capital (or acquire on seller financing)
+
+**Lead Generation Needs:**
+- Data sources for finding land (analytical — areas likely to sell)
+- Skip tracing owners (phone, email)
+- Pulling deeds/mortgages from county records, scraping owner details
+- Multi-touch outreach: calling, texting, email (cheaper than direct mail which had limited success)
+- Eventually: AI cold calling
+
+**Current Tools:**
+- landinsights.co — sourcing + skip tracing (recently downgraded, limited)
+- land.id — supplemental property info
+- Zillow + Joe McCall's Dirt Flippers training/strategies
+
+**Tools Under Consideration:**
+- landportal.com
+- landai.ai — AI cold calling/voice agent (pricey)
+
+**Tech Stack (Planned):**
+- GoHighLevel as CRM — calls, texts, emails, newsletters, booking
+
+**Dirt Roamers Resources (Educational Arm):**
+- Model after Joe McCall's Dirt Flippers brand
+- Build educational materials for aspiring land flippers
+- Affiliate programs from tools: land.id, landportal, landai, GoHighLevel (waiting on landinsights)
+- Pair affiliate recommendations with bonuses: guides, consultations, GHL snapshots
+- Content channels: blog, social media, newsletters
+- Revenue: affiliate commissions + digital products
+
 ### Mission
 - Build and buy businesses + acquire real estate
 - "Mt. Everest" goal (details TBD)
