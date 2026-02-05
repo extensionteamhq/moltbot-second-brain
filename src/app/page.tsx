@@ -4,6 +4,16 @@ import { useState, useEffect, useRef, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+/**
+ * Document interface representing a markdown document
+ * @typedef {Object} Document
+ * @property {string} slug - URL-friendly identifier derived from filename
+ * @property {string} title - Document title from frontmatter
+ * @property {string} content - Raw markdown content
+ * @property {string[]} tags - Tags for categorization
+ * @property {string} date - ISO date string
+ * @property {string} excerpt - Short preview of content
+ */
 interface Document {
   slug: string;
   title: string;
@@ -13,6 +23,33 @@ interface Document {
   excerpt: string;
 }
 
+/**
+ * Tag color configuration for visual categorization
+ * @constant {Record<string, string>}
+ */
+const tagColors: Record<string, string> = {
+  journal: 'bg-blue-500',
+  notes: 'bg-green-500',
+  newsletters: 'bg-amber-500',
+  scripts: 'bg-pink-500',
+  ideas: 'bg-violet-500',
+  concepts: 'bg-cyan-500',
+  'dirt-roamers': 'bg-orange-500',
+  'email-sequences': 'bg-teal-500',
+  sales: 'bg-red-500',
+};
+
+/**
+ * Documents Page Component
+ * 
+ * Main page displaying the document browser with sidebar navigation,
+ * search functionality, tag filtering, and markdown rendering.
+ * 
+ * @page
+ * @route /
+ * @example
+ * // Access at: http://localhost:3000/
+ */
 export default function Home() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
@@ -23,6 +60,9 @@ export default function Home() {
   const mainContentRef = useRef<HTMLElement>(null);
   const [, startTransition] = useTransition();
 
+  /**
+   * Fetch documents from API on component mount
+   */
   useEffect(() => {
     fetch('/api/documents')
       .then(res => res.json())
@@ -35,6 +75,10 @@ export default function Home() {
       });
   }, []);
 
+  /**
+   * Filter documents based on search query and selected tag
+   * @returns {Document[]} Filtered documents
+   */
   const filteredDocs = documents.filter(doc => {
     const matchesSearch = searchQuery === '' || 
       doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -43,25 +87,19 @@ export default function Home() {
     return matchesSearch && matchesTag;
   });
 
+  // Separate journal entries from other documents
   const journalDocs = filteredDocs.filter(d => d.tags.includes('journal'));
   const otherDocs = filteredDocs.filter(d => !d.tags.includes('journal'));
 
-  const tagColors: Record<string, string> = {
-    journal: 'bg-blue-500',
-    notes: 'bg-green-500',
-    newsletters: 'bg-amber-500',
-    scripts: 'bg-pink-500',
-    ideas: 'bg-violet-500',
-    concepts: 'bg-cyan-500',
-  };
-
+  /**
+   * Handles document selection with optimized rendering
+   * @param {Document} doc - The document to select
+   */
   const handleDocSelect = (doc: Document) => {
-    setSidebarOpen(false); // Close sidebar on mobile when doc selected
-    // Use transition to avoid blocking the main thread
+    setSidebarOpen(false);
     startTransition(() => {
       setSelectedDoc(doc);
     });
-    // Defer scroll to next frame for better INP
     requestAnimationFrame(() => {
       if (mainContentRef.current) {
         mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
@@ -69,12 +107,14 @@ export default function Home() {
     });
   };
 
+  /**
+   * Handles tag filter selection
+   * @param {string | null} tag - The tag to filter by, or null for all
+   */
   const handleTagSelect = (tag: string | null) => {
-    // Use transition to avoid blocking the main thread
     startTransition(() => {
       setSelectedTag(tag);
     });
-    // Defer scroll to next frame for better INP
     requestAnimationFrame(() => {
       if (mainContentRef.current) {
         mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
@@ -82,10 +122,12 @@ export default function Home() {
     });
   };
 
+  /**
+   * Downloads the current document as a markdown file
+   */
   const handleDownload = () => {
     if (!selectedDoc) return;
     
-    // Reconstruct markdown with frontmatter
     const frontmatter = `---
 title: "${selectedDoc.title}"
 tags: [${selectedDoc.tags.join(', ')}]
@@ -94,8 +136,6 @@ date: ${selectedDoc.date}
 
 `;
     const fullContent = frontmatter + selectedDoc.content;
-    
-    // Create blob and download
     const blob = new Blob([fullContent], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -108,26 +148,20 @@ date: ${selectedDoc.date}
   };
 
   return (
-    <div className="flex h-screen relative">
-      {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-30 bg-[var(--sidebar)] border-b border-[var(--border)] px-4 py-3 flex items-center justify-between">
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 -ml-2 hover:bg-[var(--card)] rounded-lg transition"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {sidebarOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-        <h1 className="text-lg font-semibold flex items-center gap-2">
-          <span>🧠</span> Second Brain
-        </h1>
-        <div className="w-10" /> {/* Spacer for centering */}
-      </div>
+    <div className="flex h-[calc(100vh-3.5rem)] relative">
+      {/* Mobile Sidebar Toggle */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="md:hidden fixed bottom-4 right-4 z-30 p-3 bg-[var(--accent)] text-white rounded-full shadow-lg hover:bg-[var(--accent-hover)] transition"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {sidebarOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
 
       {/* Overlay for mobile */}
       {sidebarOpen && (
@@ -143,15 +177,8 @@ date: ${selectedDoc.date}
         w-72 bg-[var(--sidebar)] border-r border-[var(--border)] flex flex-col
         transform transition-transform duration-200 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-        pt-14 md:pt-0
+        top-14 md:top-0 h-[calc(100vh-3.5rem)]
       `}>
-        {/* Header - hidden on mobile (we have the fixed header) */}
-        <div className="hidden md:block p-4 border-b border-[var(--border)]">
-          <h1 className="text-xl font-semibold flex items-center gap-2">
-            <span>🧠</span> Second Brain
-          </h1>
-        </div>
-
         {/* Search */}
         <div className="p-3">
           <input
@@ -236,7 +263,7 @@ date: ${selectedDoc.date}
       </aside>
 
       {/* Main Content */}
-      <main ref={mainContentRef} className="flex-1 overflow-y-auto pt-14 md:pt-0 md:ml-0">
+      <main ref={mainContentRef} className="flex-1 overflow-y-auto md:ml-0">
         {selectedDoc ? (
           <article className="max-w-4xl mx-auto p-4 md:p-8">
             {/* Document Header */}
@@ -287,6 +314,18 @@ date: ${selectedDoc.date}
   );
 }
 
+/**
+ * Document Item Component
+ * 
+ * Renders a single document in the sidebar list with title, date, and tag indicators.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Document} props.doc - The document to display
+ * @param {boolean} props.isSelected - Whether this document is currently selected
+ * @param {() => void} props.onClick - Click handler for selection
+ * @param {Record<string, string>} props.tagColors - Mapping of tag names to color classes
+ */
 function DocItem({ 
   doc, 
   isSelected, 
@@ -310,7 +349,7 @@ function DocItem({
       <div className="font-medium text-sm truncate">{doc.title}</div>
       <div className="text-xs text-[var(--muted)] mt-1">{doc.date}</div>
       <div className="flex gap-1 mt-2">
-        {doc.tags.slice(0, 2).map(tag => (
+        {doc.tags.slice(0, 3).map(tag => (
           <span
             key={tag}
             className={`w-2 h-2 rounded-full ${tagColors[tag] || 'bg-gray-500'}`}
