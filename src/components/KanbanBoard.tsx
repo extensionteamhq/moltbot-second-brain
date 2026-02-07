@@ -112,6 +112,7 @@ export default function KanbanBoard() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [draggedTask, setDraggedTask] = useState<{ task: Task; columnId: string } | null>(null);
+  const [dropTarget, setDropTarget] = useState<{ columnId: string; index: number } | null>(null);
   const [isAddingProject, setIsAddingProject] = useState(false);
   const [isAddingTask, setIsAddingTask] = useState<string | null>(null);
   const [editingTask, setEditingTask] = useState<{ task: Task; columnId: string } | null>(null);
@@ -311,24 +312,65 @@ export default function KanbanBoard() {
   };
 
   /**
+   * Handles drag over a task to determine drop position
+   */
+  const handleDragOverTask = (e: React.DragEvent, columnId: string, taskIndex: number) => {
+    e.preventDefault();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const midY = rect.top + rect.height / 2;
+    const insertIndex = e.clientY < midY ? taskIndex : taskIndex + 1;
+    setDropTarget({ columnId, index: insertIndex });
+  };
+
+  /**
+   * Handles drag over empty area of column
+   */
+  const handleDragOverColumn = (e: React.DragEvent, columnId: string, taskCount: number) => {
+    e.preventDefault();
+    if (!dropTarget || dropTarget.columnId !== columnId) {
+      setDropTarget({ columnId, index: taskCount });
+    }
+  };
+
+  /**
    * Handles drop event on a column
    * @param {string} targetColumnId - The column where the task is dropped
    */
   const handleDrop = (targetColumnId: string) => {
-    if (!draggedTask || !activeProject) return;
-    if (draggedTask.columnId === targetColumnId) {
+    if (!draggedTask || !activeProject) {
       setDraggedTask(null);
+      setDropTarget(null);
       return;
     }
+
+    const targetIndex = dropTarget?.columnId === targetColumnId ? dropTarget.index : -1;
+    const sameColumn = draggedTask.columnId === targetColumnId;
 
     const updatedProject = {
       ...activeProject,
       columns: activeProject.columns.map(col => {
+        if (sameColumn && col.id === targetColumnId) {
+          // Reordering within same column
+          const tasks = [...col.tasks];
+          const currentIndex = tasks.findIndex(t => t.id === draggedTask.task.id);
+          if (currentIndex === -1) return col;
+          
+          tasks.splice(currentIndex, 1);
+          const newIndex = targetIndex > currentIndex ? targetIndex - 1 : targetIndex;
+          tasks.splice(newIndex >= 0 ? newIndex : tasks.length, 0, draggedTask.task);
+          return { ...col, tasks };
+        }
+        
         if (col.id === draggedTask.columnId) {
+          // Remove from source column
           return { ...col, tasks: col.tasks.filter(t => t.id !== draggedTask.task.id) };
         }
         if (col.id === targetColumnId) {
-          return { ...col, tasks: [...col.tasks, draggedTask.task] };
+          // Add to target column at specific index
+          const tasks = [...col.tasks];
+          const insertAt = targetIndex >= 0 ? targetIndex : tasks.length;
+          tasks.splice(insertAt, 0, draggedTask.task);
+          return { ...col, tasks };
         }
         return col;
       }),
@@ -337,6 +379,15 @@ export default function KanbanBoard() {
     setProjects(prev => prev.map(p => p.id === activeProject.id ? updatedProject : p));
     setActiveProject(updatedProject);
     setDraggedTask(null);
+    setDropTarget(null);
+  };
+
+  /**
+   * Clears drag state on drag end
+   */
+  const handleDragEnd = () => {
+    setDraggedTask(null);
+    setDropTarget(null);
   };
 
   /**
@@ -566,18 +617,24 @@ export default function KanbanBoard() {
                 )}
 
                 {/* Task Cards */}
-                {column.tasks.map(task => (
-                  <div
-                    key={task.id}
-                    draggable
-                    onDragStart={() => handleDragStart(task, column.id)}
-                    onClick={() => setViewingTask({ task, columnId: column.id })}
-                    className={`
-                      p-3 bg-[var(--card)] rounded-lg border border-[var(--border)] cursor-pointer
-                      hover:border-[var(--accent)] transition group
-                      ${draggedTask?.task.id === task.id ? 'opacity-50' : ''}
-                    `}
-                  >
+                {column.tasks.map((task, taskIndex) => (
+                  <div key={task.id} className="relative">
+                    {/* Drop indicator above */}
+                    {dropTarget?.columnId === column.id && dropTarget?.index === taskIndex && draggedTask?.task.id !== task.id && (
+                      <div className="h-1 bg-[var(--accent)] rounded-full mb-2 animate-pulse" />
+                    )}
+                    <div
+                      draggable
+                      onDragStart={() => handleDragStart(task, column.id)}
+                      onDragOver={(e) => handleDragOverTask(e, column.id, taskIndex)}
+                      onDragEnd={handleDragEnd}
+                      onClick={() => setViewingTask({ task, columnId: column.id })}
+                      className={`
+                        p-3 bg-[var(--card)] rounded-lg border border-[var(--border)] cursor-grab active:cursor-grabbing
+                        hover:border-[var(--accent)] transition group
+                        ${draggedTask?.task.id === task.id ? 'opacity-50 scale-95' : ''}
+                      `}
+                    >
                     <div className="flex items-start justify-between gap-2">
                       <h4 className="font-medium text-sm">{task.title}</h4>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition">
@@ -622,8 +679,18 @@ export default function KanbanBoard() {
                         {new Date(task.dueDate).toLocaleDateString()}
                       </div>
                     )}
+                    </div>
                   </div>
                 ))}
+                {/* Drop indicator at end of column */}
+                {dropTarget?.columnId === column.id && dropTarget?.index === column.tasks.length && (
+                  <div className="h-1 bg-[var(--accent)] rounded-full animate-pulse" />
+                )}
+                {/* Empty drop zone */}
+                <div 
+                  className="flex-1 min-h-[50px]"
+                  onDragOver={(e) => handleDragOverColumn(e, column.id, column.tasks.length)}
+                />
               </div>
             </div>
           ))}
