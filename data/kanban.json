@@ -90,6 +90,109 @@
         }
       ],
       "createdAt": "2026-02-07T18:00:00.000Z"
+    },
+    {
+      "id": "mateo-tasks",
+      "name": "Mateo's Tasks",
+      "description": "Mateo's projects and tasks",
+      "columns": [
+        {
+          "id": "backlog",
+          "title": "📋 Backlog",
+          "color": "#9333ea",
+          "tasks": [
+            {
+              "id": "mateo-book-affiliate",
+              "title": "Affiliate Marketing Book",
+              "description": "Write a book teaching affiliate marketing income generation.\n\nTopics to cover:\n- Finding affiliate programs\n- Building an audience\n- Content strategies\n- Conversion optimization\n- Scaling income",
+              "priority": "medium",
+              "tags": ["book", "affiliate", "content"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            },
+            {
+              "id": "mateo-book-branding",
+              "title": "Personal Branding Book",
+              "description": "Write a book on building a personal brand to earn affiliate income and sell products/services.\n\nTopics to cover:\n- Defining your brand\n- Building presence\n- Monetization strategies\n- Promoting yourself authentically",
+              "priority": "medium",
+              "tags": ["book", "branding", "content"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            },
+            {
+              "id": "mateo-bootcamp",
+              "title": "Bootcamp/Workshop with Owner's Club",
+              "description": "Create and deliver a bootcamp/workshop teaching how to build and launch bootcamps for personal branding.\n\nCollaboration with Owner's Club group.",
+              "priority": "medium",
+              "tags": ["bootcamp", "owners-club", "teaching"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            },
+            {
+              "id": "mateo-rank-n-soar",
+              "title": "Rank-n-Soar",
+              "description": "Rank and rent model business.\n\n- Template site built with Payload CMS (Next.js)\n- Buy domain → clone template → SEO + LLM SEO\n- Generate leads → sell to local service providers\n\nNeeds research on localized service-based industries.",
+              "priority": "medium",
+              "tags": ["rank-n-soar", "seo", "lead-gen"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            },
+            {
+              "id": "mateo-anchor-staff",
+              "title": "Consulting Agency (Anchor & Staff)",
+              "description": "Full-service marketing agency with Mike Davis.\n\nServices:\n- Brand building\n- Target market understanding\n- Marketing channel development\n- Lead/revenue generation\n\nPositioning: \"Your marketing department & premium strategist\"",
+              "priority": "high",
+              "tags": ["anchor-staff", "agency", "consulting"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            },
+            {
+              "id": "mateo-partner-resources",
+              "title": "Partner With Mateo Resources",
+              "description": "Build affiliate resources for SubTo, Gator, Top-Tier TC signups.\n\nIncludes:\n- \"What you get\" explainers\n- \"Why sign up\" content\n- Workbooks, guides, worksheets\n- GoHighLevel snapshots\n- Data source links\n\nRevenue: Affiliate income + helping people succeed.",
+              "priority": "medium",
+              "tags": ["partner-with-mateo", "affiliate", "resources"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            },
+            {
+              "id": "mateo-dirt-roamers-resources",
+              "title": "Dirt Roamers Resources",
+              "description": "Build affiliate content + digital products to help land owners sell and new investors get started.\n\nModel: Joe McCall's Dirt Flippers program.\n\nRevenue: Affiliate income from tools/resources.",
+              "priority": "medium",
+              "tags": ["dirt-roamers", "affiliate", "resources"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            },
+            {
+              "id": "mateo-social-media",
+              "title": "Personal Brand / Social Media",
+              "description": "Build presence on social platforms:\n- Twitter/X\n- Instagram\n- Facebook\n- LinkedIn\n- Eventually YouTube\n\nPlanning to use AI avatar (Blotato) for short-form video content.\n\nChallenge: Struggles with on-camera recording, finding words, clarity in unscripted speaking.",
+              "priority": "medium",
+              "tags": ["social-media", "branding", "content"],
+              "createdAt": "2026-02-07T20:18:00.000Z"
+            }
+          ]
+        },
+        {
+          "id": "for-consideration",
+          "title": "🤔 For Consideration",
+          "color": "#6b7280",
+          "tasks": []
+        },
+        {
+          "id": "research-plan",
+          "title": "🔬 Research & Plan",
+          "color": "#3b82f6",
+          "tasks": []
+        },
+        {
+          "id": "implementing",
+          "title": "⚡ Implementing",
+          "color": "#f59e0b",
+          "tasks": []
+        },
+        {
+          "id": "done",
+          "title": "✅ Done",
+          "color": "#22c55e",
+          "tasks": []
+        }
+      ],
+      "createdAt": "2026-02-07T20:18:00.000Z"
     }
   ],
   "activeProjectId": "molly-tasks"

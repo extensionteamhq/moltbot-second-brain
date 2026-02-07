@@ -34,5 +34,5 @@ By end of 2026, 30%+ of B2B buying research will start in an AI chat, not Google
 
 ## Relevance to Projects
 
-- **Rank N Soar** - Should factor in LLM SEO from day one
+- **Rank-n-Soar** - Should factor in LLM SEO from day one
 - **mrmateomoore.com** - Position as authority for AI to cite

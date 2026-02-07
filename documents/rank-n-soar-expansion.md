@@ -4,7 +4,7 @@ tags: [rank-n-soar, notes]
 date: 2026-01-31
 ---
 
-# Rank N Soar — Expansion Ideas
+# Rank-n-Soar — Expansion Ideas
 
 ## Current Model
 Buy domain → Clone Payload CMS template → SEO + LLM SEO → Generate leads → Sell to local service providers

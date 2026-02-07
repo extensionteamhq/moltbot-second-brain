@@ -123,7 +123,7 @@ date: 2026-02-07
   1. Affiliate marketing income generation
   2. Personal branding — build your brand, promote yourself, earn affiliate income + sell your own products/services
 - **Bootcamp/Workshop:** With Owner's Club group — teaching how to build/promote/launch bootcamps for personal branding
-- **Rank N Soar:** Rank and rent model — template site built with Payload CMS (Next.js). Buy domain → clone template → SEO + LLM SEO → generate leads → sell to local service providers. Needs research on localized service-based industries.
+- **Rank-n-Soar:** Rank and rent model — template site built with Payload CMS (Next.js). Buy domain → clone template → SEO + LLM SEO → generate leads → sell to local service providers. Needs research on localized service-based industries.
 - **Consulting Agency:** Anchor & Staff (anchorandstaff.com) — with Mike Davis (partner) and Cheryl Trosky (brand strategy). Full-service marketing agency helping small businesses build their brand, understand their target market, and build marketing channels to generate leads/revenue. Positioning: "Your marketing department & premium strategist."
 - **Partner With Mateo Resources:** Adding affiliate resources (SubTo, Gator, Top-Tier TC signups) — "what you get", "why sign up", workbooks, guides, worksheets, how-tos, GoHighLevel snapshots, data source links. Affiliate revenue + helping people succeed.
 - **Dirt Roamers Resources:** Affiliate content + digital products to help land owners sell and new investors get started. Model: Joe McCall's Dirt Flippers program — affiliate income from tools/resources.

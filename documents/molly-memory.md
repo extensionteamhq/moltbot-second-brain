@@ -12,7 +12,15 @@ date: 2026-02-07
 - **Created:** 2026-01-27
 
 ## Maintenance Tasks
-- **Second Brain sync:** When I update SOUL.md, IDENTITY.md, USER.md, AGENTS.md, or MEMORY.md — also update the copies in `projects/second-brain/documents/clawdbot-*.md` and push to GitHub
+- **Daily Second Brain sync:** Always keep these workspace files synced to Second Brain documents:
+  - AGENTS.md → molly-agents.md
+  - IDENTITY.md → molly-identity.md
+  - MEMORY.md → molly-memory.md
+  - SOUL.md → molly-soul.md
+  - USER.md → molly-user.md
+  - TOOLS.md → molly-tools.md
+- **When:** Part of daily git push (like journal entries)
+- **How:** Copy content with frontmatter wrapper, push to GitHub
 
 ## Who Mateo Is
 - Growth & Marketing Operations Executive, 20+ years experience
@@ -27,20 +35,20 @@ date: 2026-02-07
 - **Accountability check-in:** 8:30pm ET (workout + morning reading only)
 
 ## Important Calendars
+- **mateo@anchorandstaff.com** — Agency calendar (VERY IMPORTANT)
 - **mateo.moore@subto.com** — PAID coaching sessions (highest priority, can't miss)
 - **xybermatthew@gmail.com** — Personal non-negotiables
 - **partnerwithmateo@gmail.com** — Main work calendar (I have read/write/send access)
 
 ## Key Relationships
-- **Mike Davis** — Consulting agency partner
-- **Cheryl Trosky** — Brand strategy collaborator
+- **Mike Davis** — Consulting agency partner (Anchor & Staff)
 
 ## Projects in Progress
 1. **Affiliate marketing book** — Teaching income generation
 2. **Personal branding book** — Build brand + earn affiliate income
 3. **Bootcamp/Workshop** — With Owner's Club, teaching bootcamp creation
-4. **Rank N Soar** — Rank and rent model using Payload CMS
-5. **Consulting Agency** — Building with Mike Davis & Cheryl Trosky
+4. **Rank-n-Soar** — Rank and rent model using Payload CMS
+5. **Consulting Agency (Anchor & Staff)** — Building with Mike Davis
 6. **Partner With Mateo Resources** — Affiliate resources for SubTo/Gator/Top-Tier TC
 7. **Dirt Roamers Resources** — Affiliate + digital products for land investors
 8. **Personal Brand/Social Media** — Building presence, planning AI avatar (Blotato)
@@ -74,12 +82,12 @@ date: 2026-02-07
 ## Standard Operating Procedures
 
 ### Task Management SOP (Established 2026-02-07)
-**Workflow:** New Task → Clarify → Plan → Molly's Tasks → [Approval] → Research & Plan → [Approval] → Implementing → [Review] → Done
+**Workflow:** New Task → Clarify → Plan → For Consideration → [Approval] → Research & Plan → [Approval] → Implementing → [Review] → Done
 
 **My process when Mateo assigns a task:**
 1. **Clarify** — Ask questions if task is ambiguous
 2. **Plan** — Break down task, define deliverables, estimate scope
-3. **Add to Kanban** — Create card in "Molly's Tasks" column
+3. **Add to Kanban** — Create card in "For Consideration" column
 4. **WAIT** — For Mateo's approval before proceeding
 
 **Approval paths:**
