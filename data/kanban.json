@@ -1,0 +1,62 @@
+{
+  "projects": [
+    {
+      "id": "molly-tasks",
+      "name": "Molly's Recommendations",
+      "description": "Tasks recommended by Molly for autonomous execution",
+      "columns": [
+        {
+          "id": "for-consideration",
+          "title": "🤔 For Consideration",
+          "color": "#6b7280",
+          "tasks": [
+            {
+              "id": "task-001",
+              "title": "Dirt Roamers Email Sequence",
+              "description": "Draft a 5-email nurture sequence for land sellers (cold outreach → follow-up → offer). Ready to load into GoHighLevel.",
+              "priority": "high",
+              "tags": ["dirt-roamers", "email", "gohighlevel"],
+              "createdAt": "2026-02-07T18:00:00.000Z"
+            },
+            {
+              "id": "task-002",
+              "title": "Land Tool Comparison Report",
+              "description": "Compile research on landportal.com, landai.ai, land.id, and landinsights.co into a decision matrix with pricing, features, affiliate programs, and recommendations.",
+              "priority": "medium",
+              "tags": ["dirt-roamers", "research", "tools"],
+              "createdAt": "2026-02-07T18:00:00.000Z"
+            },
+            {
+              "id": "task-003",
+              "title": "Social Media Content Calendar",
+              "description": "Build a 30-day content calendar template for Twitter/X and LinkedIn with post ideas aligned to Dirt Roamers + Anchor & Staff brand positioning.",
+              "priority": "medium",
+              "tags": ["social-media", "content", "anchor-staff", "dirt-roamers"],
+              "createdAt": "2026-02-07T18:00:00.000Z"
+            }
+          ]
+        },
+        {
+          "id": "research-plan",
+          "title": "🔬 Research & Plan",
+          "color": "#3b82f6",
+          "tasks": []
+        },
+        {
+          "id": "implementing",
+          "title": "⚡ Implementing",
+          "color": "#f59e0b",
+          "tasks": []
+        },
+        {
+          "id": "done",
+          "title": "✅ Done",
+          "color": "#22c55e",
+          "tasks": []
+        }
+      ],
+      "createdAt": "2026-02-07T18:00:00.000Z"
+    }
+  ],
+  "activeProjectId": "molly-tasks"
+}

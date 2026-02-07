@@ -72,10 +72,9 @@ const STORAGE_KEY = 'second-brain-kanban';
  * @constant {Omit<Column, 'tasks'>[]}
  */
 const DEFAULT_COLUMNS: Omit<Column, 'tasks'>[] = [
-  { id: 'backlog', title: '📋 Backlog', color: '#6b7280' },
-  { id: 'todo', title: '📝 To Do', color: '#3b82f6' },
-  { id: 'in-progress', title: '🔄 In Progress', color: '#f59e0b' },
-  { id: 'review', title: '👀 Review', color: '#8b5cf6' },
+  { id: 'for-consideration', title: '🤔 For Consideration', color: '#6b7280' },
+  { id: 'research-plan', title: '🔬 Research & Plan', color: '#3b82f6' },
+  { id: 'implementing', title: '⚡ Implementing', color: '#f59e0b' },
   { id: 'done', title: '✅ Done', color: '#22c55e' },
 ];
 
@@ -125,22 +124,47 @@ export default function KanbanBoard() {
   const [newTaskDueDate, setNewTaskDueDate] = useState('');
 
   /**
-   * Load projects from localStorage on mount
+   * Load projects from API first, then localStorage as fallback
    */
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
+    const loadData = async () => {
+      // Try API first (server-side data)
       try {
-        const data = JSON.parse(saved);
-        setProjects(data.projects || []);
-        if (data.activeProjectId) {
-          const active = data.projects?.find((p: Project) => p.id === data.activeProjectId);
-          if (active) setActiveProject(active);
+        const res = await fetch('/api/kanban');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.projects && data.projects.length > 0) {
+            setProjects(data.projects);
+            if (data.activeProjectId) {
+              const active = data.projects.find((p: Project) => p.id === data.activeProjectId);
+              if (active) setActiveProject(active);
+            }
+            // Sync to localStorage
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            return;
+          }
         }
       } catch (e) {
-        console.error('Failed to load Kanban data:', e);
+        console.log('API not available, using localStorage');
       }
-    }
+      
+      // Fallback to localStorage
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          setProjects(data.projects || []);
+          if (data.activeProjectId) {
+            const active = data.projects?.find((p: Project) => p.id === data.activeProjectId);
+            if (active) setActiveProject(active);
+          }
+        } catch (e) {
+          console.error('Failed to load Kanban data:', e);
+        }
+      }
+    };
+    
+    loadData();
   }, []);
 
   /**
