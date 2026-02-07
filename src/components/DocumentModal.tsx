@@ -21,6 +21,8 @@ const BUSINESS_MODELS: Record<string, { dark: string; label: string }> = {
   'dirt-roamers': { dark: 'bg-orange-600 text-white', label: 'Dirt Roamers' },
   'rank-n-soar': { dark: 'bg-green-600 text-white', label: 'Rank-n-Soar' },
   'partner-with-mateo': { dark: 'bg-teal-600 text-white', label: 'Partner With Mateo' },
+  'marketing': { dark: 'bg-rose-600 text-white', label: 'Marketing' },
+  'system': { dark: 'bg-slate-600 text-white', label: 'System' },
   'other': { dark: 'bg-gray-600 text-white', label: 'Other' },
 };
 
@@ -38,6 +40,9 @@ const DOCUMENT_TYPES: Record<string, { color: string; label: string }> = {
   'ideas': { color: 'bg-violet-500', label: 'Ideas' },
   'research': { color: 'bg-emerald-500', label: 'Research' },
   'template': { color: 'bg-cyan-500', label: 'Template' },
+  'social-media': { color: 'bg-fuchsia-500', label: 'Social Media' },
+  'framework': { color: 'bg-lime-500', label: 'Framework' },
+  'uncategorized': { color: 'bg-gray-400', label: 'Uncategorized' },
 };
 
 function categorizeTag(tag: string): { type: 'business' | 'doctype' | 'other'; key: string } {

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Link from 'next/link';
 
 /**
  * Document interface representing a markdown document
@@ -46,6 +47,16 @@ const BUSINESS_MODELS: Record<string, { light: string; dark: string; label: stri
     dark: 'bg-teal-600 text-white',
     label: 'Partner With Mateo'
   },
+  'marketing': { 
+    light: 'bg-rose-200 text-rose-800 hover:bg-rose-300', 
+    dark: 'bg-rose-600 text-white',
+    label: 'Marketing'
+  },
+  'system': { 
+    light: 'bg-slate-200 text-slate-800 hover:bg-slate-300', 
+    dark: 'bg-slate-600 text-white',
+    label: 'System'
+  },
   'other': { 
     light: 'bg-gray-200 text-gray-800 hover:bg-gray-300', 
     dark: 'bg-gray-600 text-white',
@@ -67,6 +78,9 @@ const DOCUMENT_TYPES: Record<string, { color: string; label: string }> = {
   'ideas': { color: 'bg-violet-500', label: 'Ideas' },
   'research': { color: 'bg-emerald-500', label: 'Research' },
   'template': { color: 'bg-cyan-500', label: 'Template' },
+  'social-media': { color: 'bg-fuchsia-500', label: 'Social Media' },
+  'framework': { color: 'bg-lime-500', label: 'Framework' },
+  'uncategorized': { color: 'bg-gray-400', label: 'Uncategorized' },
 };
 
 /**
@@ -123,16 +137,20 @@ export default function Home() {
     fetch('/api/documents')
       .then(res => res.json())
       .then(data => {
-        setDocuments(data.documents);
-        if (data.documents.length > 0) {
-          setSelectedDoc(data.documents[0]);
+        // Sort documents by date (most recent first)
+        const sortedDocs = [...data.documents].sort((a: Document, b: Document) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setDocuments(sortedDocs);
+        if (sortedDocs.length > 0) {
+          setSelectedDoc(sortedDocs[0]);
         }
         
         // Extract available tags
         const businesses = new Set<string>();
         const types = new Set<string>();
         
-        for (const doc of data.documents) {
+        for (const doc of sortedDocs) {
           for (const tag of doc.tags) {
             const cat = categorizeTag(tag);
             if (cat.type === 'business') businesses.add(cat.key);
@@ -145,22 +163,20 @@ export default function Home() {
       });
   }, []);
 
-  // Filter documents
-  const filteredDocs = documents.filter(doc => {
-    const matchesSearch = searchQuery === '' || 
-      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.content.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const { business, types } = getTagCategories(doc.tags);
-    const matchesBusiness = selectedBusiness === null || business === selectedBusiness;
-    const matchesType = selectedType === null || types.includes(selectedType);
-    
-    return matchesSearch && matchesBusiness && matchesType;
-  });
-
-  // Separate journal entries from other documents
-  const journalDocs = filteredDocs.filter(d => d.tags.some(t => categorizeTag(t).key === 'journal'));
-  const otherDocs = filteredDocs.filter(d => !d.tags.some(t => categorizeTag(t).key === 'journal'));
+  // Filter documents (exclude journal for main view)
+  const filteredDocs = documents
+    .filter(doc => !doc.tags.some(t => categorizeTag(t).key === 'journal'))
+    .filter(doc => {
+      const matchesSearch = searchQuery === '' || 
+        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.content.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const { business, types } = getTagCategories(doc.tags);
+      const matchesBusiness = selectedBusiness === null || business === selectedBusiness;
+      const matchesType = selectedType === null || types.includes(selectedType);
+      
+      return matchesSearch && matchesBusiness && matchesType;
+    });
 
   const handleDocSelect = (doc: Document) => {
     setSidebarOpen(false);
@@ -233,6 +249,19 @@ date: ${selectedDoc.date}
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         top-14 md:top-0 h-[calc(100vh-3.5rem)]
       `}>
+        {/* Navigation */}
+        <div className="flex border-b border-[var(--border)]">
+          <Link 
+            href="/journal"
+            className="flex-1 px-4 py-3 text-sm font-medium text-center hover:bg-[var(--card)] transition border-r border-[var(--border)]"
+          >
+            📅 Journal
+          </Link>
+          <div className="flex-1 px-4 py-3 text-sm font-medium text-center bg-[var(--accent)]/10 text-[var(--accent)]">
+            📄 Documents
+          </div>
+        </div>
+
         {/* Search */}
         <div className="p-3">
           <input
@@ -262,6 +291,7 @@ date: ${selectedDoc.date}
             </button>
             {availableBusinesses.map(key => {
               const config = BUSINESS_MODELS[key];
+              if (!config) return null;
               const isSelected = selectedBusiness === key;
               return (
                 <button
@@ -284,8 +314,9 @@ date: ${selectedDoc.date}
             Document Type
           </div>
           <div className="flex flex-wrap gap-1">
-            {availableTypes.map(key => {
+            {availableTypes.filter(t => t !== 'journal').map(key => {
               const config = DOCUMENT_TYPES[key];
+              if (!config) return null;
               const isSelected = selectedType === key;
               return (
                 <button
@@ -321,37 +352,14 @@ date: ${selectedDoc.date}
 
         {/* Document List */}
         <div className="flex-1 overflow-y-auto border-t border-[var(--border)]">
-          {journalDocs.length > 0 && (
-            <>
-              <div className="px-4 py-2 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">
-                📅 Journal Entries
-              </div>
-              {journalDocs.map(doc => (
-                <DocItem
-                  key={doc.slug}
-                  doc={doc}
-                  isSelected={selectedDoc?.slug === doc.slug}
-                  onClick={() => handleDocSelect(doc)}
-                />
-              ))}
-            </>
-          )}
-          
-          {otherDocs.length > 0 && (
-            <>
-              <div className="px-4 py-2 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mt-2">
-                📄 Documents
-              </div>
-              {otherDocs.map(doc => (
-                <DocItem
-                  key={doc.slug}
-                  doc={doc}
-                  isSelected={selectedDoc?.slug === doc.slug}
-                  onClick={() => handleDocSelect(doc)}
-                />
-              ))}
-            </>
-          )}
+          {filteredDocs.map(doc => (
+            <DocItem
+              key={doc.slug}
+              doc={doc}
+              isSelected={selectedDoc?.slug === doc.slug}
+              onClick={() => handleDocSelect(doc)}
+            />
+          ))}
 
           {filteredDocs.length === 0 && (
             <div className="px-4 py-8 text-center text-[var(--muted)] text-sm">
@@ -362,7 +370,7 @@ date: ${selectedDoc.date}
 
         {/* Footer */}
         <div className="p-3 border-t border-[var(--border)] text-xs text-[var(--muted)]">
-          {filteredDocs.length} of {documents.length} documents
+          {filteredDocs.length} of {documents.filter(d => !d.tags.some(t => categorizeTag(t).key === 'journal')).length} documents
         </div>
       </aside>
 
@@ -471,11 +479,13 @@ function DocItem({
       <div className="flex items-center gap-1 mt-2">
         {business && BUSINESS_MODELS[business] && (
           <span className={`w-2 h-2 rounded-full`} style={{
-            backgroundColor: BUSINESS_MODELS[business].dark.includes('blue') ? '#2563eb' :
-                            BUSINESS_MODELS[business].dark.includes('purple') ? '#9333ea' :
-                            BUSINESS_MODELS[business].dark.includes('orange') ? '#ea580c' :
-                            BUSINESS_MODELS[business].dark.includes('green') ? '#16a34a' :
-                            BUSINESS_MODELS[business].dark.includes('teal') ? '#0d9488' :
+            backgroundColor: business === 'anchor-staff' ? '#2563eb' :
+                            business === 'mr-mateo-moore' ? '#9333ea' :
+                            business === 'dirt-roamers' ? '#ea580c' :
+                            business === 'rank-n-soar' ? '#16a34a' :
+                            business === 'partner-with-mateo' ? '#0d9488' :
+                            business === 'marketing' ? '#e11d48' :
+                            business === 'system' ? '#475569' :
                             '#4b5563'
           }} />
         )}
@@ -484,16 +494,18 @@ function DocItem({
             key={type}
             className={`w-2 h-2 rounded-full`}
             style={{
-              backgroundColor: DOCUMENT_TYPES[type]?.color.includes('sky') ? '#0ea5e9' :
-                              DOCUMENT_TYPES[type]?.color.includes('amber') ? '#f59e0b' :
-                              DOCUMENT_TYPES[type]?.color.includes('rose') ? '#f43f5e' :
-                              DOCUMENT_TYPES[type]?.color.includes('teal') ? '#14b8a6' :
-                              DOCUMENT_TYPES[type]?.color.includes('pink') ? '#ec4899' :
-                              DOCUMENT_TYPES[type]?.color.includes('indigo') ? '#6366f1' :
-                              DOCUMENT_TYPES[type]?.color.includes('blue') ? '#3b82f6' :
-                              DOCUMENT_TYPES[type]?.color.includes('violet') ? '#8b5cf6' :
-                              DOCUMENT_TYPES[type]?.color.includes('emerald') ? '#10b981' :
-                              DOCUMENT_TYPES[type]?.color.includes('cyan') ? '#06b6d4' :
+              backgroundColor: type === 'guide' ? '#0ea5e9' :
+                              type === 'newsletter' ? '#f59e0b' :
+                              type === 'sop' ? '#f43f5e' :
+                              type === 'email-sequence' ? '#14b8a6' :
+                              type === 'script' ? '#ec4899' :
+                              type === 'notes' ? '#6366f1' :
+                              type === 'journal' ? '#3b82f6' :
+                              type === 'ideas' ? '#8b5cf6' :
+                              type === 'research' ? '#10b981' :
+                              type === 'template' ? '#06b6d4' :
+                              type === 'social-media' ? '#d946ef' :
+                              type === 'framework' ? '#84cc16' :
                               '#6b7280'
             }}
           />
