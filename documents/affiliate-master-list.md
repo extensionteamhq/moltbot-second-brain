@@ -1,6 +1,6 @@
 ---
 title: "Affiliate Links Master List"
-tags: [affiliates, partner-with-mateo, dirt-roamers]
+tags: [marketing, notes]
 date: 2026-02-02
 ---
 

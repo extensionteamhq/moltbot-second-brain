@@ -1,6 +1,6 @@
 ---
 title: "Dirt Roamers: Nurture Email Sequence"
-tags: [dirt-roamers, email-sequences, sales]
+tags: [dirt-roamers, email-sequence]
 date: 2026-02-05
 ---
 

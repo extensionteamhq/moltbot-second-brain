@@ -1,6 +1,6 @@
 ---
 title: "Anchor & Staff Nurture Email Sequence - The Revenue Foundation Series"
-tags: [newsletters, anchor-staff]
+tags: [anchor-staff, email-sequence]
 date: 2026-02-02
 ---
 

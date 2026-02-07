@@ -1,6 +1,6 @@
 ---
 title: "Dirt Roamers Newsletter #001 - Building in Public"
-tags: [newsletters, dirt-roamers]
+tags: [dirt-roamers, newsletter]
 date: 2026-01-31
 ---
 

@@ -3,10 +3,9 @@
 import { useState, useEffect, useRef, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Link from 'next/link';
 
 /**
- * Document interface representing a markdown document
+ * Document interface
  */
 interface Document {
   slug: string;
@@ -18,10 +17,9 @@ interface Document {
 }
 
 /**
- * Business Model Tags - Primary categorization
- * Each has light (unselected) and dark (selected/display) variants
+ * Category Tags (Primary) - Business/Topic level
  */
-const BUSINESS_MODELS: Record<string, { light: string; dark: string; label: string }> = {
+const CATEGORIES: Record<string, { light: string; dark: string; label: string }> = {
   'anchor-staff': { 
     light: 'bg-blue-200 text-blue-800 hover:bg-blue-300', 
     dark: 'bg-blue-600 text-white',
@@ -65,9 +63,9 @@ const BUSINESS_MODELS: Record<string, { light: string; dark: string; label: stri
 };
 
 /**
- * Document Type Tags - Secondary categorization
+ * Type Tags (Secondary) - Document type level
  */
-const DOCUMENT_TYPES: Record<string, { color: string; label: string }> = {
+const TYPES: Record<string, { color: string; label: string }> = {
   'guide': { color: 'bg-sky-500', label: 'Guide' },
   'newsletter': { color: 'bg-amber-500', label: 'Newsletter' },
   'sop': { color: 'bg-rose-500', label: 'SOP' },
@@ -84,36 +82,45 @@ const DOCUMENT_TYPES: Record<string, { color: string; label: string }> = {
 };
 
 /**
- * Helper to categorize a tag
+ * Categorize a tag
  */
-function categorizeTag(tag: string): { type: 'business' | 'doctype' | 'other'; key: string } {
+function categorizeTag(tag: string): { type: 'category' | 'doctype' | 'other'; key: string } {
   const normalizedTag = tag.toLowerCase().replace(/\s+/g, '-');
-  if (BUSINESS_MODELS[normalizedTag]) {
-    return { type: 'business', key: normalizedTag };
-  }
-  if (DOCUMENT_TYPES[normalizedTag]) {
-    return { type: 'doctype', key: normalizedTag };
-  }
+  if (CATEGORIES[normalizedTag]) return { type: 'category', key: normalizedTag };
+  if (TYPES[normalizedTag]) return { type: 'doctype', key: normalizedTag };
   return { type: 'other', key: tag };
 }
 
 /**
- * Get business model and document types from a document's tags
+ * Get category and types from tags
  */
-function getTagCategories(tags: string[]): { business: string | null; types: string[] } {
-  let business: string | null = null;
+function getTagCategories(tags: string[]): { category: string | null; types: string[] } {
+  let category: string | null = null;
   const types: string[] = [];
   
   for (const tag of tags) {
     const cat = categorizeTag(tag);
-    if (cat.type === 'business' && !business) {
-      business = cat.key;
+    if (cat.type === 'category' && !category) {
+      category = cat.key;
     } else if (cat.type === 'doctype') {
       types.push(cat.key);
     }
   }
   
-  return { business, types };
+  return { category, types };
+}
+
+/**
+ * Format date as YYYY-MM-DD HH:MM ET
+ */
+function formatDateTime(dateStr: string): string {
+  const date = new Date(dateStr);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes} ET`;
 }
 
 /**
@@ -123,21 +130,20 @@ export default function Home() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const mainContentRef = useRef<HTMLElement>(null);
   const [, startTransition] = useTransition();
 
-  // Collect available tags from documents
-  const [availableBusinesses, setAvailableBusinesses] = useState<string[]>([]);
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [availableTypes, setAvailableTypes] = useState<string[]>([]);
 
   useEffect(() => {
     fetch('/api/documents')
       .then(res => res.json())
       .then(data => {
-        // Sort documents by date (most recent first)
+        // Sort by date (most recent first)
         const sortedDocs = [...data.documents].sort((a: Document, b: Document) => 
           new Date(b.date).getTime() - new Date(a.date).getTime()
         );
@@ -147,36 +153,34 @@ export default function Home() {
         }
         
         // Extract available tags
-        const businesses = new Set<string>();
+        const categories = new Set<string>();
         const types = new Set<string>();
         
         for (const doc of sortedDocs) {
           for (const tag of doc.tags) {
             const cat = categorizeTag(tag);
-            if (cat.type === 'business') businesses.add(cat.key);
+            if (cat.type === 'category') categories.add(cat.key);
             if (cat.type === 'doctype') types.add(cat.key);
           }
         }
         
-        setAvailableBusinesses(Array.from(businesses));
+        setAvailableCategories(Array.from(categories));
         setAvailableTypes(Array.from(types));
       });
   }, []);
 
-  // Filter documents (exclude journal for main view)
-  const filteredDocs = documents
-    .filter(doc => !doc.tags.some(t => categorizeTag(t).key === 'journal'))
-    .filter(doc => {
-      const matchesSearch = searchQuery === '' || 
-        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        doc.content.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const { business, types } = getTagCategories(doc.tags);
-      const matchesBusiness = selectedBusiness === null || business === selectedBusiness;
-      const matchesType = selectedType === null || types.includes(selectedType);
-      
-      return matchesSearch && matchesBusiness && matchesType;
-    });
+  // Filter documents (include all - journals and documents)
+  const filteredDocs = documents.filter(doc => {
+    const matchesSearch = searchQuery === '' || 
+      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.content.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const { category, types } = getTagCategories(doc.tags);
+    const matchesCategory = selectedCategory === null || category === selectedCategory;
+    const matchesType = selectedType === null || types.includes(selectedType);
+    
+    return matchesSearch && matchesCategory && matchesType;
+  });
 
   const handleDocSelect = (doc: Document) => {
     setSidebarOpen(false);
@@ -213,7 +217,7 @@ date: ${selectedDoc.date}
   };
 
   const clearFilters = () => {
-    setSelectedBusiness(null);
+    setSelectedCategory(null);
     setSelectedType(null);
   };
 
@@ -249,54 +253,41 @@ date: ${selectedDoc.date}
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         top-14 md:top-0 h-[calc(100vh-3.5rem)]
       `}>
-        {/* Navigation */}
-        <div className="flex border-b border-[var(--border)]">
-          <Link 
-            href="/journal"
-            className="flex-1 px-4 py-3 text-sm font-medium text-center hover:bg-[var(--card)] transition border-r border-[var(--border)]"
-          >
-            📅 Journal
-          </Link>
-          <div className="flex-1 px-4 py-3 text-sm font-medium text-center bg-[var(--accent)]/10 text-[var(--accent)]">
-            📄 Documents
-          </div>
-        </div>
-
         {/* Search */}
         <div className="p-3">
           <input
             type="text"
-            placeholder="Search documents..."
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-3 py-2 bg-[var(--card)] border border-[var(--border)] rounded-lg text-sm focus:outline-none focus:border-[var(--accent)]"
           />
         </div>
 
-        {/* Business Model Tags */}
+        {/* Category Tags */}
         <div className="px-3 pb-2">
           <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
-            Business
+            Category
           </div>
           <div className="flex flex-wrap gap-1">
             <button
               onClick={clearFilters}
               className={`px-2 py-1 text-xs rounded-full transition ${
-                selectedBusiness === null && selectedType === null
+                selectedCategory === null && selectedType === null
                   ? 'bg-[var(--accent)] text-white' 
                   : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
               }`}
             >
               All
             </button>
-            {availableBusinesses.map(key => {
-              const config = BUSINESS_MODELS[key];
+            {availableCategories.map(key => {
+              const config = CATEGORIES[key];
               if (!config) return null;
-              const isSelected = selectedBusiness === key;
+              const isSelected = selectedCategory === key;
               return (
                 <button
                   key={key}
-                  onClick={() => setSelectedBusiness(isSelected ? null : key)}
+                  onClick={() => setSelectedCategory(isSelected ? null : key)}
                   className={`px-2 py-1 text-xs rounded-full transition ${
                     isSelected ? config.dark : config.light
                   }`}
@@ -308,14 +299,14 @@ date: ${selectedDoc.date}
           </div>
         </div>
 
-        {/* Document Type Tags */}
+        {/* Type Tags */}
         <div className="px-3 pb-3">
           <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
-            Document Type
+            Type
           </div>
           <div className="flex flex-wrap gap-1">
-            {availableTypes.filter(t => t !== 'journal').map(key => {
-              const config = DOCUMENT_TYPES[key];
+            {availableTypes.map(key => {
+              const config = TYPES[key];
               if (!config) return null;
               const isSelected = selectedType === key;
               return (
@@ -335,8 +326,8 @@ date: ${selectedDoc.date}
           </div>
         </div>
 
-        {/* Active Filters Indicator */}
-        {(selectedBusiness || selectedType) && (
+        {/* Active Filters */}
+        {(selectedCategory || selectedType) && (
           <div className="px-3 pb-2">
             <button
               onClick={clearFilters}
@@ -363,14 +354,14 @@ date: ${selectedDoc.date}
 
           {filteredDocs.length === 0 && (
             <div className="px-4 py-8 text-center text-[var(--muted)] text-sm">
-              No documents found
+              No items found
             </div>
           )}
         </div>
 
         {/* Footer */}
         <div className="p-3 border-t border-[var(--border)] text-xs text-[var(--muted)]">
-          {filteredDocs.length} of {documents.filter(d => !d.tags.some(t => categorizeTag(t).key === 'journal')).length} documents
+          {filteredDocs.length} of {documents.length} items
         </div>
       </aside>
 
@@ -394,7 +385,7 @@ date: ${selectedDoc.date}
                 </button>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold mb-2">{selectedDoc.title}</h1>
-              <time className="text-[var(--muted)] text-sm">{selectedDoc.date}</time>
+              <time className="text-[var(--muted)] text-sm">{formatDateTime(selectedDoc.date)}</time>
             </header>
 
             {/* Document Content */}
@@ -408,7 +399,7 @@ date: ${selectedDoc.date}
           <div className="flex items-center justify-center h-full text-[var(--muted)]">
             <div className="text-center">
               <div className="text-6xl mb-4">🧠</div>
-              <p>Select a document to view</p>
+              <p>Select an item to view</p>
             </div>
           </div>
         )}
@@ -418,31 +409,30 @@ date: ${selectedDoc.date}
 }
 
 /**
- * Document Tags Display Component
- * Shows tags in format: <Business Model>: <Type>|<Type>
+ * Document Tags Display - <Category>: <Type>|<Type>
  */
 function DocumentTags({ tags }: { tags: string[] }) {
-  const { business, types } = getTagCategories(tags);
+  const { category, types } = getTagCategories(tags);
   
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      {business && BUSINESS_MODELS[business] && (
-        <span className={`px-2 py-0.5 text-xs rounded-full ${BUSINESS_MODELS[business].dark}`}>
-          {BUSINESS_MODELS[business].label}
+      {category && CATEGORIES[category] && (
+        <span className={`px-2 py-0.5 text-xs rounded-full ${CATEGORIES[category].dark}`}>
+          {CATEGORIES[category].label}
         </span>
       )}
-      {business && types.length > 0 && (
+      {category && types.length > 0 && (
         <span className="text-[var(--muted)]">:</span>
       )}
       {types.map((type, idx) => (
         <span key={type} className="flex items-center">
           {idx > 0 && <span className="text-[var(--muted)] mx-1">|</span>}
-          <span className={`px-2 py-0.5 text-xs rounded-full text-white ${DOCUMENT_TYPES[type]?.color || 'bg-gray-500'}`}>
-            {DOCUMENT_TYPES[type]?.label || type}
+          <span className={`px-2 py-0.5 text-xs rounded-full text-white ${TYPES[type]?.color || 'bg-gray-500'}`}>
+            {TYPES[type]?.label || type}
           </span>
         </span>
       ))}
-      {!business && types.length === 0 && (
+      {!category && types.length === 0 && (
         <span className="px-2 py-0.5 text-xs rounded-full bg-gray-500 text-white">
           Uncategorized
         </span>
@@ -452,7 +442,7 @@ function DocumentTags({ tags }: { tags: string[] }) {
 }
 
 /**
- * Document Item Component for sidebar
+ * Document Item for sidebar - shows title, timestamp, and tags
  */
 function DocItem({ 
   doc, 
@@ -463,7 +453,7 @@ function DocItem({
   isSelected: boolean; 
   onClick: () => void;
 }) {
-  const { business, types } = getTagCategories(doc.tags);
+  const { category, types } = getTagCategories(doc.tags);
   
   return (
     <button
@@ -475,24 +465,30 @@ function DocItem({
       }`}
     >
       <div className="font-medium text-sm truncate">{doc.title}</div>
-      <div className="text-xs text-[var(--muted)] mt-1">{doc.date}</div>
-      <div className="flex items-center gap-1 mt-2">
-        {business && BUSINESS_MODELS[business] && (
-          <span className={`w-2 h-2 rounded-full`} style={{
-            backgroundColor: business === 'anchor-staff' ? '#2563eb' :
-                            business === 'mr-mateo-moore' ? '#9333ea' :
-                            business === 'dirt-roamers' ? '#ea580c' :
-                            business === 'rank-n-soar' ? '#16a34a' :
-                            business === 'partner-with-mateo' ? '#0d9488' :
-                            business === 'marketing' ? '#e11d48' :
-                            business === 'system' ? '#475569' :
-                            '#4b5563'
-          }} />
+      <div className="text-xs text-[var(--muted)] mt-1">{formatDateTime(doc.date)}</div>
+      {/* Tags under timestamp */}
+      <div className="flex items-center gap-1 mt-2 flex-wrap">
+        {category && CATEGORIES[category] && (
+          <span 
+            className="px-1.5 py-0.5 text-[10px] rounded-full text-white"
+            style={{
+              backgroundColor: category === 'anchor-staff' ? '#2563eb' :
+                              category === 'mr-mateo-moore' ? '#9333ea' :
+                              category === 'dirt-roamers' ? '#ea580c' :
+                              category === 'rank-n-soar' ? '#16a34a' :
+                              category === 'partner-with-mateo' ? '#0d9488' :
+                              category === 'marketing' ? '#e11d48' :
+                              category === 'system' ? '#475569' :
+                              '#4b5563'
+            }}
+          >
+            {CATEGORIES[category].label}
+          </span>
         )}
-        {types.slice(0, 2).map(type => (
+        {types.map(type => (
           <span
             key={type}
-            className={`w-2 h-2 rounded-full`}
+            className="px-1.5 py-0.5 text-[10px] rounded-full text-white"
             style={{
               backgroundColor: type === 'guide' ? '#0ea5e9' :
                               type === 'newsletter' ? '#f59e0b' :
@@ -508,7 +504,9 @@ function DocItem({
                               type === 'framework' ? '#84cc16' :
                               '#6b7280'
             }}
-          />
+          >
+            {TYPES[type]?.label || type}
+          </span>
         ))}
       </div>
     </button>

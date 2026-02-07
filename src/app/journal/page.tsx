@@ -3,11 +3,7 @@
 import { useState, useEffect, useRef, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Link from 'next/link';
 
-/**
- * Document interface representing a markdown document
- */
 interface Document {
   slug: string;
   title: string;
@@ -18,8 +14,20 @@ interface Document {
 }
 
 /**
- * Journal Page Component
- * Shows only journal entries sorted by date (most recent first)
+ * Format date as YYYY-MM-DD HH:MM ET
+ */
+function formatDateTime(dateStr: string): string {
+  const date = new Date(dateStr);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes} ET`;
+}
+
+/**
+ * Journal Page - Shows only journal entries
  */
 export default function JournalPage() {
   const [documents, setDocuments] = useState<Document[]>([]);
@@ -33,7 +41,7 @@ export default function JournalPage() {
     fetch('/api/documents')
       .then(res => res.json())
       .then(data => {
-        // Filter only journal entries and sort by date (most recent first)
+        // Filter only journal entries and sort by date
         const journalDocs = data.documents
           .filter((doc: Document) => 
             doc.tags.some((t: string) => t.toLowerCase().replace(/\s+/g, '-') === 'journal')
@@ -49,7 +57,6 @@ export default function JournalPage() {
       });
   }, []);
 
-  // Filter documents by search
   const filteredDocs = documents.filter(doc => {
     return searchQuery === '' || 
       doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -122,24 +129,11 @@ date: ${selectedDoc.date}
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         top-14 md:top-0 h-[calc(100vh-3.5rem)]
       `}>
-        {/* Navigation */}
-        <div className="flex border-b border-[var(--border)]">
-          <div className="flex-1 px-4 py-3 text-sm font-medium text-center bg-[var(--accent)]/10 text-[var(--accent)] border-r border-[var(--border)]">
-            📅 Journal
-          </div>
-          <Link 
-            href="/"
-            className="flex-1 px-4 py-3 text-sm font-medium text-center hover:bg-[var(--card)] transition"
-          >
-            📄 Documents
-          </Link>
-        </div>
-
         {/* Search */}
         <div className="p-3">
           <input
             type="text"
-            placeholder="Search journal entries..."
+            placeholder="Search journal..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-3 py-2 bg-[var(--card)] border border-[var(--border)] rounded-lg text-sm focus:outline-none focus:border-[var(--accent)]"
@@ -159,7 +153,12 @@ date: ${selectedDoc.date}
               }`}
             >
               <div className="font-medium text-sm truncate">{doc.title}</div>
-              <div className="text-xs text-[var(--muted)] mt-1">{doc.date}</div>
+              <div className="text-xs text-[var(--muted)] mt-1">{formatDateTime(doc.date)}</div>
+              <div className="mt-2">
+                <span className="px-1.5 py-0.5 text-[10px] rounded-full bg-blue-500 text-white">
+                  Journal
+                </span>
+              </div>
             </button>
           ))}
 
@@ -198,7 +197,7 @@ date: ${selectedDoc.date}
                 </button>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold mb-2">{selectedDoc.title}</h1>
-              <time className="text-[var(--muted)] text-sm">{selectedDoc.date}</time>
+              <time className="text-[var(--muted)] text-sm">{formatDateTime(selectedDoc.date)}</time>
             </header>
 
             {/* Document Content */}

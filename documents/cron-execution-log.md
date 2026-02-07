@@ -1,6 +1,6 @@
 ---
 title: "Cron Execution Log"
-tags: [reference]
+tags: [system, notes]
 date: 2026-01-31
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "SOP: Marketing Process"
-tags: [sops, anchor-staff]
+tags: [anchor-staff, sop]
 date: 2026-02-02
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Dirt Roamers: Business Plan & Execution Roadmap"
-tags: [dirt-roamers, business-plan]
+tags: [dirt-roamers, notes]
 date: 2026-02-02
 ---
 

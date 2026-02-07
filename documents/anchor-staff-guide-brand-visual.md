@@ -1,6 +1,6 @@
 ---
 title: "Guide: Creating a Brand Visual Style Guide"
-tags: [guides, anchor-staff]
+tags: [anchor-staff, guide]
 date: 2026-02-02
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Second Brain Setup Complete"
-tags: [reference]
+tags: [system, notes]
 date: 2026-01-31
 ---
 

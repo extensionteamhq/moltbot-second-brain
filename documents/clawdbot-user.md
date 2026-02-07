@@ -1,6 +1,6 @@
 ---
 title: "Clawdbot: USER.md"
-tags: [clawdbot, config]
+tags: [system, notes]
 date: 2026-02-02
 ---
 

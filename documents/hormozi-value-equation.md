@@ -1,6 +1,6 @@
 ---
 title: Hormozi Value Equation
-tags: [concepts, anchor-staff]
+tags: [marketing, framework]
 date: 2026-01-31
 ---
 

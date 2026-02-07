@@ -1,6 +1,6 @@
 ---
 title: Rank N Soar Expansion Ideas
-tags: [ideas, mr-mateo-moore]
+tags: [rank-n-soar, notes]
 date: 2026-01-31
 ---
 
