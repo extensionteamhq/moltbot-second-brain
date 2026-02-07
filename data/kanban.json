@@ -15,7 +15,12 @@
               "title": "Migrate Files to Supabase Database",
               "description": "Convert our file-based system (documents, journal items, and other files) into database entries using Supabase.\n\n**Milestones:**\n\n**Phase 1: Setup & Schema**\n- Set up Supabase project and API connection\n- Design database schema for documents, journals, and metadata\n- Create tables with proper indexes and relationships\n\n**Phase 2: Migration Script**\n- Build script to read existing markdown files\n- Parse frontmatter and content\n- Migrate all existing documents to database\n- Verify data integrity\n\n**Phase 3: API Integration**\n- Create API routes for CRUD operations\n- Update Molly to read from database instead of files\n- Update Molly to write to database instead of files\n\n**Phase 4: Cleanup**\n- Remove dependency on file system for documents\n- Archive old files\n- Update documentation",
               "priority": "high",
-              "tags": ["second-brain", "database", "supabase", "infrastructure"],
+              "tags": [
+                "second-brain",
+                "database",
+                "supabase",
+                "infrastructure"
+              ],
               "createdAt": "2026-02-07T19:42:00.000Z"
             },
             {
@@ -23,7 +28,12 @@
               "title": "Second Brain CRUD Interface",
               "description": "Update Second Brain to allow creating, editing, and deleting items directly in the UI.\n\n**Milestones:**\n\n**Phase 1: Create Documents**\n- Add 'New Document' button\n- Build document creation form (title, content, tags)\n- Markdown editor with preview\n- Save to database/file system\n\n**Phase 2: Edit Documents**\n- Add 'Edit' button to document view\n- Inline editing or modal editor\n- Save changes with version tracking\n- Auto-save drafts\n\n**Phase 3: Delete Documents**\n- Add 'Delete' button with confirmation\n- Soft delete (trash) vs hard delete option\n- Bulk operations (multi-select delete)\n\n**Phase 4: Enhanced Features**\n- Document search improvements\n- Tag management UI (create, rename, merge tags)\n- Document templates\n- Import/export functionality",
               "priority": "high",
-              "tags": ["second-brain", "ui", "crud", "feature"],
+              "tags": [
+                "second-brain",
+                "ui",
+                "crud",
+                "feature"
+              ],
               "createdAt": "2026-02-07T19:42:00.000Z"
             }
           ]
@@ -38,7 +48,12 @@
               "title": "Land Sourcing Tool Comparison",
               "description": "**Primary Tools Comparison** (for finding raw land parcels):\nCompare landportal.com vs landinsights.co vs similar tools for:\n• Finding target markets\n• Pulling public records & parcel details\n• Skip tracing owner info (phone, email)\n• Building outreach campaigns (cold call, text, email, direct mail)\n\n**Supplemental Tools Review:**\n• landai.ai — AI lead generation service\n• land.id — Supplemental parcel information\n\n**Deliverables:**\n1. Decision matrix to help choose the right service\n2. Content for dirtroamers.com: articles, lead magnets, emails\n3. Identify affiliate program opportunities for each tool",
               "priority": "medium",
-              "tags": ["dirt-roamers", "research", "tools", "affiliate"],
+              "tags": [
+                "dirt-roamers",
+                "research",
+                "tools",
+                "affiliate"
+              ],
               "createdAt": "2026-02-07T18:00:00.000Z"
             },
             {
@@ -46,8 +61,26 @@
               "title": "Social Media Content Calendar",
               "description": "Build a 30-day content calendar template for Twitter/X and LinkedIn with post ideas aligned to Dirt Roamers + Anchor & Staff brand positioning.",
               "priority": "medium",
-              "tags": ["social-media", "content", "anchor-staff", "dirt-roamers"],
+              "tags": [
+                "social-media",
+                "content",
+                "anchor-staff",
+                "dirt-roamers"
+              ],
               "createdAt": "2026-02-07T18:00:00.000Z"
+            },
+            {
+              "id": "task-phone-validation",
+              "title": "Add Phone Validation to Anchor & Staff Website",
+              "description": "Add free phone number validation to website forms.\n\n**Research Findings:**\n\n**Recommended: libphonenumber-js** ⭐\n- Lightweight: 145KB vs Google's 550KB\n- TypeScript support built-in\n- 8M+ weekly downloads\n- Validates, formats, parses international numbers\n- MIT License (FREE)\n\n```bash\npnpm add libphonenumber-js\n```\n\n**Alternative: react-phone-number-input**\n- Built on libphonenumber-js\n- Ready-made React component with country selector\n- Great UX with flag dropdown\n- Also FREE (MIT License)\n\n```bash\npnpm add react-phone-number-input\n```\n\n**Alternative: awesome-phonenumber**\n- Smallest bundle (284KB total)\n- Full Google libphonenumber port\n- Also FREE\n\n**Implementation Plan:**\n1. Install libphonenumber-js (or react-phone-number-input for full component)\n2. Create validation utility function\n3. Add to form components\n4. Display formatted number + validation errors\n\n**No API costs - all validation runs client-side.**",
+              "priority": "medium",
+              "tags": [
+                "anchor-staff",
+                "website",
+                "validation",
+                "forms"
+              ],
+              "createdAt": "2026-02-07T20:25:00.000Z"
             }
           ]
         },
@@ -73,7 +106,11 @@
               "title": "Dirt Roamers Email Sequence",
               "description": "Draft email sequences for land sellers. Ready to load into GoHighLevel.\n\n**Completed Documents:**\n• [Nurture Email Sequence](/dirt-roamers-nurture-email-sequence)\n• [Cold Email Sequence](/dirt-roamers-cold-email-sequence)",
               "priority": "high",
-              "tags": ["dirt-roamers", "email", "gohighlevel"],
+              "tags": [
+                "dirt-roamers",
+                "email",
+                "gohighlevel"
+              ],
               "createdAt": "2026-02-07T18:00:00.000Z",
               "completedAt": "2026-02-07T18:21:00.000Z"
             },
@@ -82,7 +119,11 @@
               "title": "Audit File System for Missing Documents",
               "description": "Scanned ~/clawd directory and added 10 missing documents to Second Brain.\n\n**Files Added:**\n\n**Marketing (2):**\n• [Lead Magnet - Brand Story Blueprint](/marketing-lead-magnet-brand-story)\n• [Miami Reconnect Email Draft](/marketing-miami-reconnect-email)\n\n**Dirt Roamers Research (7):**\n• [Research Summary](/dirt-roamers-research-summary)\n• [Land Portal Review](/dirt-roamers-research-landportal)\n• [Land AI Review](/dirt-roamers-research-landai)\n• [County Records Solutions](/dirt-roamers-research-county-records)\n• [Skip Tracing Alternatives](/dirt-roamers-research-skip-tracing)\n• [Growth Market Data Sources](/dirt-roamers-research-growth-markets)\n• [GoHighLevel Setup](/dirt-roamers-research-gohighlevel)\n\n**Partner With Mateo (1):**\n• [OC Weekly Accountability Guide](/partner-with-mateo-oc-accountability)\n\n**Not Added (by design):**\n- Workspace config files (AGENTS.md, SOUL.md, etc.) — used by Molly\n- Memory files — daily notes, not documents\n- Project README files — internal docs",
               "priority": "medium",
-              "tags": ["second-brain", "audit", "cleanup"],
+              "tags": [
+                "second-brain",
+                "audit",
+                "cleanup"
+              ],
               "createdAt": "2026-02-07T19:42:00.000Z",
               "completedAt": "2026-02-07T19:47:00.000Z"
             }
@@ -106,7 +147,11 @@
               "title": "Affiliate Marketing Book",
               "description": "Write a book teaching affiliate marketing income generation.\n\nTopics to cover:\n- Finding affiliate programs\n- Building an audience\n- Content strategies\n- Conversion optimization\n- Scaling income",
               "priority": "medium",
-              "tags": ["book", "affiliate", "content"],
+              "tags": [
+                "book",
+                "affiliate",
+                "content"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             },
             {
@@ -114,7 +159,11 @@
               "title": "Personal Branding Book",
               "description": "Write a book on building a personal brand to earn affiliate income and sell products/services.\n\nTopics to cover:\n- Defining your brand\n- Building presence\n- Monetization strategies\n- Promoting yourself authentically",
               "priority": "medium",
-              "tags": ["book", "branding", "content"],
+              "tags": [
+                "book",
+                "branding",
+                "content"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             },
             {
@@ -122,7 +171,11 @@
               "title": "Bootcamp/Workshop with Owner's Club",
               "description": "Create and deliver a bootcamp/workshop teaching how to build and launch bootcamps for personal branding.\n\nCollaboration with Owner's Club group.",
               "priority": "medium",
-              "tags": ["bootcamp", "owners-club", "teaching"],
+              "tags": [
+                "bootcamp",
+                "owners-club",
+                "teaching"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             },
             {
@@ -130,7 +183,11 @@
               "title": "Rank-n-Soar",
               "description": "Rank and rent model business.\n\n- Template site built with Payload CMS (Next.js)\n- Buy domain → clone template → SEO + LLM SEO\n- Generate leads → sell to local service providers\n\nNeeds research on localized service-based industries.",
               "priority": "medium",
-              "tags": ["rank-n-soar", "seo", "lead-gen"],
+              "tags": [
+                "rank-n-soar",
+                "seo",
+                "lead-gen"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             },
             {
@@ -138,7 +195,11 @@
               "title": "Consulting Agency (Anchor & Staff)",
               "description": "Full-service marketing agency with Mike Davis.\n\nServices:\n- Brand building\n- Target market understanding\n- Marketing channel development\n- Lead/revenue generation\n\nPositioning: \"Your marketing department & premium strategist\"",
               "priority": "high",
-              "tags": ["anchor-staff", "agency", "consulting"],
+              "tags": [
+                "anchor-staff",
+                "agency",
+                "consulting"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             },
             {
@@ -146,7 +207,11 @@
               "title": "Partner With Mateo Resources",
               "description": "Build affiliate resources for SubTo, Gator, Top-Tier TC signups.\n\nIncludes:\n- \"What you get\" explainers\n- \"Why sign up\" content\n- Workbooks, guides, worksheets\n- GoHighLevel snapshots\n- Data source links\n\nRevenue: Affiliate income + helping people succeed.",
               "priority": "medium",
-              "tags": ["partner-with-mateo", "affiliate", "resources"],
+              "tags": [
+                "partner-with-mateo",
+                "affiliate",
+                "resources"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             },
             {
@@ -154,7 +219,11 @@
               "title": "Dirt Roamers Resources",
               "description": "Build affiliate content + digital products to help land owners sell and new investors get started.\n\nModel: Joe McCall's Dirt Flippers program.\n\nRevenue: Affiliate income from tools/resources.",
               "priority": "medium",
-              "tags": ["dirt-roamers", "affiliate", "resources"],
+              "tags": [
+                "dirt-roamers",
+                "affiliate",
+                "resources"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             },
             {
@@ -162,7 +231,11 @@
               "title": "Personal Brand / Social Media",
               "description": "Build presence on social platforms:\n- Twitter/X\n- Instagram\n- Facebook\n- LinkedIn\n- Eventually YouTube\n\nPlanning to use AI avatar (Blotato) for short-form video content.\n\nChallenge: Struggles with on-camera recording, finding words, clarity in unscripted speaking.",
               "priority": "medium",
-              "tags": ["social-media", "branding", "content"],
+              "tags": [
+                "social-media",
+                "branding",
+                "content"
+              ],
               "createdAt": "2026-02-07T20:18:00.000Z"
             }
           ]
