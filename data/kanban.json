@@ -25,14 +25,6 @@
               "priority": "high",
               "tags": ["second-brain", "ui", "crud", "feature"],
               "createdAt": "2026-02-07T19:42:00.000Z"
-            },
-            {
-              "id": "task-file-audit",
-              "title": "Audit File System for Missing Documents",
-              "description": "Review the entire file system for any files that have been created but are not showing in Second Brain.\n\n**Tasks:**\n- Scan ~/clawd directory recursively\n- Identify markdown files outside /documents\n- Check for relevant files in /projects, /memory, and other folders\n- Add missing documents to Second Brain\n- Create proper tags for discovered files",
-              "priority": "medium",
-              "tags": ["second-brain", "audit", "cleanup"],
-              "createdAt": "2026-02-07T19:42:00.000Z"
             }
           ]
         },
@@ -84,6 +76,15 @@
               "tags": ["dirt-roamers", "email", "gohighlevel"],
               "createdAt": "2026-02-07T18:00:00.000Z",
               "completedAt": "2026-02-07T18:21:00.000Z"
+            },
+            {
+              "id": "task-file-audit",
+              "title": "Audit File System for Missing Documents",
+              "description": "Scanned ~/clawd directory and added 10 missing documents to Second Brain.\n\n**Files Added:**\n\n**Marketing (2):**\n• [Lead Magnet - Brand Story Blueprint](/marketing-lead-magnet-brand-story)\n• [Miami Reconnect Email Draft](/marketing-miami-reconnect-email)\n\n**Dirt Roamers Research (7):**\n• [Research Summary](/dirt-roamers-research-summary)\n• [Land Portal Review](/dirt-roamers-research-landportal)\n• [Land AI Review](/dirt-roamers-research-landai)\n• [County Records Solutions](/dirt-roamers-research-county-records)\n• [Skip Tracing Alternatives](/dirt-roamers-research-skip-tracing)\n• [Growth Market Data Sources](/dirt-roamers-research-growth-markets)\n• [GoHighLevel Setup](/dirt-roamers-research-gohighlevel)\n\n**Partner With Mateo (1):**\n• [OC Weekly Accountability Guide](/partner-with-mateo-oc-accountability)\n\n**Not Added (by design):**\n- Workspace config files (AGENTS.md, SOUL.md, etc.) — used by Molly\n- Memory files — daily notes, not documents\n- Project README files — internal docs",
+              "priority": "medium",
+              "tags": ["second-brain", "audit", "cleanup"],
+              "createdAt": "2026-02-07T19:42:00.000Z",
+              "completedAt": "2026-02-07T19:47:00.000Z"
             }
           ]
         }
