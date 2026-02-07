@@ -6,6 +6,37 @@
       "description": "Tasks recommended by Molly for autonomous execution",
       "columns": [
         {
+          "id": "backlog",
+          "title": "📋 Backlog",
+          "color": "#9333ea",
+          "tasks": [
+            {
+              "id": "task-db-migration",
+              "title": "Migrate Files to Supabase Database",
+              "description": "Convert our file-based system (documents, journal items, and other files) into database entries using Supabase.\n\n**Milestones:**\n\n**Phase 1: Setup & Schema**\n- Set up Supabase project and API connection\n- Design database schema for documents, journals, and metadata\n- Create tables with proper indexes and relationships\n\n**Phase 2: Migration Script**\n- Build script to read existing markdown files\n- Parse frontmatter and content\n- Migrate all existing documents to database\n- Verify data integrity\n\n**Phase 3: API Integration**\n- Create API routes for CRUD operations\n- Update Molly to read from database instead of files\n- Update Molly to write to database instead of files\n\n**Phase 4: Cleanup**\n- Remove dependency on file system for documents\n- Archive old files\n- Update documentation",
+              "priority": "high",
+              "tags": ["second-brain", "database", "supabase", "infrastructure"],
+              "createdAt": "2026-02-07T19:42:00.000Z"
+            },
+            {
+              "id": "task-crud-interface",
+              "title": "Second Brain CRUD Interface",
+              "description": "Update Second Brain to allow creating, editing, and deleting items directly in the UI.\n\n**Milestones:**\n\n**Phase 1: Create Documents**\n- Add 'New Document' button\n- Build document creation form (title, content, tags)\n- Markdown editor with preview\n- Save to database/file system\n\n**Phase 2: Edit Documents**\n- Add 'Edit' button to document view\n- Inline editing or modal editor\n- Save changes with version tracking\n- Auto-save drafts\n\n**Phase 3: Delete Documents**\n- Add 'Delete' button with confirmation\n- Soft delete (trash) vs hard delete option\n- Bulk operations (multi-select delete)\n\n**Phase 4: Enhanced Features**\n- Document search improvements\n- Tag management UI (create, rename, merge tags)\n- Document templates\n- Import/export functionality",
+              "priority": "high",
+              "tags": ["second-brain", "ui", "crud", "feature"],
+              "createdAt": "2026-02-07T19:42:00.000Z"
+            },
+            {
+              "id": "task-file-audit",
+              "title": "Audit File System for Missing Documents",
+              "description": "Review the entire file system for any files that have been created but are not showing in Second Brain.\n\n**Tasks:**\n- Scan ~/clawd directory recursively\n- Identify markdown files outside /documents\n- Check for relevant files in /projects, /memory, and other folders\n- Add missing documents to Second Brain\n- Create proper tags for discovered files",
+              "priority": "medium",
+              "tags": ["second-brain", "audit", "cleanup"],
+              "createdAt": "2026-02-07T19:42:00.000Z"
+            }
+          ]
+        },
+        {
           "id": "for-consideration",
           "title": "🤔 For Consideration",
           "color": "#6b7280",
