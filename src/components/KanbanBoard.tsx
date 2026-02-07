@@ -1,6 +1,10 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import DocumentModal to avoid SSR issues
+const DocumentModal = dynamic(() => import('./DocumentModal'), { ssr: false });
 
 /**
  * Priority levels for tasks
@@ -117,6 +121,7 @@ export default function KanbanBoard() {
   const [isAddingTask, setIsAddingTask] = useState<string | null>(null);
   const [editingTask, setEditingTask] = useState<{ task: Task; columnId: string } | null>(null);
   const [viewingTask, setViewingTask] = useState<{ task: Task; columnId: string } | null>(null);
+  const [viewingDocument, setViewingDocument] = useState<string | null>(null);
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectDesc, setNewProjectDesc] = useState('');
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -723,7 +728,31 @@ export default function KanbanBoard() {
             {viewingTask.task.description ? (
               <div className="mb-4">
                 <h4 className="text-sm font-semibold text-[var(--muted)] mb-1">Description</h4>
-                <p className="text-[var(--foreground)] whitespace-pre-wrap">{viewingTask.task.description}</p>
+                <div className="text-[var(--foreground)] whitespace-pre-wrap">
+                  {viewingTask.task.description.split(/(\[.*?\]\(\/[^)]+\))/g).map((part, idx) => {
+                    // Match markdown links like [Title](/slug)
+                    const linkMatch = part.match(/\[(.*?)\]\(\/(.*?)\)/);
+                    if (linkMatch) {
+                      const [, linkText, slug] = linkMatch;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setViewingDocument(slug);
+                          }}
+                          className="text-[var(--accent)] hover:underline font-medium inline-flex items-center gap-1"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          {linkText}
+                        </button>
+                      );
+                    }
+                    return <span key={idx}>{part}</span>;
+                  })}
+                </div>
               </div>
             ) : (
               <p className="text-[var(--muted)] italic mb-4">No description provided.</p>
@@ -844,6 +873,14 @@ export default function KanbanBoard() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Document Modal */}
+      {viewingDocument && (
+        <DocumentModal
+          slug={viewingDocument}
+          onClose={() => setViewingDocument(null)}
+        />
       )}
     </div>
   );
