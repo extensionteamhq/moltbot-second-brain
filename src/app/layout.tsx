@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
+import { SidebarProvider } from "@/lib/SidebarContext";
 import "./globals.css";
 
 /**
@@ -22,10 +23,6 @@ export const metadata: Metadata = {
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - Child page content
  * @returns {JSX.Element} The root layout structure
- * 
- * @example
- * // This layout wraps all pages automatically
- * // Children are rendered where {children} appears
  */
 export default function RootLayout({
   children,
@@ -35,10 +32,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Header />
-        <main className="pt-14">
-          {children}
-        </main>
+        <SidebarProvider>
+          <Header />
+          <main className="pt-14">
+            {children}
+          </main>
+        </SidebarProvider>
       </body>
     </html>
   );

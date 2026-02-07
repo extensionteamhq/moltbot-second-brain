@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSidebar } from '@/lib/SidebarContext';
 
 /**
  * Navigation items for the header
@@ -13,10 +14,11 @@ const navItems = [
 ];
 
 /**
- * Header component with navigation
+ * Header component with navigation and mobile hamburger menu
  */
 export default function Header() {
   const pathname = usePathname();
+  const { isOpen, toggle } = useSidebar();
 
   const isActive = (href: string): boolean => {
     if (href === '/') {
@@ -25,10 +27,30 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
+  // Show hamburger on pages with sidebars (not on /projects)
+  const showHamburger = pathname === '/' || pathname === '/journal';
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--sidebar)] border-b border-[var(--border)]">
       <div className="flex items-center h-14 px-4">
-        {/* Logo - Far Left */}
+        {/* Mobile Hamburger Menu - Only on pages with sidebars */}
+        {showHamburger && (
+          <button
+            onClick={toggle}
+            className="md:hidden p-2 -ml-2 mr-2 rounded-lg hover:bg-[var(--card)] transition"
+            aria-label="Toggle sidebar"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        )}
+
+        {/* Logo */}
         <Link 
           href="/" 
           className="flex items-center gap-2 text-lg font-semibold hover:text-[var(--accent)] transition mr-auto"

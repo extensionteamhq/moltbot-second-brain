@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useSidebar } from '@/lib/SidebarContext';
 
 /**
  * Document interface
@@ -132,7 +133,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { isOpen: sidebarOpen, close: closeSidebar } = useSidebar();
   const mainContentRef = useRef<HTMLElement>(null);
   const [, startTransition] = useTransition();
 
@@ -183,7 +184,7 @@ export default function Home() {
   });
 
   const handleDocSelect = (doc: Document) => {
-    setSidebarOpen(false);
+    closeSidebar();
     startTransition(() => {
       setSelectedDoc(doc);
     });
@@ -223,25 +224,11 @@ date: ${selectedDoc.date}
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] relative">
-      {/* Mobile Sidebar Toggle */}
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="md:hidden fixed bottom-4 right-4 z-30 p-3 bg-[var(--accent)] text-white rounded-full shadow-lg hover:bg-[var(--accent-hover)] transition"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {sidebarOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
-
-      {/* Overlay for mobile */}
+      {/* Overlay for mobile - closes sidebar when tapping outside */}
       {sidebarOpen && (
         <div 
           className="md:hidden fixed inset-0 bg-black/50 z-30"
-          onClick={() => setSidebarOpen(false)}
+          onClick={closeSidebar}
         />
       )}
 
