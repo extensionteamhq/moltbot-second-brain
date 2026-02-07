@@ -2,8 +2,8 @@
   "projects": [
     {
       "id": "molly-tasks",
-      "name": "Molly's Recommendations",
-      "description": "Tasks recommended by Molly for autonomous execution",
+      "name": "Molly's Tasks",
+      "description": "Tasks assigned to Molly with approval workflow",
       "columns": [
         {
           "id": "backlog",
