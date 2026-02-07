@@ -1,7 +1,7 @@
 ---
 title: "Molly: USER.md"
 tags: [system, notes]
-date: 2026-02-02
+date: 2026-02-07
 ---
 
 # USER.md - About Your Human
@@ -53,6 +53,7 @@ date: 2026-02-02
 - **SubTo Coaching (mateo.moore@subto.com):** PAID coaching sessions — can't miss these. High priority.
 - **Partner With Mateo:** Pathway to working with community members on deals
 - **Personal Calendar (xybermatthew@gmail.com):** Non-negotiables — things he wants to protect but struggles to stick to. Needs accountability.
+- **Agency Calendar (mateo@anchorandstaff.com):** Anchor & Staff agency calendar — VERY IMPORTANT, don't miss these events
   - **Track:** Workout, morning reading/Bible time
   - **Don't track/show in briefs:** Routine stuff (wake up, meals, bedtime)
 
