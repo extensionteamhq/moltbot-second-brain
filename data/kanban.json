@@ -20,10 +20,10 @@
             },
             {
               "id": "task-002",
-              "title": "Land Tool Comparison Report",
-              "description": "Compile research on landportal.com, landai.ai, land.id, and landinsights.co into a decision matrix with pricing, features, affiliate programs, and recommendations.",
+              "title": "Land Sourcing Tool Comparison",
+              "description": "**Primary Tools Comparison** (for finding raw land parcels):\nCompare landportal.com vs landinsights.co vs similar tools for:\n• Finding target markets\n• Pulling public records & parcel details\n• Skip tracing owner info (phone, email)\n• Building outreach campaigns (cold call, text, email, direct mail)\n\n**Supplemental Tools Review:**\n• landai.ai — AI lead generation service\n• land.id — Supplemental parcel information\n\n**Deliverables:**\n1. Decision matrix to help choose the right service\n2. Content for dirtroamers.com: articles, lead magnets, emails\n3. Identify affiliate program opportunities for each tool",
               "priority": "medium",
-              "tags": ["dirt-roamers", "research", "tools"],
+              "tags": ["dirt-roamers", "research", "tools", "affiliate"],
               "createdAt": "2026-02-07T18:00:00.000Z"
             },
             {
