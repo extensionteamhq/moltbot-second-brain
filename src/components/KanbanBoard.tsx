@@ -115,6 +115,7 @@ export default function KanbanBoard() {
   const [isAddingProject, setIsAddingProject] = useState(false);
   const [isAddingTask, setIsAddingTask] = useState<string | null>(null);
   const [editingTask, setEditingTask] = useState<{ task: Task; columnId: string } | null>(null);
+  const [viewingTask, setViewingTask] = useState<{ task: Task; columnId: string } | null>(null);
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectDesc, setNewProjectDesc] = useState('');
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -570,8 +571,9 @@ export default function KanbanBoard() {
                     key={task.id}
                     draggable
                     onDragStart={() => handleDragStart(task, column.id)}
+                    onClick={() => setViewingTask({ task, columnId: column.id })}
                     className={`
-                      p-3 bg-[var(--card)] rounded-lg border border-[var(--border)] cursor-grab active:cursor-grabbing
+                      p-3 bg-[var(--card)] rounded-lg border border-[var(--border)] cursor-pointer
                       hover:border-[var(--accent)] transition group
                       ${draggedTask?.task.id === task.id ? 'opacity-50' : ''}
                     `}
@@ -580,7 +582,7 @@ export default function KanbanBoard() {
                       <h4 className="font-medium text-sm">{task.title}</h4>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition">
                         <button
-                          onClick={() => openEditTask(task, column.id)}
+                          onClick={(e) => { e.stopPropagation(); openEditTask(task, column.id); }}
                           className="p-1 hover:bg-[var(--background)] rounded text-[var(--muted)] hover:text-[var(--foreground)]"
                           title="Edit"
                         >
@@ -589,7 +591,7 @@ export default function KanbanBoard() {
                           </svg>
                         </button>
                         <button
-                          onClick={() => deleteTask(column.id, task.id)}
+                          onClick={(e) => { e.stopPropagation(); deleteTask(column.id, task.id); }}
                           className="p-1 hover:bg-[var(--background)] rounded text-[var(--muted)] hover:text-red-500"
                           title="Delete"
                         >
@@ -627,6 +629,92 @@ export default function KanbanBoard() {
           ))}
         </div>
       </div>
+
+      {/* View Task Modal */}
+      {viewingTask && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setViewingTask(null)}>
+          <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] w-full max-w-lg p-6" onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <span className={`inline-block px-2 py-1 text-xs rounded mb-2 ${PRIORITY_CONFIG[viewingTask.task.priority].bg}`} style={{ color: PRIORITY_CONFIG[viewingTask.task.priority].color }}>
+                  {PRIORITY_CONFIG[viewingTask.task.priority].label} Priority
+                </span>
+                <h3 className="text-xl font-bold">{viewingTask.task.title}</h3>
+              </div>
+              <button
+                onClick={() => setViewingTask(null)}
+                className="p-2 hover:bg-[var(--background)] rounded-lg transition text-[var(--muted)] hover:text-[var(--foreground)]"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Description */}
+            {viewingTask.task.description ? (
+              <div className="mb-4">
+                <h4 className="text-sm font-semibold text-[var(--muted)] mb-1">Description</h4>
+                <p className="text-[var(--foreground)] whitespace-pre-wrap">{viewingTask.task.description}</p>
+              </div>
+            ) : (
+              <p className="text-[var(--muted)] italic mb-4">No description provided.</p>
+            )}
+
+            {/* Tags */}
+            {viewingTask.task.tags.length > 0 && (
+              <div className="mb-4">
+                <h4 className="text-sm font-semibold text-[var(--muted)] mb-2">Tags</h4>
+                <div className="flex flex-wrap gap-2">
+                  {viewingTask.task.tags.map(tag => (
+                    <span key={tag} className="px-2 py-1 text-sm bg-[var(--background)] rounded text-[var(--foreground)]">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Metadata */}
+            <div className="flex flex-wrap gap-4 text-sm text-[var(--muted)] mb-6">
+              <div className="flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Created: {new Date(viewingTask.task.createdAt).toLocaleDateString()}
+              </div>
+              {viewingTask.task.dueDate && (
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Due: {new Date(viewingTask.task.dueDate).toLocaleDateString()}
+                </div>
+              )}
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  openEditTask(viewingTask.task, viewingTask.columnId);
+                  setViewingTask(null);
+                }}
+                className="flex-1 px-4 py-2 bg-[var(--accent)] text-white rounded-lg hover:bg-[var(--accent-hover)] transition"
+              >
+                Edit Task
+              </button>
+              <button
+                onClick={() => setViewingTask(null)}
+                className="px-4 py-2 bg-[var(--background)] border border-[var(--border)] rounded-lg hover:bg-[var(--border)] transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Edit Task Modal */}
       {editingTask && (
