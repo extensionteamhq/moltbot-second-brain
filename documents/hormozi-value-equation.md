@@ -1,5 +1,5 @@
 ---
-title: Hormozi Value Equation
+title: "Marketing: Hormozi Value Equation"
 tags: [marketing, framework]
 date: 2026-01-31
 ---

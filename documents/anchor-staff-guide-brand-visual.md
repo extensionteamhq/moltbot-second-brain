@@ -1,5 +1,5 @@
 ---
-title: "Guide: Creating a Brand Visual Style Guide"
+title: "Anchor & Staff: Brand Visual Style Guide"
 tags: [anchor-staff, guide]
 date: 2026-02-02
 ---

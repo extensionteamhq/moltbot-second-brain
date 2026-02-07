@@ -1,5 +1,5 @@
 ---
-title: StoryBrand Framework
+title: "Marketing: StoryBrand Framework"
 tags: [marketing, framework]
 date: 2026-01-31
 ---

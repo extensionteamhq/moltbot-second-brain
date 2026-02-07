@@ -1,5 +1,5 @@
 ---
-title: "Guide: Creating a Brand Voice Style Guide"
+title: "Anchor & Staff: Brand Voice Style Guide"
 tags: [anchor-staff, guide]
 date: 2026-02-02
 ---

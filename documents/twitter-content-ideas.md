@@ -1,5 +1,5 @@
 ---
-title: "X/Twitter Content Ideas for @mrmateomoore"
+title: "Mr Mateo Moore: X/Twitter Content Ideas"
 tags: [mr-mateo-moore, social-media, ideas]
 date: 2026-01-30
 ---

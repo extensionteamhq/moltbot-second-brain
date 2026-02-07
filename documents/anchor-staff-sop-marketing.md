@@ -1,5 +1,5 @@
 ---
-title: "SOP: Marketing Process"
+title: "Anchor & Staff: SOP - Marketing"
 tags: [anchor-staff, sop]
 date: 2026-02-02
 ---

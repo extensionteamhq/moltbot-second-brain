@@ -1,5 +1,5 @@
 ---
-title: "SOP: Sales Process"
+title: "Anchor & Staff: SOP - Sales"
 tags: [anchor-staff, sop]
 date: 2026-02-02
 ---

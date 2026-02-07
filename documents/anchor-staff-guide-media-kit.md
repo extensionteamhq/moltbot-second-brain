@@ -1,5 +1,5 @@
 ---
-title: "Guide: Creating a Media Kit / Press Package"
+title: "Anchor & Staff: Media Kit & Press Package"
 tags: [anchor-staff, guide]
 date: 2026-02-02
 ---

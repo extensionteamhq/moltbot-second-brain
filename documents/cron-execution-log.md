@@ -1,5 +1,5 @@
 ---
-title: "Cron Execution Log"
+title: "Molly: Cron Execution Log"
 tags: [system, notes]
 date: 2026-01-31
 ---

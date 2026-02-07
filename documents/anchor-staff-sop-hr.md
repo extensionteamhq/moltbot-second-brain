@@ -1,5 +1,5 @@
 ---
-title: "SOP: Human Resources Process"
+title: "Anchor & Staff: SOP - Human Resources"
 tags: [anchor-staff, sop]
 date: 2026-02-02
 ---

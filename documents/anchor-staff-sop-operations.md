@@ -1,5 +1,5 @@
 ---
-title: "SOP: Operations Process"
+title: "Anchor & Staff: SOP - Operations"
 tags: [anchor-staff, sop]
 date: 2026-02-02
 ---

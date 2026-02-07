@@ -1,5 +1,5 @@
 ---
-title: Rank N Soar Expansion Ideas
+title: "Rank-n-Soar: Expansion Ideas"
 tags: [rank-n-soar, notes]
 date: 2026-01-31
 ---

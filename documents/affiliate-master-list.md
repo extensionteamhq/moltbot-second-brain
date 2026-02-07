@@ -1,5 +1,5 @@
 ---
-title: "Affiliate Links Master List"
+title: "Marketing: Affiliate Links Master List"
 tags: [marketing, notes]
 date: 2026-02-02
 ---

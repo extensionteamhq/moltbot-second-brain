@@ -1,5 +1,5 @@
 ---
-title: "Clawdbot: SOUL.md"
+title: "Molly: SOUL.md"
 tags: [system, notes]
 date: 2026-02-02
 ---

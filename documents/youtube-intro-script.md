@@ -1,5 +1,5 @@
 ---
-title: YouTube Intro Script - Land Flipping 101
+title: "Dirt Roamers: YouTube Intro Script - Land Flipping 101"
 tags: [dirt-roamers, script, sop]
 date: 2026-01-31
 ---

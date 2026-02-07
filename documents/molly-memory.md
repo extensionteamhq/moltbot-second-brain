@@ -1,5 +1,5 @@
 ---
-title: "Clawdbot: MEMORY.md"
+title: "Molly: MEMORY.md"
 tags: [system, notes]
 date: 2026-02-02
 ---

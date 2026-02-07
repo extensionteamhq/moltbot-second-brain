@@ -1,5 +1,5 @@
 ---
-title: "Clawdbot: AGENTS.md"
+title: "Molly: AGENTS.md"
 tags: [system, notes]
 date: 2026-02-02
 ---

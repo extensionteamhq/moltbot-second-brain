@@ -1,5 +1,5 @@
 ---
-title: "Second Brain Setup Complete"
+title: "Molly: Second Brain Setup"
 tags: [system, notes]
 date: 2026-01-31
 ---

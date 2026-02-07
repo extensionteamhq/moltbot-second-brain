@@ -1,5 +1,5 @@
 ---
-title: "SOP: Accounting & Finance Process"
+title: "Anchor & Staff: SOP - Accounting & Finance"
 tags: [anchor-staff, sop]
 date: 2026-02-02
 ---
