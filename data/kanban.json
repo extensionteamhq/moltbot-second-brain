@@ -11,14 +11,6 @@
           "color": "#6b7280",
           "tasks": [
             {
-              "id": "task-001",
-              "title": "Dirt Roamers Email Sequence",
-              "description": "Draft a 5-email nurture sequence for land sellers (cold outreach → follow-up → offer). Ready to load into GoHighLevel.",
-              "priority": "high",
-              "tags": ["dirt-roamers", "email", "gohighlevel"],
-              "createdAt": "2026-02-07T18:00:00.000Z"
-            },
-            {
               "id": "task-002",
               "title": "Land Sourcing Tool Comparison",
               "description": "**Primary Tools Comparison** (for finding raw land parcels):\nCompare landportal.com vs landinsights.co vs similar tools for:\n• Finding target markets\n• Pulling public records & parcel details\n• Skip tracing owner info (phone, email)\n• Building outreach campaigns (cold call, text, email, direct mail)\n\n**Supplemental Tools Review:**\n• landai.ai — AI lead generation service\n• land.id — Supplemental parcel information\n\n**Deliverables:**\n1. Decision matrix to help choose the right service\n2. Content for dirtroamers.com: articles, lead magnets, emails\n3. Identify affiliate program opportunities for each tool",
@@ -52,7 +44,17 @@
           "id": "done",
           "title": "✅ Done",
           "color": "#22c55e",
-          "tasks": []
+          "tasks": [
+            {
+              "id": "task-001",
+              "title": "Dirt Roamers Email Sequence",
+              "description": "Draft email sequences for land sellers. Ready to load into GoHighLevel.\n\n**Completed Documents:**\n• [Nurture Email Sequence](/dirt-roamers-nurture-email-sequence)\n• [Cold Email Sequence](/dirt-roamers-cold-email-sequence)",
+              "priority": "high",
+              "tags": ["dirt-roamers", "email", "gohighlevel"],
+              "createdAt": "2026-02-07T18:00:00.000Z",
+              "completedAt": "2026-02-07T18:21:00.000Z"
+            }
+          ]
         }
       ],
       "createdAt": "2026-02-07T18:00:00.000Z"
