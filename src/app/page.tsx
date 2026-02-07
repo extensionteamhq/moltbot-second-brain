@@ -6,13 +6,6 @@ import remarkGfm from 'remark-gfm';
 
 /**
  * Document interface representing a markdown document
- * @typedef {Object} Document
- * @property {string} slug - URL-friendly identifier derived from filename
- * @property {string} title - Document title from frontmatter
- * @property {string} content - Raw markdown content
- * @property {string[]} tags - Tags for categorization
- * @property {string} date - ISO date string
- * @property {string} excerpt - Short preview of content
  */
 interface Document {
   slug: string;
@@ -24,77 +17,151 @@ interface Document {
 }
 
 /**
- * Tag color configuration for visual categorization
- * @constant {Record<string, string>}
+ * Business Model Tags - Primary categorization
+ * Each has light (unselected) and dark (selected/display) variants
  */
-const tagColors: Record<string, string> = {
-  journal: 'bg-blue-500',
-  notes: 'bg-green-500',
-  newsletters: 'bg-amber-500',
-  scripts: 'bg-pink-500',
-  ideas: 'bg-violet-500',
-  concepts: 'bg-cyan-500',
-  'dirt-roamers': 'bg-orange-500',
-  'email-sequences': 'bg-teal-500',
-  sales: 'bg-red-500',
+const BUSINESS_MODELS: Record<string, { light: string; dark: string; label: string }> = {
+  'anchor-staff': { 
+    light: 'bg-blue-200 text-blue-800 hover:bg-blue-300', 
+    dark: 'bg-blue-600 text-white',
+    label: 'Anchor & Staff'
+  },
+  'mr-mateo-moore': { 
+    light: 'bg-purple-200 text-purple-800 hover:bg-purple-300', 
+    dark: 'bg-purple-600 text-white',
+    label: 'Mr Mateo Moore'
+  },
+  'dirt-roamers': { 
+    light: 'bg-orange-200 text-orange-800 hover:bg-orange-300', 
+    dark: 'bg-orange-600 text-white',
+    label: 'Dirt Roamers'
+  },
+  'rank-n-soar': { 
+    light: 'bg-green-200 text-green-800 hover:bg-green-300', 
+    dark: 'bg-green-600 text-white',
+    label: 'Rank-n-Soar'
+  },
+  'partner-with-mateo': { 
+    light: 'bg-teal-200 text-teal-800 hover:bg-teal-300', 
+    dark: 'bg-teal-600 text-white',
+    label: 'Partner With Mateo'
+  },
+  'other': { 
+    light: 'bg-gray-200 text-gray-800 hover:bg-gray-300', 
+    dark: 'bg-gray-600 text-white',
+    label: 'Other'
+  },
 };
 
 /**
+ * Document Type Tags - Secondary categorization
+ */
+const DOCUMENT_TYPES: Record<string, { color: string; label: string }> = {
+  'guide': { color: 'bg-sky-500', label: 'Guide' },
+  'newsletter': { color: 'bg-amber-500', label: 'Newsletter' },
+  'sop': { color: 'bg-rose-500', label: 'SOP' },
+  'email-sequence': { color: 'bg-teal-500', label: 'Email Sequence' },
+  'script': { color: 'bg-pink-500', label: 'Script' },
+  'notes': { color: 'bg-indigo-500', label: 'Notes' },
+  'journal': { color: 'bg-blue-500', label: 'Journal' },
+  'ideas': { color: 'bg-violet-500', label: 'Ideas' },
+  'research': { color: 'bg-emerald-500', label: 'Research' },
+  'template': { color: 'bg-cyan-500', label: 'Template' },
+};
+
+/**
+ * Helper to categorize a tag
+ */
+function categorizeTag(tag: string): { type: 'business' | 'doctype' | 'other'; key: string } {
+  const normalizedTag = tag.toLowerCase().replace(/\s+/g, '-');
+  if (BUSINESS_MODELS[normalizedTag]) {
+    return { type: 'business', key: normalizedTag };
+  }
+  if (DOCUMENT_TYPES[normalizedTag]) {
+    return { type: 'doctype', key: normalizedTag };
+  }
+  return { type: 'other', key: tag };
+}
+
+/**
+ * Get business model and document types from a document's tags
+ */
+function getTagCategories(tags: string[]): { business: string | null; types: string[] } {
+  let business: string | null = null;
+  const types: string[] = [];
+  
+  for (const tag of tags) {
+    const cat = categorizeTag(tag);
+    if (cat.type === 'business' && !business) {
+      business = cat.key;
+    } else if (cat.type === 'doctype') {
+      types.push(cat.key);
+    }
+  }
+  
+  return { business, types };
+}
+
+/**
  * Documents Page Component
- * 
- * Main page displaying the document browser with sidebar navigation,
- * search functionality, tag filtering, and markdown rendering.
- * 
- * @page
- * @route /
- * @example
- * // Access at: http://localhost:3000/
  */
 export default function Home() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [allTags, setAllTags] = useState<string[]>([]);
+  const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const mainContentRef = useRef<HTMLElement>(null);
   const [, startTransition] = useTransition();
 
-  /**
-   * Fetch documents from API on component mount
-   */
+  // Collect available tags from documents
+  const [availableBusinesses, setAvailableBusinesses] = useState<string[]>([]);
+  const [availableTypes, setAvailableTypes] = useState<string[]>([]);
+
   useEffect(() => {
     fetch('/api/documents')
       .then(res => res.json())
       .then(data => {
         setDocuments(data.documents);
-        setAllTags(data.tags);
         if (data.documents.length > 0) {
           setSelectedDoc(data.documents[0]);
         }
+        
+        // Extract available tags
+        const businesses = new Set<string>();
+        const types = new Set<string>();
+        
+        for (const doc of data.documents) {
+          for (const tag of doc.tags) {
+            const cat = categorizeTag(tag);
+            if (cat.type === 'business') businesses.add(cat.key);
+            if (cat.type === 'doctype') types.add(cat.key);
+          }
+        }
+        
+        setAvailableBusinesses(Array.from(businesses));
+        setAvailableTypes(Array.from(types));
       });
   }, []);
 
-  /**
-   * Filter documents based on search query and selected tag
-   * @returns {Document[]} Filtered documents
-   */
+  // Filter documents
   const filteredDocs = documents.filter(doc => {
     const matchesSearch = searchQuery === '' || 
       doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.content.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTag = selectedTag === null || doc.tags.includes(selectedTag);
-    return matchesSearch && matchesTag;
+    
+    const { business, types } = getTagCategories(doc.tags);
+    const matchesBusiness = selectedBusiness === null || business === selectedBusiness;
+    const matchesType = selectedType === null || types.includes(selectedType);
+    
+    return matchesSearch && matchesBusiness && matchesType;
   });
 
   // Separate journal entries from other documents
-  const journalDocs = filteredDocs.filter(d => d.tags.includes('journal'));
-  const otherDocs = filteredDocs.filter(d => !d.tags.includes('journal'));
+  const journalDocs = filteredDocs.filter(d => d.tags.some(t => categorizeTag(t).key === 'journal'));
+  const otherDocs = filteredDocs.filter(d => !d.tags.some(t => categorizeTag(t).key === 'journal'));
 
-  /**
-   * Handles document selection with optimized rendering
-   * @param {Document} doc - The document to select
-   */
   const handleDocSelect = (doc: Document) => {
     setSidebarOpen(false);
     startTransition(() => {
@@ -107,24 +174,6 @@ export default function Home() {
     });
   };
 
-  /**
-   * Handles tag filter selection
-   * @param {string | null} tag - The tag to filter by, or null for all
-   */
-  const handleTagSelect = (tag: string | null) => {
-    startTransition(() => {
-      setSelectedTag(tag);
-    });
-    requestAnimationFrame(() => {
-      if (mainContentRef.current) {
-        mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-  };
-
-  /**
-   * Downloads the current document as a markdown file
-   */
   const handleDownload = () => {
     if (!selectedDoc) return;
     
@@ -145,6 +194,11 @@ date: ${selectedDoc.date}
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const clearFilters = () => {
+    setSelectedBusiness(null);
+    setSelectedType(null);
   };
 
   return (
@@ -190,31 +244,83 @@ date: ${selectedDoc.date}
           />
         </div>
 
-        {/* Tags */}
-        <div className="px-3 pb-3 flex flex-wrap gap-1">
-          <button
-            onClick={() => handleTagSelect(null)}
-            className={`px-2 py-1 text-xs rounded-full transition ${
-              selectedTag === null ? 'bg-[var(--accent)] text-white' : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
-            }`}
-          >
-            All
-          </button>
-          {allTags.map(tag => (
+        {/* Business Model Tags */}
+        <div className="px-3 pb-2">
+          <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
+            Business
+          </div>
+          <div className="flex flex-wrap gap-1">
             <button
-              key={tag}
-              onClick={() => handleTagSelect(selectedTag === tag ? null : tag)}
+              onClick={clearFilters}
               className={`px-2 py-1 text-xs rounded-full transition ${
-                selectedTag === tag ? 'bg-[var(--accent)] text-white' : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
+                selectedBusiness === null && selectedType === null
+                  ? 'bg-[var(--accent)] text-white' 
+                  : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
               }`}
             >
-              {tag}
+              All
             </button>
-          ))}
+            {availableBusinesses.map(key => {
+              const config = BUSINESS_MODELS[key];
+              const isSelected = selectedBusiness === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setSelectedBusiness(isSelected ? null : key)}
+                  className={`px-2 py-1 text-xs rounded-full transition ${
+                    isSelected ? config.dark : config.light
+                  }`}
+                >
+                  {config.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
+        {/* Document Type Tags */}
+        <div className="px-3 pb-3">
+          <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
+            Document Type
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {availableTypes.map(key => {
+              const config = DOCUMENT_TYPES[key];
+              const isSelected = selectedType === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setSelectedType(isSelected ? null : key)}
+                  className={`px-2 py-1 text-xs rounded-full transition ${
+                    isSelected 
+                      ? `${config.color} text-white` 
+                      : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
+                  }`}
+                >
+                  {config.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Active Filters Indicator */}
+        {(selectedBusiness || selectedType) && (
+          <div className="px-3 pb-2">
+            <button
+              onClick={clearFilters}
+              className="text-xs text-[var(--accent)] hover:underline flex items-center gap-1"
+            >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Clear filters
+            </button>
+          </div>
+        )}
+
         {/* Document List */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto border-t border-[var(--border)]">
           {journalDocs.length > 0 && (
             <>
               <div className="px-4 py-2 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">
@@ -226,7 +332,6 @@ date: ${selectedDoc.date}
                   doc={doc}
                   isSelected={selectedDoc?.slug === doc.slug}
                   onClick={() => handleDocSelect(doc)}
-                  tagColors={tagColors}
                 />
               ))}
             </>
@@ -243,7 +348,6 @@ date: ${selectedDoc.date}
                   doc={doc}
                   isSelected={selectedDoc?.slug === doc.slug}
                   onClick={() => handleDocSelect(doc)}
-                  tagColors={tagColors}
                 />
               ))}
             </>
@@ -258,7 +362,7 @@ date: ${selectedDoc.date}
 
         {/* Footer */}
         <div className="p-3 border-t border-[var(--border)] text-xs text-[var(--muted)]">
-          {documents.length} documents
+          {filteredDocs.length} of {documents.length} documents
         </div>
       </aside>
 
@@ -269,16 +373,7 @@ date: ${selectedDoc.date}
             {/* Document Header */}
             <header className="mb-6 md:mb-8 pb-4 md:pb-6 border-b border-[var(--border)]">
               <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2 flex-wrap">
-                  {selectedDoc.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className={`px-2 py-0.5 text-xs rounded-full text-white ${tagColors[tag] || 'bg-gray-500'}`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <DocumentTags tags={selectedDoc.tags} />
                 <button
                   onClick={handleDownload}
                   className="flex items-center gap-2 px-3 py-1.5 text-sm bg-[var(--card)] hover:bg-[var(--border)] border border-[var(--border)] rounded-lg transition"
@@ -315,28 +410,53 @@ date: ${selectedDoc.date}
 }
 
 /**
- * Document Item Component
- * 
- * Renders a single document in the sidebar list with title, date, and tag indicators.
- * 
- * @component
- * @param {Object} props - Component props
- * @param {Document} props.doc - The document to display
- * @param {boolean} props.isSelected - Whether this document is currently selected
- * @param {() => void} props.onClick - Click handler for selection
- * @param {Record<string, string>} props.tagColors - Mapping of tag names to color classes
+ * Document Tags Display Component
+ * Shows tags in format: <Business Model>: <Type>|<Type>
+ */
+function DocumentTags({ tags }: { tags: string[] }) {
+  const { business, types } = getTagCategories(tags);
+  
+  return (
+    <div className="flex items-center gap-2 flex-wrap">
+      {business && BUSINESS_MODELS[business] && (
+        <span className={`px-2 py-0.5 text-xs rounded-full ${BUSINESS_MODELS[business].dark}`}>
+          {BUSINESS_MODELS[business].label}
+        </span>
+      )}
+      {business && types.length > 0 && (
+        <span className="text-[var(--muted)]">:</span>
+      )}
+      {types.map((type, idx) => (
+        <span key={type} className="flex items-center">
+          {idx > 0 && <span className="text-[var(--muted)] mx-1">|</span>}
+          <span className={`px-2 py-0.5 text-xs rounded-full text-white ${DOCUMENT_TYPES[type]?.color || 'bg-gray-500'}`}>
+            {DOCUMENT_TYPES[type]?.label || type}
+          </span>
+        </span>
+      ))}
+      {!business && types.length === 0 && (
+        <span className="px-2 py-0.5 text-xs rounded-full bg-gray-500 text-white">
+          Uncategorized
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Document Item Component for sidebar
  */
 function DocItem({ 
   doc, 
   isSelected, 
   onClick,
-  tagColors 
 }: { 
   doc: Document; 
   isSelected: boolean; 
   onClick: () => void;
-  tagColors: Record<string, string>;
 }) {
+  const { business, types } = getTagCategories(doc.tags);
+  
   return (
     <button
       onClick={onClick}
@@ -348,11 +468,34 @@ function DocItem({
     >
       <div className="font-medium text-sm truncate">{doc.title}</div>
       <div className="text-xs text-[var(--muted)] mt-1">{doc.date}</div>
-      <div className="flex gap-1 mt-2">
-        {doc.tags.slice(0, 3).map(tag => (
+      <div className="flex items-center gap-1 mt-2">
+        {business && BUSINESS_MODELS[business] && (
+          <span className={`w-2 h-2 rounded-full`} style={{
+            backgroundColor: BUSINESS_MODELS[business].dark.includes('blue') ? '#2563eb' :
+                            BUSINESS_MODELS[business].dark.includes('purple') ? '#9333ea' :
+                            BUSINESS_MODELS[business].dark.includes('orange') ? '#ea580c' :
+                            BUSINESS_MODELS[business].dark.includes('green') ? '#16a34a' :
+                            BUSINESS_MODELS[business].dark.includes('teal') ? '#0d9488' :
+                            '#4b5563'
+          }} />
+        )}
+        {types.slice(0, 2).map(type => (
           <span
-            key={tag}
-            className={`w-2 h-2 rounded-full ${tagColors[tag] || 'bg-gray-500'}`}
+            key={type}
+            className={`w-2 h-2 rounded-full`}
+            style={{
+              backgroundColor: DOCUMENT_TYPES[type]?.color.includes('sky') ? '#0ea5e9' :
+                              DOCUMENT_TYPES[type]?.color.includes('amber') ? '#f59e0b' :
+                              DOCUMENT_TYPES[type]?.color.includes('rose') ? '#f43f5e' :
+                              DOCUMENT_TYPES[type]?.color.includes('teal') ? '#14b8a6' :
+                              DOCUMENT_TYPES[type]?.color.includes('pink') ? '#ec4899' :
+                              DOCUMENT_TYPES[type]?.color.includes('indigo') ? '#6366f1' :
+                              DOCUMENT_TYPES[type]?.color.includes('blue') ? '#3b82f6' :
+                              DOCUMENT_TYPES[type]?.color.includes('violet') ? '#8b5cf6' :
+                              DOCUMENT_TYPES[type]?.color.includes('emerald') ? '#10b981' :
+                              DOCUMENT_TYPES[type]?.color.includes('cyan') ? '#06b6d4' :
+                              '#6b7280'
+            }}
           />
         ))}
       </div>

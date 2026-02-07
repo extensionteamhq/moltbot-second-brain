@@ -12,17 +12,51 @@ interface Document {
   date: string;
 }
 
-const tagColors: Record<string, string> = {
-  journal: 'bg-blue-500',
-  notes: 'bg-green-500',
-  newsletters: 'bg-amber-500',
-  scripts: 'bg-pink-500',
-  ideas: 'bg-violet-500',
-  concepts: 'bg-cyan-500',
-  'dirt-roamers': 'bg-orange-500',
-  'email-sequences': 'bg-teal-500',
-  sales: 'bg-red-500',
+/**
+ * Business Model Tags
+ */
+const BUSINESS_MODELS: Record<string, { dark: string; label: string }> = {
+  'anchor-staff': { dark: 'bg-blue-600 text-white', label: 'Anchor & Staff' },
+  'mr-mateo-moore': { dark: 'bg-purple-600 text-white', label: 'Mr Mateo Moore' },
+  'dirt-roamers': { dark: 'bg-orange-600 text-white', label: 'Dirt Roamers' },
+  'rank-n-soar': { dark: 'bg-green-600 text-white', label: 'Rank-n-Soar' },
+  'partner-with-mateo': { dark: 'bg-teal-600 text-white', label: 'Partner With Mateo' },
+  'other': { dark: 'bg-gray-600 text-white', label: 'Other' },
 };
+
+/**
+ * Document Type Tags
+ */
+const DOCUMENT_TYPES: Record<string, { color: string; label: string }> = {
+  'guide': { color: 'bg-sky-500', label: 'Guide' },
+  'newsletter': { color: 'bg-amber-500', label: 'Newsletter' },
+  'sop': { color: 'bg-rose-500', label: 'SOP' },
+  'email-sequence': { color: 'bg-teal-500', label: 'Email Sequence' },
+  'script': { color: 'bg-pink-500', label: 'Script' },
+  'notes': { color: 'bg-indigo-500', label: 'Notes' },
+  'journal': { color: 'bg-blue-500', label: 'Journal' },
+  'ideas': { color: 'bg-violet-500', label: 'Ideas' },
+  'research': { color: 'bg-emerald-500', label: 'Research' },
+  'template': { color: 'bg-cyan-500', label: 'Template' },
+};
+
+function categorizeTag(tag: string): { type: 'business' | 'doctype' | 'other'; key: string } {
+  const normalizedTag = tag.toLowerCase().replace(/\s+/g, '-');
+  if (BUSINESS_MODELS[normalizedTag]) return { type: 'business', key: normalizedTag };
+  if (DOCUMENT_TYPES[normalizedTag]) return { type: 'doctype', key: normalizedTag };
+  return { type: 'other', key: tag };
+}
+
+function getTagCategories(tags: string[]): { business: string | null; types: string[] } {
+  let business: string | null = null;
+  const types: string[] = [];
+  for (const tag of tags) {
+    const cat = categorizeTag(tag);
+    if (cat.type === 'business' && !business) business = cat.key;
+    else if (cat.type === 'doctype') types.push(cat.key);
+  }
+  return { business, types };
+}
 
 interface DocumentModalProps {
   slug: string;
@@ -113,14 +147,29 @@ date: ${document.date}
             <div className="p-4 border-b border-[var(--border)] flex items-start justify-between">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap mb-2">
-                  {document.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className={`px-2 py-0.5 text-xs rounded-full text-white ${tagColors[tag] || 'bg-gray-500'}`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  {(() => {
+                    const { business, types } = getTagCategories(document.tags);
+                    return (
+                      <>
+                        {business && BUSINESS_MODELS[business] && (
+                          <span className={`px-2 py-0.5 text-xs rounded-full ${BUSINESS_MODELS[business].dark}`}>
+                            {BUSINESS_MODELS[business].label}
+                          </span>
+                        )}
+                        {business && types.length > 0 && (
+                          <span className="text-[var(--muted)]">:</span>
+                        )}
+                        {types.map((type, idx) => (
+                          <span key={type} className="flex items-center">
+                            {idx > 0 && <span className="text-[var(--muted)] mx-1">|</span>}
+                            <span className={`px-2 py-0.5 text-xs rounded-full text-white ${DOCUMENT_TYPES[type]?.color || 'bg-gray-500'}`}>
+                              {DOCUMENT_TYPES[type]?.label || type}
+                            </span>
+                          </span>
+                        ))}
+                      </>
+                    );
+                  })()}
                 </div>
                 <h2 className="text-xl font-bold truncate">{document.title}</h2>
                 <time className="text-[var(--muted)] text-sm">{document.date}</time>
