@@ -24,19 +24,6 @@
               "createdAt": "2026-02-07T19:42:00.000Z"
             },
             {
-              "id": "task-mobile-nav",
-              "title": "Fix Mobile Navigation - Document Switcher",
-              "description": "**Bug Report:**\nOn mobile, there's no option to switch between documents or journal entries. The app isn't 100% mobile-friendly.\n\n**Expected:**\nMobile users should be able to navigate between documents via hamburger menu, bottom nav, or similar mobile-friendly pattern.\n\n**Reported:** 2026-02-07 by Mateo",
-              "priority": "high",
-              "tags": [
-                "second-brain",
-                "bug",
-                "mobile",
-                "ui"
-              ],
-              "createdAt": "2026-02-07T21:08:00.000Z"
-            },
-            {
               "id": "task-crud-interface",
               "title": "Second Brain CRUD Interface",
               "description": "Update Second Brain to allow creating, editing, and deleting items directly in the UI.\n\n**Milestones:**\n\n**Phase 1: Create Documents**\n- Add 'New Document' button\n- Build document creation form (title, content, tags)\n- Markdown editor with preview\n- Save to database/file system\n\n**Phase 2: Edit Documents**\n- Add 'Edit' button to document view\n- Inline editing or modal editor\n- Save changes with version tracking\n- Auto-save drafts\n\n**Phase 3: Delete Documents**\n- Add 'Delete' button with confirmation\n- Soft delete (trash) vs hard delete option\n- Bulk operations (multi-select delete)\n\n**Phase 4: Enhanced Features**\n- Document search improvements\n- Tag management UI (create, rename, merge tags)\n- Document templates\n- Import/export functionality",
@@ -154,6 +141,20 @@
               ],
               "createdAt": "2026-02-07T21:01:00.000Z",
               "completedAt": "2026-02-07T21:12:00.000Z"
+            },
+            {
+              "id": "task-mobile-nav",
+              "title": "Fix Mobile Navigation - Document Switcher",
+              "description": "**Bug Report:**\nOn mobile, there was no option to switch between documents or journal entries.\n\n**Solution Implemented:**\n- Created shared SidebarContext for state management\n- Added hamburger menu button to Header (visible on mobile)\n- Hamburger appears on Documents and Journal pages\n- Removed less-discoverable floating bottom-right button\n- Kept overlay for closing sidebar by tapping outside\n\n**Result:** Mobile users can now easily switch documents via the hamburger menu in the header.",
+              "priority": "high",
+              "tags": [
+                "second-brain",
+                "bug",
+                "mobile",
+                "ui"
+              ],
+              "createdAt": "2026-02-07T21:08:00.000Z",
+              "completedAt": "2026-02-07T21:13:00.000Z"
             }
           ]
         }
