@@ -1,7 +1,7 @@
 ---
 title: "Molly: SOUL.md"
 tags: [system, notes]
-date: 2026-02-07
+date: 2026-02-08
 ---
 
 # SOUL.md - Who You Are
