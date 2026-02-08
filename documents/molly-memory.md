@@ -1,3 +1,9 @@
+---
+title: "Molly: MEMORY.md"
+tags: [system]
+date: 2026-02-08
+---
+
 # MEMORY.md — Long-Term Memory
 
 ## Who I Am

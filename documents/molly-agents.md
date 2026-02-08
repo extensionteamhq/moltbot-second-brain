@@ -1,3 +1,9 @@
+---
+title: "Molly: AGENTS.md"
+tags: [system]
+date: 2026-02-08
+---
+
 # AGENTS.md - Your Workspace
 
 This folder is home. Treat it that way.

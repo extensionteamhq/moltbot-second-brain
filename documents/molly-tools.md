@@ -1,3 +1,9 @@
+---
+title: "Molly: TOOLS.md"
+tags: [system]
+date: 2026-02-08
+---
+
 # TOOLS.md - Local Notes
 
 Skills define *how* tools work. This file is for *your* specifics — the stuff that's unique to your setup.
