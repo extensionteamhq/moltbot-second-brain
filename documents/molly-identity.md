@@ -1,7 +1,7 @@
 ---
 title: "Molly: IDENTITY.md"
-tags: [system]
-date: 2026-02-08
+tags: [system, notes]
+date: 2026-02-09
 ---
 
 # IDENTITY.md - Who Am I?

@@ -1,7 +1,7 @@
 ---
 title: "Molly: USER.md"
-tags: [system]
-date: 2026-02-08
+tags: [system, notes]
+date: 2026-02-09
 ---
 
 # USER.md - About Your Human
