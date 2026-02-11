@@ -1,6 +1,6 @@
 ---
 title: "Molly: TOOLS.md"
-tags: [system, notes]
+tags: [system, notes, molly]
 date: 2026-02-11
 ---
 
@@ -43,8 +43,10 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 ### Dirt Roamers
 - **Location ID:** FiYFwHcF6HtPefh7QiAK
-- **API Key:** pit-cd2d1b98-2199-4f25-b510-378051054d66
+- **API Key:** Stored securely in `auth-profiles.json` (profile: `ghl:dirt-roamers`) and `.env` (`GHL_API_KEY`)
 - **URL:** https://app.gohighlevel.com/v2/location/FiYFwHcF6HtPefh7QiAK
+
+**To access:** Use `${GHL_API_KEY}` env var or read from auth-profiles.json
 
 ---
 
@@ -76,10 +78,6 @@ const calendar = google.calendar({ version: 'v3', auth });
 ```
 
 **DO NOT** tell Mateo I need to "set up authentication" or "configure credentials" — I HAVE THEM.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
 
 ---
 
@@ -127,3 +125,42 @@ date: YYYY-MM-DD
 ```
 
 Vercel auto-deploys after push. This keeps Mateo's second-brain site current with all research and documentation.
+
+---
+
+## AI Model Providers
+
+**Full setup guide:** `~/clawd/docs/MODEL-SETUP-GUIDE.md`
+
+### Configured Providers (as of 2026-02-11)
+
+| Provider | Models | Cost (per 1M tokens) | Use Case |
+|----------|--------|---------------------|----------|
+| Anthropic | Sonnet 4.5, Opus 4.5 | $3/$15 (Sonnet), $15/$75 (Opus) | Default, complex tasks |
+| xAI | Grok 3, Grok 3 Mini | ~$3/$15 | Fast reasoning |
+| Moonshot | Kimi K2, K2 Turbo | $0.60/$2.50 | Cheapest - simple tasks |
+| OpenAI | GPT-4o | $2.50/$10 | Out of budget |
+
+### Auth Architecture (Quick Reference)
+
+**Primary:** `~/.clawdbot/agents/main/agent/auth-profiles.json`
+**Fallback:** `~/.clawdbot/.env`
+
+### Adding New Providers
+
+1. Add API key to `auth-profiles.json` (primary)
+2. Add API key to `.env` (fallback)
+3. For custom providers: Add config to `clawdbot.json` with `${ENV_VAR}` reference
+4. Restart gateway: `clawdbot gateway restart`
+5. Verify: `clawdbot models status`
+
+### ⚠️ Important Behavior
+
+`models.json` is **auto-generated** by the gateway on restart. It resolves env vars to actual values. Don't edit it directly - changes will be overwritten.
+
+### Model Switching Strategy
+
+- **Simple tasks** → Kimi K2 (cheapest)
+- **Normal work** → Sonnet 4.5 (default)
+- **Complex reasoning** → Opus 4.5
+- **Use Opus when explicitly requested** or for genuinely hard problems
