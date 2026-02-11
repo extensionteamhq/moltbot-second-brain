@@ -1,7 +1,7 @@
 ---
 title: "Molly: AGENTS.md"
 tags: [system, notes]
-date: 2026-02-09
+date: 2026-02-11
 ---
 
 # AGENTS.md - Your Workspace

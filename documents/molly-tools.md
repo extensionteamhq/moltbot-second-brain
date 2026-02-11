@@ -1,7 +1,7 @@
 ---
 title: "Molly: TOOLS.md"
 tags: [system, notes]
-date: 2026-02-09
+date: 2026-02-11
 ---
 
 # TOOLS.md - Local Notes
@@ -105,3 +105,25 @@ This email was crafted with love by Molly, Mateo's AI assistant, at his directio
 - No emojis in email subjects or body (encoding issues)
 - Signature is required on all outgoing emails
 - The "crafted by Molly" note goes after the main signature
+
+---
+
+## Second Brain Sync
+
+**ALWAYS sync generated files to second-brain and push to GitHub.**
+
+When creating research docs, outlines, guides, or any substantial content:
+1. Save to appropriate project folder (e.g., `projects/dirt-roamers/research/`)
+2. Copy to `projects/second-brain/documents/` with frontmatter (title, tags, date)
+3. Git add, commit, and push
+
+**Frontmatter template:**
+```yaml
+---
+title: "Document Title"
+tags: [relevant, tags, here]
+date: YYYY-MM-DD
+---
+```
+
+Vercel auto-deploys after push. This keeps Mateo's second-brain site current with all research and documentation.
