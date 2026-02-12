@@ -68,32 +68,6 @@
                 "dirt-roamers"
               ],
               "createdAt": "2026-02-07T18:00:00.000Z"
-            },
-            {
-              "id": "task-phone-validation",
-              "title": "Add Phone Validation to Anchor & Staff Website",
-              "description": "Add free phone number validation to website forms.\n\n**Research Findings:**\n\n**Recommended: libphonenumber-js** \u2b50\n- Lightweight: 145KB vs Google's 550KB\n- TypeScript support built-in\n- 8M+ weekly downloads\n- Validates, formats, parses international numbers\n- MIT License (FREE)\n\n```bash\npnpm add libphonenumber-js\n```\n\n**Alternative: react-phone-number-input**\n- Built on libphonenumber-js\n- Ready-made React component with country selector\n- Great UX with flag dropdown\n- Also FREE (MIT License)\n\n```bash\npnpm add react-phone-number-input\n```\n\n**Alternative: awesome-phonenumber**\n- Smallest bundle (284KB total)\n- Full Google libphonenumber port\n- Also FREE\n\n**Implementation Plan:**\n1. Install libphonenumber-js (or react-phone-number-input for full component)\n2. Create validation utility function\n3. Add to form components\n4. Display formatted number + validation errors\n\n**No API costs - all validation runs client-side.**",
-              "priority": "medium",
-              "tags": [
-                "anchor-staff",
-                "website",
-                "validation",
-                "forms"
-              ],
-              "createdAt": "2026-02-07T20:25:00.000Z"
-            },
-            {
-              "id": "task-cloudflare-1770904612431",
-              "title": "Cloudflare Tunnel Setup - Secure Dashboard Access",
-              "description": "Set up Cloudflare Tunnel to access Clawdbot dashboard securely without exposing to public internet.\n\n**Current Setup:**\n- Dashboard running on port 18789\n- Will change to port 37842 (less common, harder to scan)\n\n**Mateo's Tasks:**\n- [ ] Create free Cloudflare account (if don't have one): https://dash.cloudflare.com/sign-up\n- [ ] Decide: Use subdomain on existing domain OR use Cloudflare's provided URL (e.g., molly-dashboard.trycloudflare.com)\n- [ ] If using own domain: Add domain to Cloudflare account + update nameservers\n- [ ] Review and approve tunnel configuration before going live\n- [ ] Test dashboard access from phone + laptop after setup\n\n**Molly's Tasks:**\n- [ ] Change Clawdbot dashboard port from 18789 to 37842\n- [ ] Install cloudflared on server\n- [ ] Configure tunnel with authentication (Cloudflare Access or password)\n- [ ] Set up tunnel routing to dashboard\n- [ ] Test connectivity and security\n- [ ] Document access instructions (URL, auth method, troubleshooting)\n- [ ] Create quick-start guide for Mateo\n\n**Benefits:**\n- No port forwarding or firewall changes needed\n- Zero-trust authentication layer\n- Access from anywhere (phone, laptop, tablet)\n- No exposed ports to internet",
-              "priority": "high",
-              "tags": [
-                "infrastructure",
-                "security",
-                "cloudflare",
-                "dashboard"
-              ],
-              "createdAt": "2026-02-12T13:56:52.431Z"
             }
           ]
         },
