@@ -8,9 +8,8 @@ import { useSidebar } from '@/lib/SidebarContext';
  * Navigation items for the header
  */
 const navItems = [
-  { href: '/journal', label: 'Journal', icon: '📅' },
   { href: '/', label: 'Documents', icon: '📄' },
-  { href: '/projects', label: 'Projects', icon: '📋' },
+  { href: '/journal', label: 'Journal', icon: '📅' },
 ];
 
 /**

@@ -28,6 +28,32 @@ function formatDateTime(dateStr: string): string {
 }
 
 /**
+ * Format journal title with day of week
+ * Example: "Daily Journal - February 12, 2026 (Thursday)"
+ */
+function formatJournalTitle(dateStr: string): string {
+  const date = new Date(dateStr);
+  const options: Intl.DateTimeFormatOptions = { 
+    timeZone: 'America/New_York',
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric',
+    weekday: 'long'
+  };
+  const formatted = new Intl.DateTimeFormat('en-US', options).format(date);
+  const [weekday, ...dateParts] = formatted.split(', ');
+  const dateWithoutWeekday = dateParts.join(', ');
+  return `Daily Journal - ${dateWithoutWeekday} (${weekday})`;
+}
+
+/**
+ * Remove duplicate h1 from content
+ */
+function removeFirstH1(content: string): string {
+  return content.replace(/^#\s+.*$/m, '').trim();
+}
+
+/**
  * Journal Page - Shows only journal entries
  */
 export default function JournalPage() {
@@ -42,11 +68,23 @@ export default function JournalPage() {
     fetch('/api/documents')
       .then(res => res.json())
       .then(data => {
-        // Filter only journal entries and sort by date
+        const now = new Date();
+        const todayET = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'America/New_York',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).format(now);
+        const [month, day, year] = todayET.split('/');
+        const todayDateStr = `${year}-${month}-${day}`;
+        
+        // Filter only journal entries, exclude today's entry, and sort by date
         const journalDocs = data.documents
-          .filter((doc: Document) => 
-            doc.tags.some((t: string) => t.toLowerCase().replace(/\s+/g, '-') === 'journal')
-          )
+          .filter((doc: Document) => {
+            const isJournal = doc.tags.some((t: string) => t.toLowerCase().replace(/\s+/g, '-') === 'journal');
+            const isToday = doc.slug.startsWith(todayDateStr);
+            return isJournal && !isToday;
+          })
           .sort((a: Document, b: Document) => 
             new Date(b.date).getTime() - new Date(a.date).getTime()
           );
@@ -139,13 +177,8 @@ date: ${selectedDoc.date}
                   : 'hover:bg-[var(--card)] border-l-2 border-transparent'
               }`}
             >
-              <div className="font-medium text-sm truncate">{doc.title}</div>
+              <div className="font-medium text-sm">{formatJournalTitle(doc.date)}</div>
               <div className="text-xs text-[var(--muted)] mt-1">{formatDateTime(doc.date)}</div>
-              <div className="mt-2">
-                <span className="px-1.5 py-0.5 text-[10px] rounded-full bg-blue-500 text-white">
-                  Journal
-                </span>
-              </div>
             </button>
           ))}
 
@@ -183,14 +216,14 @@ date: ${selectedDoc.date}
                   <span className="hidden sm:inline">Download</span>
                 </button>
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">{selectedDoc.title}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">{formatJournalTitle(selectedDoc.date)}</h1>
               <time className="text-[var(--muted)] text-sm">{formatDateTime(selectedDoc.date)}</time>
             </header>
 
             {/* Document Content */}
             <div className="prose prose-sm md:prose-base">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {selectedDoc.content}
+                {removeFirstH1(selectedDoc.content)}
               </ReactMarkdown>
             </div>
           </article>
