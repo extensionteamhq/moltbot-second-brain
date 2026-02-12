@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef, useTransition } from 'react';
+import { useState, useEffect, useRef, useTransition, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useSidebar } from '@/lib/SidebarContext';
@@ -125,9 +126,12 @@ function formatDateTime(dateStr: string): string {
 }
 
 /**
- * Documents Page Component
+ * Documents Page Component (Internal)
  */
-export default function Home() {
+function HomeContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [documents, setDocuments] = useState<Document[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,7 +153,15 @@ export default function Home() {
           new Date(b.date).getTime() - new Date(a.date).getTime()
         );
         setDocuments(sortedDocs);
-        if (sortedDocs.length > 0) {
+        
+        // Check URL for document slug
+        const docSlug = searchParams.get('doc');
+        
+        if (docSlug && sortedDocs.length > 0) {
+          // Try to find document matching the URL slug
+          const urlDoc = sortedDocs.find(d => d.slug === docSlug);
+          setSelectedDoc(urlDoc || sortedDocs[0]);
+        } else if (sortedDocs.length > 0) {
           setSelectedDoc(sortedDocs[0]);
         }
         
@@ -168,7 +180,20 @@ export default function Home() {
         setAvailableCategories(Array.from(categories));
         setAvailableTypes(Array.from(types));
       });
-  }, []);
+  }, [searchParams]);
+  
+  // Separate effect to handle URL changes after documents are loaded
+  useEffect(() => {
+    if (documents.length === 0) return;
+    
+    const docSlug = searchParams.get('doc');
+    if (docSlug) {
+      const urlDoc = documents.find(d => d.slug === docSlug);
+      if (urlDoc && urlDoc.slug !== selectedDoc?.slug) {
+        setSelectedDoc(urlDoc);
+      }
+    }
+  }, [searchParams, documents, selectedDoc]);
 
   // Filter documents (include all - journals and documents)
   const filteredDocs = documents.filter(doc => {
@@ -187,6 +212,8 @@ export default function Home() {
     closeSidebar();
     startTransition(() => {
       setSelectedDoc(doc);
+      // Update URL with document slug for shareable links
+      router.push(`/?doc=${doc.slug}`, { scroll: false });
     });
     requestAnimationFrame(() => {
       if (mainContentRef.current) {
@@ -497,5 +524,16 @@ function DocItem({
         ))}
       </div>
     </button>
+  );
+}
+
+/**
+ * Home Page with Suspense Boundary
+ */
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
