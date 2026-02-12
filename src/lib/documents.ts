@@ -92,10 +92,10 @@ Happy organizing! 🧠
     const slug = filename.replace('.md', '');
     const excerpt = content.slice(0, 150).replace(/[#*`]/g, '').trim() + '...';
     
-    // Date priority: created > date > file birthtime
-    const created = data.created || data.date || stats.birthtime.toISOString().split('T')[0];
-    // Updated priority: updated > file mtime
-    const updated = data.updated || stats.mtime.toISOString().split('T')[0];
+    // Date priority: created > date > file birthtime (keep as full ISO timestamp)
+    const created = data.created || data.date || stats.birthtime.toISOString();
+    // Updated priority: updated > file mtime (keep as full ISO timestamp)
+    const updated = data.updated || stats.mtime.toISOString();
     
     return {
       slug,

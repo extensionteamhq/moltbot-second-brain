@@ -4,8 +4,8 @@ tags:
   - dirt-roamers
   - research
   - notes
-created: '2026-02-07'
-updated: '2026-02-12'
+created: '2026-02-07T19:47:30+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # Dirt Roamers Research Summary

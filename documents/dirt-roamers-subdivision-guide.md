@@ -6,8 +6,8 @@ tags:
   - subdivision
   - real-estate
   - value-add
-created: '2026-02-11'
-updated: '2026-02-11'
+created: '2026-02-11T20:54:34+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # Land Subdivision Guide for Investors

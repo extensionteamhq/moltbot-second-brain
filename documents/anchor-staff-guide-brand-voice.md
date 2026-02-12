@@ -3,8 +3,8 @@ title: 'Anchor & Staff: Brand Voice Style Guide'
 tags:
   - anchor-staff
   - guide
-created: '2026-02-02'
-updated: '2026-02-07'
+created: '2026-02-02T14:29:01+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # How to Create a Brand Voice Style Guide

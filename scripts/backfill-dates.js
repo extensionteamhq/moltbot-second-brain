@@ -14,21 +14,21 @@ const DOCUMENTS_DIR = path.join(__dirname, '..', 'documents');
 
 function getGitDates(filePath) {
   try {
-    // Get first commit date (created)
+    // Get first commit date (created) - full ISO timestamp
     const createdDate = execSync(
       `git log --follow --format=%aI --reverse "${filePath}" | head -1`,
       { encoding: 'utf8' }
     ).trim();
 
-    // Get last commit date (updated)
+    // Get last commit date (updated) - full ISO timestamp
     const updatedDate = execSync(
       `git log -1 --format=%aI "${filePath}"`,
       { encoding: 'utf8' }
     ).trim();
 
     return {
-      created: createdDate ? createdDate.split('T')[0] : null,
-      updated: updatedDate ? updatedDate.split('T')[0] : null,
+      created: createdDate || null,
+      updated: updatedDate || null,
     };
   } catch (error) {
     // File not in git yet
@@ -50,16 +50,16 @@ function backfillDocument(filename) {
   const gitDates = getGitDates(filePath);
   const stats = fs.statSync(filePath);
 
-  // Determine created date
+  // Determine created timestamp (full ISO)
   let created = parsed.data.created;
   if (!created) {
-    created = gitDates?.created || parsed.data.date || stats.birthtime.toISOString().split('T')[0];
+    created = gitDates?.created || parsed.data.date || stats.birthtime.toISOString();
   }
 
-  // Determine updated date
+  // Determine updated timestamp (full ISO)
   let updated = parsed.data.updated;
   if (!updated) {
-    updated = gitDates?.updated || stats.mtime.toISOString().split('T')[0];
+    updated = gitDates?.updated || stats.mtime.toISOString();
   }
 
   // Update frontmatter

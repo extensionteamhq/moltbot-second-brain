@@ -3,8 +3,8 @@ title: 'Dirt Roamers: Cold Email Sequence'
 tags:
   - dirt-roamers
   - email-sequence
-created: '2026-02-05'
-updated: '2026-02-07'
+created: '2026-02-05T13:10:35+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # Dirt Roamers Cold Email Sequence

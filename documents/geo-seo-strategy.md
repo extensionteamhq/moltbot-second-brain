@@ -3,8 +3,8 @@ title: 'Marketing: GEO - Generative Engine Optimization'
 tags:
   - marketing
   - notes
-created: '2026-01-31'
-updated: '2026-02-07'
+created: '2026-01-31T01:34:26+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # GEO - Generative Engine Optimization

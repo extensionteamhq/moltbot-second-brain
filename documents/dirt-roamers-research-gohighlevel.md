@@ -5,8 +5,8 @@ tags:
   - research
   - tools
   - gohighlevel
-created: '2026-02-07'
-updated: '2026-02-07'
+created: '2026-02-07T19:47:30+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # GoHighLevel Setup for Land Investors

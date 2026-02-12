@@ -3,8 +3,8 @@ title: 'Anchor & Staff: Nurture Email Sequence - The Revenue Foundation Series'
 tags:
   - anchor-staff
   - email-sequence
-created: '2026-02-02'
-updated: '2026-02-07'
+created: '2026-02-02T13:24:12+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # The Revenue Foundation Series

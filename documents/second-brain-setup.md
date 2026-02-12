@@ -3,8 +3,8 @@ title: 'Molly: Second Brain Setup'
 tags:
   - system
   - notes
-created: '2026-01-31'
-updated: '2026-02-07'
+created: '2026-01-31T14:48:23+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # Second Brain Setup Complete 🧠

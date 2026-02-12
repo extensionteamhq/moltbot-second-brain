@@ -4,8 +4,8 @@ tags:
   - dirt-roamers
   - script
   - sop
-created: '2026-01-31'
-updated: '2026-02-07'
+created: '2026-01-31T18:30:27+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # YouTube Intro Script: Land Flipping 101

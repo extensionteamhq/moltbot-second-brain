@@ -115,25 +115,32 @@ function getTagCategories(tags: string[]): { category: string | null; types: str
 }
 
 /**
- * Format date as YYYY-MM-DD (date only) or YYYY-MM-DD HH:MM ET (with time)
+ * Format date as YYYY-MM-DD HH:MM ET
+ * Converts UTC timestamps to Eastern Time
  */
 function formatDateTime(dateStr: string): string {
-  // Check if dateStr includes time info (has 'T' or space with time)
-  const hasTime = dateStr.includes('T') || /\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(dateStr);
-  
-  if (!hasTime) {
-    // Just a date (YYYY-MM-DD) - return as-is to avoid timezone issues
-    return dateStr;
-  }
-  
-  // Has time - parse and format with ET timezone
   const date = new Date(dateStr);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${year}-${month}-${day} ${hours}:${minutes} ET`;
+  
+  // Convert to ET (UTC-5 or UTC-4 depending on DST)
+  // Using Intl.DateTimeFormat for proper timezone handling
+  const etFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+  
+  const parts = etFormatter.formatToParts(date);
+  const year = parts.find(p => p.type === 'year')?.value;
+  const month = parts.find(p => p.type === 'month')?.value;
+  const day = parts.find(p => p.type === 'day')?.value;
+  const hour = parts.find(p => p.type === 'hour')?.value;
+  const minute = parts.find(p => p.type === 'minute')?.value;
+  
+  return `${year}-${month}-${day} ${hour}:${minute} ET`;
 }
 
 /**

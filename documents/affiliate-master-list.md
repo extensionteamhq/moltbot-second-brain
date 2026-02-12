@@ -3,8 +3,8 @@ title: 'Marketing: Affiliate Links Master List'
 tags:
   - marketing
   - notes
-created: '2026-02-02'
-updated: '2026-02-07'
+created: '2026-02-02T20:35:23+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # Affiliate Links Master List

@@ -6,8 +6,8 @@ tags:
   - cold-calling
   - land-investing
   - research
-created: '2026-02-10'
-updated: '2026-02-10'
+created: '2026-02-10T15:40:26+00:00'
+updated: '2026-02-12T18:15:00+00:00'
 ---
 
 # AI Cold Calling Solutions for Dirt Roamers Land Business
