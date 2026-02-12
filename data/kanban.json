@@ -286,7 +286,21 @@
           "id": "for-consideration",
           "title": "🤔 For Consideration",
           "color": "#6b7280",
-          "tasks": []
+          "tasks": [
+            {
+              "id": "mateo-task-cloudflare-1770904867032",
+              "title": "Cloudflare Tunnel - Dashboard Access Setup",
+              "description": "Enable secure access to Molly's dashboard from anywhere without exposing it to the internet.\n\n**Your Action Items:**\n- [ ] Create free Cloudflare account: https://dash.cloudflare.com/sign-up (if you don't have one)\n- [ ] Choose access method:\n  • Option A: Use subdomain on your existing domain (e.g., molly.partnerwithmateo.com)\n  • Option B: Use free Cloudflare URL (e.g., molly-dashboard.trycloudflare.com)\n- [ ] If using your domain: Add it to Cloudflare + update nameservers\n- [ ] Review Molly's tunnel configuration before going live\n- [ ] Test access from phone and laptop\n\n**What Molly Will Handle:**\n- Change dashboard port to 37842 (more secure)\n- Install and configure cloudflared\n- Set up authentication layer\n- Test security\n- Write access guide\n\n**Result:** Secure, authenticated dashboard access from any device, anywhere.",
+              "priority": "high",
+              "tags": [
+                "infrastructure",
+                "security",
+                "cloudflare",
+                "action-required"
+              ],
+              "createdAt": "2026-02-12T14:01:07.032Z"
+            }
+          ]
         },
         {
           "id": "research-plan",
