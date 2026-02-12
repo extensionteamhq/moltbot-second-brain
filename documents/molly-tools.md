@@ -1,7 +1,7 @@
 ---
 title: "Molly: TOOLS.md"
-tags: [system, notes, molly]
-date: 2026-02-11
+tags: [system, notes]
+date: 2026-02-12
 ---
 
 # TOOLS.md - Local Notes
@@ -78,6 +78,10 @@ const calendar = google.calendar({ version: 'v3', auth });
 ```
 
 **DO NOT** tell Mateo I need to "set up authentication" or "configure credentials" — I HAVE THEM.
+
+---
+
+Add whatever helps you do your job. This is your cheat sheet.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Molly: MEMORY.md"
 tags: [system, notes]
-date: 2026-02-11
+date: 2026-02-12
 ---
 
 # MEMORY.md — Long-Term Memory
@@ -107,3 +107,48 @@ date: 2026-02-11
 **Key rule:** NEVER skip approval checkpoints. Always wait for explicit approval.
 
 **Full SOP:** Second Brain → "Molly: SOP - Task Management"
+
+---
+
+## AI Model Configuration (Established 2026-02-11)
+
+### Learned the Hard Way
+1. **Always verify model names** with `clawdbot models list --all` before using
+   - Wrong: `anthropic/claude-sonnet-4` (doesn't exist)
+   - Right: `anthropic/claude-sonnet-4-5` (correct)
+
+2. **models.json is auto-generated** — Don't try to edit it, gateway overwrites on restart
+
+3. **Use auth-profiles.json for API keys** — Not env.vars in clawdbot.json
+   - Benefits: Usage tracking, error monitoring, multi-account support
+   - Fallback: .env file
+
+4. **config.patch merges, doesn't delete** — Use null values or config.apply to remove keys
+
+### Auth Architecture
+- **Primary:** `~/.clawdbot/agents/main/agent/auth-profiles.json`
+- **Fallback:** `~/.clawdbot/.env`
+- **Guide:** `~/clawd/docs/MODEL-SETUP-GUIDE.md`
+
+### Cost Strategy (Mateo's Preference)
+Save money while maintaining quality:
+- Simple tasks → Kimi K2 ($0.60/$2.50 per 1M tokens)
+- Normal work → Sonnet 4.5 ($3/$15) — DEFAULT
+- Complex/requested → Opus 4.5 ($15/$75)
+
+**Rule:** Use Opus **ONLY** when explicitly requested or for genuinely hard problems. Otherwise default to Sonnet 4.5 or Kimi K2 for cost savings.
+
+### Current Providers
+- Anthropic: Sonnet 4.5, Opus 4.5 ✅
+- xAI: Grok 3, Grok 3 Mini ✅
+- Moonshot: Kimi K2, K2 Turbo ✅
+- OpenAI: GPT-4o (out of budget)
+
+### Other API Keys (Non-AI)
+- **GoHighLevel:** `ghl:dirt-roamers` profile in auth-profiles.json + `GHL_API_KEY` in .env
+  - Location ID: FiYFwHcF6HtPefh7QiAK (Dirt Roamers)
+
+### Security Rule
+**NEVER put API keys directly in workspace files** (TOOLS.md, MEMORY.md, etc.)
+- Store in: `auth-profiles.json` (primary) + `.env` (fallback)
+- Reference in docs: "Stored securely in auth-profiles.json"

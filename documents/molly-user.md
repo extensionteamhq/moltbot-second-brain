@@ -1,7 +1,7 @@
 ---
 title: "Molly: USER.md"
 tags: [system, notes]
-date: 2026-02-11
+date: 2026-02-12
 ---
 
 # USER.md - About Your Human
@@ -113,9 +113,52 @@ date: 2026-02-11
 - Content channels: blog, social media, newsletters
 - Revenue: affiliate commissions + digital products
 
+### Mt. Everest (5-Year Vision 2025-2030)
+
+**THE SUMMIT:**
+> "By 2030, build a $50M net worth through strategic acquisitions of AI-resistant service businesses and real estate investments, generating $4M+ in annual passive income to fund complete lifestyle freedom — including full-time travel, multiple residences, a private plane, and catamaran — while creating a family office legacy that operates without my daily involvement."
+
+**What Fills His Cup:**
+- 🎯 **Freedom:** Travel anywhere/anytime, complete financial independence, affiliate marketing funnels
+- 🏖 **Lifestyle:** Private aviation, catamaran, multiple residences (US coasts + Central America + Spain/Portugal), creative outlets (photography, painting, woodworking)
+- 🏛 **Legacy:** Family office structure, generational wealth, lifting others up
+- 📈 **Mastery:** Expert deal-maker, capital allocator, business acquisition authority
+- 🤝 **Impact:** Veteran employment opportunities, workforce housing, helping disadvantaged groups
+
+**Measurable Targets:**
+| Metric | Target |
+|--------|--------|
+| Net Worth | $50M |
+| Annual Passive Income | $4M+ |
+| Business Acquisitions | 10-15 companies |
+| Cash Flow per Business | $200K-400K annually |
+| Real Estate Units | 200+ doors |
+| Portfolio Structure | Family office established |
+
+**Strategic Focus:**
+- **Primary:** Real estate-adjacent services (landscaping, HVAC, plumbing, roofing, cleaning, pool maintenance, power washing) — local market dominance, recurring customers, AI-resistant
+- **Secondary:** B2B manufacturing/fabrication with recurring revenue
+- **Real Estate:** Deploy business cash flow into 200+ units across multiple markets
+
+**Reverse-Engineered Timeline:**
+- **Year 1 (2025):** Capital-raising partner, junior dev for SaaS, first operator, acquire 2-3 service businesses, 12-month deadline for agency profitability
+- **Year 1.5 (Mid-2026):** Exit digital marketing business (18mo max), redirect to acquisitions + RE
+- **Year 2 (2027):** Property manager, first RE acquisitions, accredited investor status
+- **Years 3-5 (2028-2030):** Scale aggressively, establish family office, hit targets, operational independence
+
+**Critical Team Members:**
+- Year 1: Capital partner, junior developer, business operator
+- Year 2+: Property manager, M&A broker network, tax strategist (✅), deal attorney, RE agents
+
+**Core Principles:**
+- Maintain focus on passive income generation
+- Prioritize AI-resistant, recession-resilient businesses
+- Build systems that operate without daily involvement
+- Leverage capital partnerships for accelerated growth
+
 ### Mission
 - Build and buy businesses + acquire real estate
-- "Mt. Everest" goal (details TBD)
+- Execute the Mt. Everest vision (documented above)
 - Needs more active income to fund the vision
 
 ### Projects in Progress
