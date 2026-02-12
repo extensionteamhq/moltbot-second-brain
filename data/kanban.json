@@ -7,7 +7,7 @@
       "columns": [
         {
           "id": "backlog",
-          "title": "📋 Backlog",
+          "title": "\ud83d\udccb Backlog",
           "color": "#9333ea",
           "tasks": [
             {
@@ -40,13 +40,13 @@
         },
         {
           "id": "for-consideration",
-          "title": "🤔 For Consideration",
+          "title": "\ud83e\udd14 For Consideration",
           "color": "#6b7280",
           "tasks": [
             {
               "id": "task-002",
               "title": "Land Sourcing Tool Comparison",
-              "description": "**Primary Tools Comparison** (for finding raw land parcels):\nCompare landportal.com vs landinsights.co vs similar tools for:\n• Finding target markets\n• Pulling public records & parcel details\n• Skip tracing owner info (phone, email)\n• Building outreach campaigns (cold call, text, email, direct mail)\n\n**Supplemental Tools Review:**\n• landai.ai — AI lead generation service\n• land.id — Supplemental parcel information\n\n**Deliverables:**\n1. Decision matrix to help choose the right service\n2. Content for dirtroamers.com: articles, lead magnets, emails\n3. Identify affiliate program opportunities for each tool",
+              "description": "**Primary Tools Comparison** (for finding raw land parcels):\nCompare landportal.com vs landinsights.co vs similar tools for:\n\u2022 Finding target markets\n\u2022 Pulling public records & parcel details\n\u2022 Skip tracing owner info (phone, email)\n\u2022 Building outreach campaigns (cold call, text, email, direct mail)\n\n**Supplemental Tools Review:**\n\u2022 landai.ai \u2014 AI lead generation service\n\u2022 land.id \u2014 Supplemental parcel information\n\n**Deliverables:**\n1. Decision matrix to help choose the right service\n2. Content for dirtroamers.com: articles, lead magnets, emails\n3. Identify affiliate program opportunities for each tool",
               "priority": "medium",
               "tags": [
                 "dirt-roamers",
@@ -72,7 +72,7 @@
             {
               "id": "task-phone-validation",
               "title": "Add Phone Validation to Anchor & Staff Website",
-              "description": "Add free phone number validation to website forms.\n\n**Research Findings:**\n\n**Recommended: libphonenumber-js** ⭐\n- Lightweight: 145KB vs Google's 550KB\n- TypeScript support built-in\n- 8M+ weekly downloads\n- Validates, formats, parses international numbers\n- MIT License (FREE)\n\n```bash\npnpm add libphonenumber-js\n```\n\n**Alternative: react-phone-number-input**\n- Built on libphonenumber-js\n- Ready-made React component with country selector\n- Great UX with flag dropdown\n- Also FREE (MIT License)\n\n```bash\npnpm add react-phone-number-input\n```\n\n**Alternative: awesome-phonenumber**\n- Smallest bundle (284KB total)\n- Full Google libphonenumber port\n- Also FREE\n\n**Implementation Plan:**\n1. Install libphonenumber-js (or react-phone-number-input for full component)\n2. Create validation utility function\n3. Add to form components\n4. Display formatted number + validation errors\n\n**No API costs - all validation runs client-side.**",
+              "description": "Add free phone number validation to website forms.\n\n**Research Findings:**\n\n**Recommended: libphonenumber-js** \u2b50\n- Lightweight: 145KB vs Google's 550KB\n- TypeScript support built-in\n- 8M+ weekly downloads\n- Validates, formats, parses international numbers\n- MIT License (FREE)\n\n```bash\npnpm add libphonenumber-js\n```\n\n**Alternative: react-phone-number-input**\n- Built on libphonenumber-js\n- Ready-made React component with country selector\n- Great UX with flag dropdown\n- Also FREE (MIT License)\n\n```bash\npnpm add react-phone-number-input\n```\n\n**Alternative: awesome-phonenumber**\n- Smallest bundle (284KB total)\n- Full Google libphonenumber port\n- Also FREE\n\n**Implementation Plan:**\n1. Install libphonenumber-js (or react-phone-number-input for full component)\n2. Create validation utility function\n3. Add to form components\n4. Display formatted number + validation errors\n\n**No API costs - all validation runs client-side.**",
               "priority": "medium",
               "tags": [
                 "anchor-staff",
@@ -99,25 +99,25 @@
         },
         {
           "id": "research-plan",
-          "title": "🔬 Research & Plan",
+          "title": "\ud83d\udd2c Research & Plan",
           "color": "#3b82f6",
           "tasks": []
         },
         {
           "id": "implementing",
-          "title": "⚡ Implementing",
+          "title": "\u26a1 Implementing",
           "color": "#f59e0b",
           "tasks": []
         },
         {
           "id": "done",
-          "title": "✅ Done",
+          "title": "\u2705 Done",
           "color": "#22c55e",
           "tasks": [
             {
               "id": "task-001",
               "title": "Dirt Roamers Email Sequence",
-              "description": "Draft email sequences for land sellers. Ready to load into GoHighLevel.\n\n**Completed Documents:**\n• [Nurture Email Sequence](/dirt-roamers-nurture-email-sequence)\n• [Cold Email Sequence](/dirt-roamers-cold-email-sequence)",
+              "description": "Draft email sequences for land sellers. Ready to load into GoHighLevel.\n\n**Completed Documents:**\n\u2022 [Nurture Email Sequence](/dirt-roamers-nurture-email-sequence)\n\u2022 [Cold Email Sequence](/dirt-roamers-cold-email-sequence)",
               "priority": "high",
               "tags": [
                 "dirt-roamers",
@@ -130,7 +130,7 @@
             {
               "id": "task-file-audit",
               "title": "Audit File System for Missing Documents",
-              "description": "Scanned ~/clawd directory and added 10 missing documents to Second Brain.\n\n**Files Added:**\n\n**Marketing (2):**\n• [Lead Magnet - Brand Story Blueprint](/marketing-lead-magnet-brand-story)\n• [Miami Reconnect Email Draft](/marketing-miami-reconnect-email)\n\n**Dirt Roamers Research (7):**\n• [Research Summary](/dirt-roamers-research-summary)\n• [Land Portal Review](/dirt-roamers-research-landportal)\n• [Land AI Review](/dirt-roamers-research-landai)\n• [County Records Solutions](/dirt-roamers-research-county-records)\n• [Skip Tracing Alternatives](/dirt-roamers-research-skip-tracing)\n• [Growth Market Data Sources](/dirt-roamers-research-growth-markets)\n• [GoHighLevel Setup](/dirt-roamers-research-gohighlevel)\n\n**Partner With Mateo (1):**\n• [OC Weekly Accountability Guide](/partner-with-mateo-oc-accountability)\n\n**Not Added (by design):**\n- Workspace config files (AGENTS.md, SOUL.md, etc.) — used by Molly\n- Memory files — daily notes, not documents\n- Project README files — internal docs",
+              "description": "Scanned ~/clawd directory and added 10 missing documents to Second Brain.\n\n**Files Added:**\n\n**Marketing (2):**\n\u2022 [Lead Magnet - Brand Story Blueprint](/marketing-lead-magnet-brand-story)\n\u2022 [Miami Reconnect Email Draft](/marketing-miami-reconnect-email)\n\n**Dirt Roamers Research (7):**\n\u2022 [Research Summary](/dirt-roamers-research-summary)\n\u2022 [Land Portal Review](/dirt-roamers-research-landportal)\n\u2022 [Land AI Review](/dirt-roamers-research-landai)\n\u2022 [County Records Solutions](/dirt-roamers-research-county-records)\n\u2022 [Skip Tracing Alternatives](/dirt-roamers-research-skip-tracing)\n\u2022 [Growth Market Data Sources](/dirt-roamers-research-growth-markets)\n\u2022 [GoHighLevel Setup](/dirt-roamers-research-gohighlevel)\n\n**Partner With Mateo (1):**\n\u2022 [OC Weekly Accountability Guide](/partner-with-mateo-oc-accountability)\n\n**Not Added (by design):**\n- Workspace config files (AGENTS.md, SOUL.md, etc.) \u2014 used by Molly\n- Memory files \u2014 daily notes, not documents\n- Project README files \u2014 internal docs",
               "priority": "medium",
               "tags": [
                 "second-brain",
@@ -143,7 +143,7 @@
             {
               "id": "task-pricing-guide",
               "title": "Service Pricing Guide for New Providers",
-              "description": "Created comprehensive how-to guide for pricing services (automation, AI integration, consulting).\n\n**Covers:**\n• Billable hours reality (20-25/week, not 40)\n• Baseline cost calculation (personal income + business costs + taxes)\n• Minimum hourly rate formula with worksheet\n• Day rate conversion (6-7x hourly)\n• Project-based pricing (value-based + estimation methods)\n• Market positioning (Budget/Mid-Market/Premium/Expert tiers)\n• Subcontractor rates when someone else brings the work (30-50% discount framework)\n• Rate card template\n• Communication tips for presenting rates\n\n**Document:** [How to Price Your Services](/guide-pricing-your-services)\n\n**Note:** ⚠️ Completed without following SOP - went straight to implementation without task card or approval. Won't happen again.",
+              "description": "Created comprehensive how-to guide for pricing services (automation, AI integration, consulting).\n\n**Covers:**\n\u2022 Billable hours reality (20-25/week, not 40)\n\u2022 Baseline cost calculation (personal income + business costs + taxes)\n\u2022 Minimum hourly rate formula with worksheet\n\u2022 Day rate conversion (6-7x hourly)\n\u2022 Project-based pricing (value-based + estimation methods)\n\u2022 Market positioning (Budget/Mid-Market/Premium/Expert tiers)\n\u2022 Subcontractor rates when someone else brings the work (30-50% discount framework)\n\u2022 Rate card template\n\u2022 Communication tips for presenting rates\n\n**Document:** [How to Price Your Services](/guide-pricing-your-services)\n\n**Note:** \u26a0\ufe0f Completed without following SOP - went straight to implementation without task card or approval. Won't happen again.",
               "priority": "medium",
               "tags": [
                 "guides",
@@ -181,7 +181,7 @@
       "columns": [
         {
           "id": "backlog",
-          "title": "📋 Backlog",
+          "title": "\ud83d\udccb Backlog",
           "color": "#9333ea",
           "tasks": [
             {
@@ -223,7 +223,7 @@
             {
               "id": "mateo-rank-n-soar",
               "title": "Rank-n-Soar",
-              "description": "Rank and rent model business.\n\n- Template site built with Payload CMS (Next.js)\n- Buy domain → clone template → SEO + LLM SEO\n- Generate leads → sell to local service providers\n\nNeeds research on localized service-based industries.",
+              "description": "Rank and rent model business.\n\n- Template site built with Payload CMS (Next.js)\n- Buy domain \u2192 clone template \u2192 SEO + LLM SEO\n- Generate leads \u2192 sell to local service providers\n\nNeeds research on localized service-based industries.",
               "priority": "medium",
               "tags": [
                 "rank-n-soar",
@@ -284,39 +284,25 @@
         },
         {
           "id": "for-consideration",
-          "title": "🤔 For Consideration",
+          "title": "\ud83e\udd14 For Consideration",
           "color": "#6b7280",
-          "tasks": [
-            {
-              "id": "mateo-task-cloudflare-1770904867032",
-              "title": "Cloudflare Tunnel - Dashboard Access Setup",
-              "description": "Enable secure access to Molly's dashboard from anywhere without exposing it to the internet.\n\n**Your Action Items:**\n- [ ] Create free Cloudflare account: https://dash.cloudflare.com/sign-up (if you don't have one)\n- [ ] Choose access method:\n  • Option A: Use subdomain on your existing domain (e.g., molly.partnerwithmateo.com)\n  • Option B: Use free Cloudflare URL (e.g., molly-dashboard.trycloudflare.com)\n- [ ] If using your domain: Add it to Cloudflare + update nameservers\n- [ ] Review Molly's tunnel configuration before going live\n- [ ] Test access from phone and laptop\n\n**What Molly Will Handle:**\n- Change dashboard port to 37842 (more secure)\n- Install and configure cloudflared\n- Set up authentication layer\n- Test security\n- Write access guide\n\n**Result:** Secure, authenticated dashboard access from any device, anywhere.",
-              "priority": "high",
-              "tags": [
-                "infrastructure",
-                "security",
-                "cloudflare",
-                "action-required"
-              ],
-              "createdAt": "2026-02-12T14:01:07.032Z"
-            }
-          ]
+          "tasks": []
         },
         {
           "id": "research-plan",
-          "title": "🔬 Research & Plan",
+          "title": "\ud83d\udd2c Research & Plan",
           "color": "#3b82f6",
           "tasks": []
         },
         {
           "id": "implementing",
-          "title": "⚡ Implementing",
+          "title": "\u26a1 Implementing",
           "color": "#f59e0b",
           "tasks": []
         },
         {
           "id": "done",
-          "title": "✅ Done",
+          "title": "\u2705 Done",
           "color": "#22c55e",
           "tasks": []
         }
