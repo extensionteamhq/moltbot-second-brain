@@ -52,14 +52,14 @@ export default function Header() {
         {/* Logo */}
         <Link 
           href="/" 
-          className="flex items-center gap-2 text-lg font-semibold hover:text-[var(--accent)] transition mr-auto"
+          className="flex items-center gap-2 text-lg font-semibold hover:text-[var(--accent)] transition"
         >
           <span className="text-xl">🧠</span>
           <span className="hidden sm:inline">Second Brain</span>
         </Link>
 
-        {/* Navigation - Center */}
-        <nav className="flex items-center gap-1">
+        {/* Navigation - Far Right */}
+        <nav className="flex items-center gap-1 ml-auto">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -77,9 +77,6 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-
-        {/* Spacer for balance */}
-        <div className="ml-auto w-[100px] hidden sm:block" />
       </div>
     </header>
   );
