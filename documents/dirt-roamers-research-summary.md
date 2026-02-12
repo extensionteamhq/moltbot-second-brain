@@ -1,7 +1,11 @@
 ---
-title: "Dirt Roamers: Research Summary"
-tags: [dirt-roamers, research, notes]
-date: 2026-02-12
+title: 'Dirt Roamers: Research Summary'
+tags:
+  - dirt-roamers
+  - research
+  - notes
+created: '2026-02-07'
+updated: '2026-02-12'
 ---
 
 # Dirt Roamers Research Summary

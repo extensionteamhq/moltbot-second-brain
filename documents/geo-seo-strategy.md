@@ -1,7 +1,10 @@
 ---
-title: "Marketing: GEO - Generative Engine Optimization"
-tags: [marketing, notes]
-date: 2026-01-30
+title: 'Marketing: GEO - Generative Engine Optimization'
+tags:
+  - marketing
+  - notes
+created: '2026-01-31'
+updated: '2026-02-07'
 ---
 
 # GEO - Generative Engine Optimization

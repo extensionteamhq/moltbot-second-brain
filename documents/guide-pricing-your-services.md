@@ -1,7 +1,12 @@
 ---
-title: "How to Price Your Services: A Guide for New Service Providers"
-tags: [guides, consulting, freelance, pricing]
-date: 2026-02-07
+title: 'How to Price Your Services: A Guide for New Service Providers'
+tags:
+  - guides
+  - consulting
+  - freelance
+  - pricing
+created: '2026-02-07'
+updated: '2026-02-07'
 ---
 
 # How to Price Your Services: A Guide for New Service Providers

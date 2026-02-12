@@ -1,7 +1,10 @@
 ---
-title: "Molly: Second Brain Setup"
-tags: [system, notes]
-date: 2026-01-31
+title: 'Molly: Second Brain Setup'
+tags:
+  - system
+  - notes
+created: '2026-01-31'
+updated: '2026-02-07'
 ---
 
 # Second Brain Setup Complete 🧠

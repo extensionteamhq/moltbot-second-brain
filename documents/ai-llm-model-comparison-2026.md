@@ -1,7 +1,14 @@
 ---
-title: "AI LLM Model Comparison & Pricing Guide (2026)"
-tags: [ai, llm, api, pricing, research, tools]
-date: 2026-02-11
+title: AI LLM Model Comparison & Pricing Guide (2026)
+tags:
+  - ai
+  - llm
+  - api
+  - pricing
+  - research
+  - tools
+created: '2026-02-11'
+updated: '2026-02-11'
 ---
 
 # AI LLM Model Comparison & Pricing Guide (2026)

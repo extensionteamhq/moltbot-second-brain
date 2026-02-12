@@ -1,7 +1,11 @@
 ---
-title: "Dirt Roamers: YouTube Intro Script - Land Flipping 101"
-tags: [dirt-roamers, script, sop]
-date: 2026-01-31
+title: 'Dirt Roamers: YouTube Intro Script - Land Flipping 101'
+tags:
+  - dirt-roamers
+  - script
+  - sop
+created: '2026-01-31'
+updated: '2026-02-07'
 ---
 
 # YouTube Intro Script: Land Flipping 101

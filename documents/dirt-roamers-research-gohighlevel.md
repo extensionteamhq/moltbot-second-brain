@@ -1,7 +1,12 @@
 ---
-title: "Dirt Roamers: GoHighLevel Land Investor Setup"
-tags: [dirt-roamers, research, tools, gohighlevel]
-date: 2026-02-06
+title: 'Dirt Roamers: GoHighLevel Land Investor Setup'
+tags:
+  - dirt-roamers
+  - research
+  - tools
+  - gohighlevel
+created: '2026-02-07'
+updated: '2026-02-07'
 ---
 
 # GoHighLevel Setup for Land Investors

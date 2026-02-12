@@ -1,7 +1,11 @@
 ---
-title: "Marketing: Lead Magnet - Brand Story Blueprint Workbook"
-tags: [marketing, template, guide]
-date: 2026-02-02
+title: 'Marketing: Lead Magnet - Brand Story Blueprint Workbook'
+tags:
+  - marketing
+  - template
+  - guide
+created: '2026-02-07'
+updated: '2026-02-07'
 ---
 
 # The Brand Story Blueprint

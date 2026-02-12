@@ -1,7 +1,10 @@
 ---
-title: "Marketing: Affiliate Links Master List"
-tags: [marketing, notes]
-date: 2026-02-02
+title: 'Marketing: Affiliate Links Master List'
+tags:
+  - marketing
+  - notes
+created: '2026-02-02'
+updated: '2026-02-07'
 ---
 
 # Affiliate Links Master List

@@ -1,7 +1,13 @@
 ---
-title: "Dirt Roamers: Buyer Financing Strategies"
-tags: [dirt-roamers, seller-financing, land-flipping, real-estate, exit-strategy]
-date: 2026-02-12
+title: 'Dirt Roamers: Buyer Financing Strategies'
+tags:
+  - dirt-roamers
+  - seller-financing
+  - land-flipping
+  - real-estate
+  - exit-strategy
+created: '2026-02-12'
+updated: '2026-02-12'
 ---
 
 # Buyer Financing Strategies for Land Sales

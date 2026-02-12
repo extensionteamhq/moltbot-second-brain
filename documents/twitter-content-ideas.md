@@ -1,7 +1,11 @@
 ---
-title: "Mr Mateo Moore: X/Twitter Content Ideas"
-tags: [mr-mateo-moore, social-media, ideas]
-date: 2026-01-30
+title: 'Mr Mateo Moore: X/Twitter Content Ideas'
+tags:
+  - mr-mateo-moore
+  - social-media
+  - ideas
+created: '2026-01-31'
+updated: '2026-02-07'
 ---
 
 # X/Twitter Content Ideas

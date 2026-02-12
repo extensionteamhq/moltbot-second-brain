@@ -1,7 +1,11 @@
 ---
-title: "Dirt Roamers: Growth Market Data Sources"
-tags: [dirt-roamers, research, tools]
-date: 2026-02-06
+title: 'Dirt Roamers: Growth Market Data Sources'
+tags:
+  - dirt-roamers
+  - research
+  - tools
+created: '2026-02-07'
+updated: '2026-02-07'
 ---
 
 # Growth Market Data Sources — Research

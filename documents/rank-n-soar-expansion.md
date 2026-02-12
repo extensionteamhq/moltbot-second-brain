@@ -1,7 +1,10 @@
 ---
-title: "Rank-n-Soar: Expansion Ideas"
-tags: [rank-n-soar, notes]
-date: 2026-01-31
+title: 'Rank-n-Soar: Expansion Ideas'
+tags:
+  - rank-n-soar
+  - notes
+created: '2026-01-31'
+updated: '2026-02-07'
 ---
 
 # Rank-n-Soar — Expansion Ideas

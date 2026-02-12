@@ -1,7 +1,13 @@
 ---
-title: "AI Cold Calling Solutions for Dirt Roamers"
-tags: [dirt-roamers, ai, cold-calling, land-investing, research]
-date: 2026-02-10
+title: AI Cold Calling Solutions for Dirt Roamers
+tags:
+  - dirt-roamers
+  - ai
+  - cold-calling
+  - land-investing
+  - research
+created: '2026-02-10'
+updated: '2026-02-10'
 ---
 
 # AI Cold Calling Solutions for Dirt Roamers Land Business

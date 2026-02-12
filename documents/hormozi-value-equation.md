@@ -1,7 +1,10 @@
 ---
-title: "Marketing: Hormozi Value Equation"
-tags: [marketing, framework]
-date: 2026-01-31
+title: 'Marketing: Hormozi Value Equation'
+tags:
+  - marketing
+  - framework
+created: '2026-01-31'
+updated: '2026-02-07'
 ---
 
 # Alex Hormozi's Value Equation

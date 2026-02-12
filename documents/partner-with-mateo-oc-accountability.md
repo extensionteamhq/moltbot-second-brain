@@ -1,7 +1,11 @@
 ---
-title: "Partner With Mateo: OC Weekly Accountability Call Guide"
-tags: [partner-with-mateo, guide, template]
-date: 2026-02-02
+title: 'Partner With Mateo: OC Weekly Accountability Call Guide'
+tags:
+  - partner-with-mateo
+  - guide
+  - template
+created: '2026-02-07'
+updated: '2026-02-07'
 ---
 
 # OC Wednesday Weekly Accountability Call

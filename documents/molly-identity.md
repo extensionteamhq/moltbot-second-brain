@@ -1,7 +1,10 @@
 ---
-title: "Molly: IDENTITY.md"
-tags: [system, notes]
-date: 2026-02-12
+title: 'Molly: IDENTITY.md'
+tags:
+  - system
+  - notes
+created: '2026-02-07'
+updated: '2026-02-12'
 ---
 
 # IDENTITY.md - Who Am I?

@@ -1,7 +1,10 @@
 ---
-title: "Anchor & Staff: SOP - Accounting & Finance"
-tags: [anchor-staff, sop]
-date: 2026-02-02
+title: 'Anchor & Staff: SOP - Accounting & Finance'
+tags:
+  - anchor-staff
+  - sop
+created: '2026-02-02'
+updated: '2026-02-07'
 ---
 
 # SOP: Accounting & Finance Process

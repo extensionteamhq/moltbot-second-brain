@@ -1,7 +1,10 @@
 ---
-title: "Anchor & Staff: Brand Voice Style Guide"
-tags: [anchor-staff, guide]
-date: 2026-02-02
+title: 'Anchor & Staff: Brand Voice Style Guide'
+tags:
+  - anchor-staff
+  - guide
+created: '2026-02-02'
+updated: '2026-02-07'
 ---
 
 # How to Create a Brand Voice Style Guide

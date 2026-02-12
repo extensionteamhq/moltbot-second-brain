@@ -1,7 +1,12 @@
 ---
-title: "Dirt Roamers 30-Day Social Media Content Calendar"
-tags: [dirt-roamers, social-media, content, marketing]
-date: 2026-02-12
+title: Dirt Roamers 30-Day Social Media Content Calendar
+tags:
+  - dirt-roamers
+  - social-media
+  - content
+  - marketing
+created: '2026-02-12'
+updated: '2026-02-12'
 ---
 
 # Dirt Roamers 30-Day Social Media Content Calendar

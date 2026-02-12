@@ -15,7 +15,9 @@ const DOCUMENTS_DIR = path.join(process.cwd(), 'documents');
  * @property {string} title - Document title from frontmatter
  * @property {string} content - Raw markdown content (without frontmatter)
  * @property {string[]} tags - Tags for categorization and filtering
- * @property {string} date - ISO date string for sorting and display
+ * @property {string} date - ISO date string for sorting and display (fallback for created)
+ * @property {string} created - ISO date string when document was created
+ * @property {string} updated - ISO date string when document was last updated
  * @property {string} excerpt - Short preview of content (first 150 chars)
  */
 export interface Document {
@@ -24,6 +26,8 @@ export interface Document {
   content: string;
   tags: string[];
   date: string;
+  created: string;
+  updated: string;
   excerpt: string;
 }
 
@@ -83,16 +87,24 @@ Happy organizing! 🧠
     const filePath = path.join(DOCUMENTS_DIR, filename);
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContent);
+    const stats = fs.statSync(filePath);
     
     const slug = filename.replace('.md', '');
     const excerpt = content.slice(0, 150).replace(/[#*`]/g, '').trim() + '...';
+    
+    // Date priority: created > date > file birthtime
+    const created = data.created || data.date || stats.birthtime.toISOString().split('T')[0];
+    // Updated priority: updated > file mtime
+    const updated = data.updated || stats.mtime.toISOString().split('T')[0];
     
     return {
       slug,
       title: data.title || slug,
       content,
       tags: data.tags || ['notes'],
-      date: data.date || new Date().toISOString().split('T')[0],
+      date: data.date || created, // Keep date for backward compatibility
+      created,
+      updated,
       excerpt,
     };
   });

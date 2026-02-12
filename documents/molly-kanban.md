@@ -1,7 +1,11 @@
 ---
-title: "Molly: KANBAN"
-tags: [system, notes, tasks]
-date: 2026-02-12
+title: 'Molly: KANBAN'
+tags:
+  - system
+  - notes
+  - tasks
+created: '2026-02-12'
+updated: '2026-02-12'
 ---
 
 # Projects Kanban Board

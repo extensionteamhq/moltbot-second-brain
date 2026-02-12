@@ -1,7 +1,10 @@
 ---
-title: "Molly: TOOLS.md"
-tags: [system, notes]
-date: 2026-02-12
+title: 'Molly: TOOLS.md'
+tags:
+  - system
+  - notes
+created: '2026-02-07'
+updated: '2026-02-12'
 ---
 
 # TOOLS.md - Local Notes

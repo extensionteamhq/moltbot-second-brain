@@ -1,7 +1,10 @@
 ---
-title: "Anchor & Staff: Media Kit & Press Package"
-tags: [anchor-staff, guide]
-date: 2026-02-02
+title: 'Anchor & Staff: Media Kit & Press Package'
+tags:
+  - anchor-staff
+  - guide
+created: '2026-02-02'
+updated: '2026-02-07'
 ---
 
 # How to Create a Media Kit

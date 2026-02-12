@@ -1,7 +1,11 @@
 ---
-title: "Marketing: Miami Reconnect Email Draft"
-tags: [marketing, email-sequence, template]
-date: 2026-02-01
+title: 'Marketing: Miami Reconnect Email Draft'
+tags:
+  - marketing
+  - email-sequence
+  - template
+created: '2026-02-07'
+updated: '2026-02-07'
 ---
 
 # Miami Reconnect Email Draft

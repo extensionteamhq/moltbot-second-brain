@@ -1,7 +1,10 @@
 ---
-title: "Marketing: StoryBrand Framework"
-tags: [marketing, framework]
-date: 2026-01-31
+title: 'Marketing: StoryBrand Framework'
+tags:
+  - marketing
+  - framework
+created: '2026-01-31'
+updated: '2026-02-07'
 ---
 
 # The StoryBrand Framework

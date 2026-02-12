@@ -1,7 +1,13 @@
 ---
-title: "Land Subdivision Guide for Investors"
-tags: [dirt-roamers, land-investing, subdivision, real-estate, value-add]
-date: 2026-02-11
+title: Land Subdivision Guide for Investors
+tags:
+  - dirt-roamers
+  - land-investing
+  - subdivision
+  - real-estate
+  - value-add
+created: '2026-02-11'
+updated: '2026-02-11'
 ---
 
 # Land Subdivision Guide for Investors

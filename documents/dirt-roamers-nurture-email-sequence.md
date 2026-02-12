@@ -1,7 +1,10 @@
 ---
-title: "Dirt Roamers: Nurture Email Sequence"
-tags: [dirt-roamers, email-sequence]
-date: 2026-02-05
+title: 'Dirt Roamers: Nurture Email Sequence'
+tags:
+  - dirt-roamers
+  - email-sequence
+created: '2026-02-05'
+updated: '2026-02-07'
 ---
 
 # Dirt Roamers Nurture Email Sequence

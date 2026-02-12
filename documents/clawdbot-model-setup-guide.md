@@ -1,7 +1,12 @@
 ---
-title: "Clawdbot: Model Provider Setup Guide"
-tags: [system, clawdbot, ai-models, documentation]
-date: 2026-02-11
+title: 'Clawdbot: Model Provider Setup Guide'
+tags:
+  - system
+  - clawdbot
+  - ai-models
+  - documentation
+created: '2026-02-11'
+updated: '2026-02-11'
 ---
 
 # Model Provider Setup Guide
