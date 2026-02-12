@@ -6,8 +6,9 @@ tags:
   - land-flipping
   - real-estate
   - exit-strategy
+  - auto
 created: '2026-02-12T07:05:27+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+updated: '2026-02-12T18:17:22+00:00'
 ---
 
 # Buyer Financing Strategies for Land Sales
