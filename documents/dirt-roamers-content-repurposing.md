@@ -8,7 +8,7 @@ tags:
   - ai
   - requested
 created: 2026-02-12T21:00:00+00:00
-updated: 2026-02-12T21:00:00+00:00
+updated: 2026-02-12T22:38:16+00:00
 ---
 
 # Dirt Roamers: Content Repurposing SOPs & AI Automation
@@ -22,13 +22,48 @@ updated: 2026-02-12T21:00:00+00:00
 ### Objective
 Expand LinkedIn posts from the 30-day calendar into 800-1200 word SEO-optimized articles for dirtroamers.com
 
+### LinkedIn API Integration Strategy
+
+**What We CAN Do with LinkedIn API:**
+- ✅ Publish posts to personal profile or Dirt Roamers organization page
+- ✅ Pull analytics on posts we've published (engagement, impressions, clicks)
+- ✅ Track performance metrics to identify top performers
+
+**What We CAN'T Do:**
+- ❌ Search for public posts across LinkedIn platform
+- ❌ Retrieve arbitrary posts from other users programmatically
+- ❌ Access feed data or trending content via API
+
+**Workaround Strategy:**
+1. **Publish via API** → Post content from 30-day calendar to LinkedIn automatically
+2. **Track via API** → Pull engagement metrics weekly to identify winners
+3. **Manual research** → Mateo finds high-performing industry posts to learn from
+4. **Web search** → AI searches for trending land investing articles/topics to repurpose or identify content gaps
+
 ### Manual SOP
 
-**Step 1: Select High-Performing LinkedIn Posts**
-- Posts with 50+ engagements (likes, comments, shares)
+**Step 1: Identify Content for Blog Expansion**
+
+**Option A: From Our Own LinkedIn Posts (API-driven)**
+- Weekly: Pull analytics on posts published in last 7-30 days
+- Filter for posts with 50+ engagements (likes, comments, shares)
 - Topics that sparked questions/discussions in comments
 - Educational posts with "save for later" signals
-- Review weekly and select 2-3 posts to expand
+- Select 2-3 top performers to expand
+
+**Option B: From Industry Research (Manual + AI)**
+- Mateo manually identifies high-performing competitor posts in land investing space
+- AI searches web for trending articles on land flipping, seller financing, homesteading
+- Identify content gaps: topics being discussed but not well-covered
+- Select topics with proven audience interest
+
+**Manual Research Workflow (Option B):**
+1. **Weekly LinkedIn Scan:** Mateo browses LinkedIn feed for posts with 100+ engagements in land investing niche
+2. **Note Topics:** Save post URLs or copy text into content ideas doc
+3. **Share with AI:** Paste high-performing post examples to AI for analysis
+4. **AI Analysis:** Extract what made it resonate (hook, structure, value prop, CTA)
+5. **Create Our Version:** Use insights to craft original Dirt Roamers content (not copying, but learning from what works)
+6. **Web Search Supplement:** AI searches for related articles to add depth/data
 
 **Step 2: Research & Expand**
 - Add data, statistics, case studies
@@ -59,27 +94,54 @@ Expand LinkedIn posts from the 30-day calendar into 800-1200 word SEO-optimized 
 ### AI Automation Strategy
 
 **Tools:**
-- **Claude/ChatGPT** — Content expansion
-- **Jasper/Copy.ai** — SEO optimization
+- **LinkedIn API** — Post publishing + analytics retrieval (requires OAuth app setup)
+- **Claude/ChatGPT** — Content expansion + trend research
+- **Brave Search API** — Web search for trending articles/topics
+- **Jasper/Copy.ai** — SEO optimization (optional)
 - **Frase/Surfer SEO** — Keyword research & content scoring
 - **Canva** — Featured image generation
 - **Make/Zapier** — Workflow automation
 
-**Automation Workflow:**
+**Automation Workflow (API-Powered):**
 
-1. **Trigger:** Weekly cron job or manual selection
-2. **Input:** LinkedIn post URL or text
+**Phase 1: Publishing & Tracking**
+1. **Trigger:** New post from 30-day calendar ready to publish
+2. **Action:** LinkedIn API publishes post to personal/organization page
+3. **Schedule:** Daily posts automated via LinkedIn API
+4. **Tracking:** Weekly cron pulls analytics (engagement, impressions, clicks) via LinkedIn API
+5. **Filter:** Identify posts with 50+ engagements
+
+**Phase 2: Content Discovery**
+1. **Trigger:** Weekly content research cron
+2. **Web Search:** AI searches for:
+   - "land investing trends 2026"
+   - "seller financing strategies land"
+   - "how to sell inherited land"
+   - "land flipping success stories"
+3. **Output:** Top 10 trending articles/topics
+4. **Review:** Mateo selects topics with content gaps or proven interest
+
+**Phase 3: Blog Expansion**
+1. **Trigger:** High-performing post identified OR trending topic selected
+2. **Input:** Post text + engagement data OR trending article URL
 3. **Process:**
-   - AI reads post + engagement data
+   - AI reads post/article
    - Expands into 800-1200 word article
    - Suggests primary/secondary keywords
    - Generates SEO title + meta description
    - Creates outline with H2/H3 structure
    - Adds relevant statistics/data (web search)
    - Suggests internal link opportunities
+   - Applies Dirt Roamers brand voice (Sam Elliott test)
 4. **Human Review:** Edit for brand voice, accuracy, add personal touches
 5. **Output:** Draft published to CMS (WordPress API)
-6. **Post-Publish:** Auto-share on social, add to newsletter queue
+6. **Post-Publish:** Auto-share on LinkedIn (via API), add to newsletter queue
+
+**LinkedIn API Setup Requirements:**
+- Register LinkedIn Developer app
+- OAuth 2.0 authentication
+- Request scopes: `w_member_social` (publish), `r_organization_social` (analytics)
+- Approval process may take 1-2 weeks
 
 **Estimated Time Savings:** 70% (2 hours → 30 minutes per article)
 
@@ -368,9 +430,18 @@ Document closed deals as social proof to attract more sellers and build credibil
 
 ### Content Creation & Management
 - **AI Writing:** Claude/ChatGPT (API access for automation)
+- **Web Search:** Brave Search API (trend discovery, content research)
 - **SEO Tools:** Frase, Surfer SEO, Ahrefs
 - **CMS:** WordPress (blog) + GoHighLevel (landing pages)
 - **Email:** GoHighLevel (CRM + sequences)
+
+### Social Media & Publishing
+- **LinkedIn API** — Post publishing + analytics (requires developer app registration)
+  - Scopes needed: `w_member_social`, `r_organization_social`
+  - OAuth 2.0 authentication
+  - 1-2 week approval process
+- **Buffer/Hootsuite** — Multi-platform scheduling (alternative/supplement to direct API)
+- **Metricool** — Cross-platform analytics
 
 ### Video Production
 - **AI Video:** Runway, Pictory, Descript
@@ -385,10 +456,6 @@ Document closed deals as social proof to attract more sellers and build credibil
 ### Automation & Workflows
 - **Make (Integromat)** — Visual workflow builder, powerful for complex automations
 - **Zapier** — Simpler automations, more integrations
-
-### Social Media Management
-- **Buffer/Hootsuite** — Multi-platform scheduling
-- **Metricool** — Analytics across platforms
 
 ---
 
