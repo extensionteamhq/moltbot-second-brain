@@ -113,9 +113,18 @@ function getTagCategories(tags: string[]): { category: string | null; types: str
 }
 
 /**
- * Format date as YYYY-MM-DD HH:MM ET
+ * Format date as YYYY-MM-DD (date only) or YYYY-MM-DD HH:MM ET (with time)
  */
 function formatDateTime(dateStr: string): string {
+  // Check if dateStr includes time info (has 'T' or space with time)
+  const hasTime = dateStr.includes('T') || /\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(dateStr);
+  
+  if (!hasTime) {
+    // Just a date (YYYY-MM-DD) - return as-is to avoid timezone issues
+    return dateStr;
+  }
+  
+  // Has time - parse and format with ET timezone
   const date = new Date(dateStr);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
