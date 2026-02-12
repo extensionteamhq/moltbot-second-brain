@@ -1,12 +1,12 @@
 ---
 title: "Dirt Roamers: Research Summary"
 tags: [dirt-roamers, research, notes]
-date: 2026-02-06
+date: 2026-02-12
 ---
 
 # Dirt Roamers Research Summary
 
-*Completed: February 6, 2026 (2am ET research window)*
+*Last Updated: February 12, 2026 (2am ET research window)*
 
 ---
 
@@ -19,6 +19,13 @@ date: 2026-02-06
 | 3 | County Records Solutions | `03-county-records-solutions.md` | ✅ Complete |
 | 4 | Skip Tracing Alternatives | `04-skip-tracing-alternatives.md` | ✅ Complete |
 | 5 | Growth Market Data Sources | `05-growth-market-data-sources.md` | ✅ Complete |
+| 6 | GoHighLevel Setup Guide | `06-gohighlevel-land-investor-setup.md` | ✅ Complete |
+| 7 | Land Listing/Disposition Platforms | `07-land-listing-platforms.md` | ✅ Complete |
+| 8 | Outreach Scripts & VA Hiring | `08-outreach-scripts-va-hiring.md` | ✅ Complete |
+| 9 | Due Diligence Checklist | `09-due-diligence-checklist.md` | ✅ Complete |
+| 10 | Closing Options Guide | `10-closing-options-guide.md` | ✅ Complete |
+| 11 | Land Subdivision Guide | `11-subdivision-guide.md` | ✅ Complete |
+| 12 | Buyer Financing Strategies | `12-buyer-financing-strategies.md` | ✅ Complete |
 
 ---
 
@@ -54,6 +61,49 @@ date: 2026-02-06
 - **Zillow Research** — Housing trends (free)
 - **Redfin Data Center** — Weekly market pulse (free)
 - **IRS Migration Data** — County flows (free)
+
+### Buyer Financing Strategies 💰
+*Added Feb 12, 2026*
+
+**Seller financing = sell at 100-120% MV + collect 8-12% interest**
+
+Key to making this work safely:
+
+**Optimal Structure:**
+| Component | Recommended | Why |
+|-----------|-------------|-----|
+| Down Payment | 20-30% | Buyer has skin in game, covers your costs |
+| Interest Rate | 10% | Standard for land, justified vs banks |
+| Amortization | 20-25 years | Lower payments = more buyers |
+| Balloon | 3-7 years | Limits exposure, forces refinance/sale |
+
+**Document Types:**
+- **Land Contract** (smaller deals): You keep title until paid off, easier to reclaim
+- **Deed of Trust** (larger deals): Buyer gets title, you get lien + power of sale
+
+**Protection Checklist:**
+✅ 20-30% down minimum
+✅ Balloon payment (3-7 years)
+✅ Power of sale clause (non-judicial foreclosure)
+✅ Insurance requirement (you as loss payee)
+✅ Due-on-sale clause
+✅ Property tax verification annually
+
+**Example Deal:**
+- Buy 20 acres for $80K (financed at 80% = $64K note)
+- Sell for $120K with 25% down = $30K
+- Finance $90K at 11%, 7-year balloon
+- Monthly: $866 income - $520 to your seller = **$346/mo net**
+- Balloon year 7: Collect $82K, pay off $35K = **$47K net**
+- **Total profit: ~$90K on $16K invested**
+
+**State foreclosure timelines (Mateo's markets):**
+- GA: ~45 days (fastest)
+- AL, TN: ~90 days
+- MT, NC: ~120-150 days
+- FL, SC: 6-12 months (judicial)
+
+**When to use:** Buyer can't get bank financing, you can command 100-120% MV, and higher total return justifies longer exit.
 
 ---
 
