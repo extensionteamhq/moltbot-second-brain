@@ -4,11 +4,15 @@ tags:
   - anchor-staff
   - guide
 created: '2026-02-02T14:29:01+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+updated: '2026-02-13T13:51:00+00:00'
+related:
+  - anchor-staff-brand-voice-intake-form
 ---
 
 # How to Create a Brand Voice Style Guide
 ## A Complete Framework for Defining How Your Brand Communicates
+
+> **Related Tool:** Use the [Brand Voice Intake Form](/?doc=anchor-staff-brand-voice-intake-form) to collect this information from clients systematically.
 
 ### What Is a Brand Voice Style Guide?
 
