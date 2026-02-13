@@ -2,7 +2,7 @@
 title: "Clawdbot Troubleshooting & Recovery SOP"
 tags: [clawdbot, sop, troubleshooting, ssh, recovery, system, requested]
 created: 2026-02-13T15:45:00+00:00
-updated: 2026-02-13T15:45:00+00:00
+updated: 2026-02-13T15:50:00+00:00
 ---
 
 # Clawdbot Troubleshooting & Recovery SOP
@@ -217,6 +217,46 @@ After any fix:
 | `~/clawd/` | Workspace (memory, docs, projects) |
 | `~/clawd/MEMORY.md` | Long-term memory |
 | `~/clawd/HEARTBEAT.md` | Heartbeat config & quick reference |
+
+---
+
+## Session Backups
+
+**Automatic backups run daily at 3 AM ET** (8 AM UTC).
+
+Backups stored in: `~/clawd/backups/`
+
+### Manual Backup
+
+```bash
+~/clawd/scripts/backup-sessions.sh
+```
+
+### List Available Backups
+
+```bash
+ls -lht ~/clawd/backups/sessions_*.tar.gz
+```
+
+### Restore from Backup
+
+```bash
+~/clawd/scripts/restore-sessions.sh ~/clawd/backups/sessions_2026-02-13_1500.tar.gz
+```
+
+**What restore does:**
+1. Stops the gateway
+2. Creates a safety backup of current (corrupted) sessions
+3. Restores from your selected backup
+4. Restarts the gateway
+
+After restore, send `/new` via Telegram to start fresh.
+
+### Backup Retention
+
+- Keeps last **7 days** of backups
+- Older backups are automatically deleted
+- Check backup log: `cat ~/clawd/backups/backup.log`
 
 ---
 
