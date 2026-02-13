@@ -1,10 +1,7 @@
 ---
-title: 'Molly: MEMORY.md'
-tags:
-  - system
-  - notes
-created: '2026-02-07T19:29:15+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+title: "Molly: MEMORY.md"
+tags: [system, notes]
+date: 2026-02-13
 ---
 
 # MEMORY.md — Long-Term Memory
@@ -127,6 +124,12 @@ updated: '2026-02-12T18:15:00+00:00'
    - Fallback: .env file
 
 4. **config.patch merges, doesn't delete** — Use null values or config.apply to remove keys
+
+5. **Second brain kanban uses JSON, not markdown** (Learned 2026-02-12)
+   - CORRECT: Edit `projects/second-brain/data/kanban.json` → push
+   - WRONG: Edit `projects/KANBAN.md` (reference only, doesn't sync)
+   - Made this mistake once - pushed to markdown instead of JSON
+   - Mateo said "make sure this doesn't happen again"
 
 ### Auth Architecture
 - **Primary:** `~/.clawdbot/agents/main/agent/auth-profiles.json`

@@ -1,10 +1,7 @@
 ---
-title: 'Molly: IDENTITY.md'
-tags:
-  - system
-  - notes
-created: '2026-02-07T19:29:15+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+title: "Molly: IDENTITY.md"
+tags: [system, notes]
+date: 2026-02-13
 ---
 
 # IDENTITY.md - Who Am I?

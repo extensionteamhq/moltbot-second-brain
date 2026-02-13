@@ -1,10 +1,7 @@
 ---
-title: 'Molly: TOOLS.md'
-tags:
-  - system
-  - notes
-created: '2026-02-07T20:14:04+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+title: "Molly: TOOLS.md"
+tags: [system, notes]
+date: 2026-02-13
 ---
 
 # TOOLS.md - Local Notes
@@ -117,10 +114,16 @@ This email was crafted with love by Molly, Mateo's AI assistant, at his directio
 
 **ALWAYS sync generated files to second-brain and push to GitHub.**
 
+### Automated Nightly Sync (Midnight ET)
+- Daily journal (conversation history)
+- Core workspace files: AGENTS.md, IDENTITY.md, MEMORY.md, SOUL.md, USER.md, TOOLS.md
+- **KANBAN.md** → Keep task columns updated in real-time throughout the day
+
+### Ad-Hoc Content Sync
 When creating research docs, outlines, guides, or any substantial content:
 1. Save to appropriate project folder (e.g., `projects/dirt-roamers/research/`)
 2. Copy to `projects/second-brain/documents/` with frontmatter (title, tags, date)
-3. Git add, commit, and push
+3. Git add, commit, and push immediately
 
 **Frontmatter template:**
 ```yaml
@@ -130,6 +133,13 @@ tags: [relevant, tags, here]
 date: YYYY-MM-DD
 ---
 ```
+
+**KANBAN Updates:**
+- **CRITICAL:** Second brain reads from `projects/second-brain/data/kanban.json` (NOT KANBAN.md)
+- To add/update tasks: Edit `data/kanban.json` directly, then git push
+- When I move tasks between columns (Molly's Tasks → Research & Plan → Implementing → Done)
+- Push updates immediately so Mateo sees current status in second brain
+- Workspace `projects/KANBAN.md` is for reference only - does NOT sync to second brain
 
 Vercel auto-deploys after push. This keeps Mateo's second-brain site current with all research and documentation.
 
