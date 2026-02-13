@@ -1,6 +1,6 @@
 ---
 title: "Clawdbot Troubleshooting & Recovery SOP"
-tags: [clawdbot, sop, troubleshooting, ssh, recovery, requested]
+tags: [clawdbot, sop, troubleshooting, ssh, recovery, system, requested]
 created: 2026-02-13T15:45:00+00:00
 updated: 2026-02-13T15:45:00+00:00
 ---
