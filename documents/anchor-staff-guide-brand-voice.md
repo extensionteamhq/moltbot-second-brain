@@ -5,15 +5,18 @@ tags:
   - guide
   - requested
 created: '2026-02-02T14:29:01+00:00'
-updated: '2026-02-13T14:19:00+00:00'
+updated: '2026-02-13T16:10:00+00:00'
 related:
-  - anchor-staff-brand-voice-intake-form
+  - anchor-staff-guide-brand-visual
+  - brand-voice-intake-questionnaire
 ---
 
 # How to Create a Brand Voice Style Guide
 ## A Complete Framework for Defining How Your Brand Communicates
 
-> **Related Tool:** Use the [Brand Voice Intake Form](/?doc=anchor-staff-brand-voice-intake-form) to collect this information from clients systematically.
+> **📋 Client Intake:** Use the [Brand Voice Intake Questionnaire](/?doc=brand-voice-intake-questionnaire) to collect this information from clients systematically.
+>
+> **🎨 Next Step:** After completing the Brand Voice Style Guide, use it to inform the [Brand Visual Style Guide](/?doc=anchor-staff-guide-brand-visual). Voice should be developed first as it shapes the visual identity.
 
 ### What Is a Brand Voice Style Guide?
 

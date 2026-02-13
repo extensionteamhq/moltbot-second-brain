@@ -4,11 +4,18 @@ tags:
   - anchor-staff
   - guide
 created: '2026-02-02T14:29:01+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+updated: '2026-02-13T16:10:00+00:00'
+related:
+  - anchor-staff-guide-brand-voice
+  - brand-visual-intake-questionnaire
 ---
 
 # How to Create a Brand Visual Style Guide
 ## A Complete Framework for Defining Your Brand's Look and Feel
+
+> **⚠️ Prerequisite:** Complete the [Brand Voice Style Guide](/?doc=anchor-staff-guide-brand-voice) first. The brand voice and personality traits inform visual design decisions.
+>
+> **📋 Client Intake:** Use the [Brand Visual Intake Questionnaire](/?doc=brand-visual-intake-questionnaire) to collect this information from clients systematically.
 
 ### What Is a Brand Visual Style Guide?
 
