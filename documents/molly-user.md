@@ -1,7 +1,8 @@
 ---
 title: "Molly: USER.md"
 tags: [system, notes]
-date: 2026-02-13
+created: 2026-01-27T00:00:00+00:00
+updated: 2026-02-14T05:00:00+00:00
 ---
 
 # USER.md - About Your Human
@@ -126,14 +127,12 @@ date: 2026-02-13
 - 🤝 **Impact:** Veteran employment opportunities, workforce housing, helping disadvantaged groups
 
 **Measurable Targets:**
-| Metric | Target |
-|--------|--------|
-| Net Worth | $50M |
-| Annual Passive Income | $4M+ |
-| Business Acquisitions | 10-15 companies |
-| Cash Flow per Business | $200K-400K annually |
-| Real Estate Units | 200+ doors |
-| Portfolio Structure | Family office established |
+- Net Worth: $50M
+- Annual Passive Income: $4M+
+- Business Acquisitions: 10-15 companies
+- Cash Flow per Business: $200K-400K annually
+- Real Estate Units: 200+ doors
+- Portfolio Structure: Family office established
 
 **Strategic Focus:**
 - **Primary:** Real estate-adjacent services (landscaping, HVAC, plumbing, roofing, cleaning, pool maintenance, power washing) — local market dominance, recurring customers, AI-resistant
