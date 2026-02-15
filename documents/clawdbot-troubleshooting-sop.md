@@ -2,7 +2,7 @@
 title: "Clawdbot Troubleshooting & Recovery SOP"
 tags: [clawdbot, sop, troubleshooting, ssh, recovery, system, requested]
 created: 2026-02-13T15:45:00+00:00
-updated: 2026-02-13T15:50:00+00:00
+updated: 2026-02-15T19:42:00+00:00
 ---
 
 # Clawdbot Troubleshooting & Recovery SOP
@@ -154,6 +154,65 @@ cat ~/.clawdbot/.env
 # Verify model access
 clawdbot models list --all | grep "yes"
 ```
+
+---
+
+### Issue: Config File Corrupted (clawdbot.json or auth-profiles.json)
+
+If Molly made bad changes to config files and the gateway won't start or behaves incorrectly:
+
+**Check if backups exist:**
+```bash
+# List available backups
+ls -la ~/.clawdbot/*.backup
+ls -la ~/.clawdbot/agents/main/agent/*.backup
+```
+
+**Revert clawdbot.json from backup:**
+```bash
+# Stop gateway first
+clawdbot gateway stop
+
+# Restore from backup
+cp ~/.clawdbot/clawdbot.json.backup ~/.clawdbot/clawdbot.json
+
+# Restart
+clawdbot gateway start
+```
+
+**Revert auth-profiles.json from backup:**
+```bash
+# Stop gateway first
+clawdbot gateway stop
+
+# Restore from backup
+cp ~/.clawdbot/agents/main/agent/auth-profiles.json.backup ~/.clawdbot/agents/main/agent/auth-profiles.json
+
+# Restart
+clawdbot gateway start
+```
+
+**Revert .env from backup:**
+```bash
+cp ~/.clawdbot/.env.backup ~/.clawdbot/.env
+clawdbot gateway restart
+```
+
+**Revert ALL config files at once:**
+```bash
+clawdbot gateway stop
+cp ~/.clawdbot/clawdbot.json.backup ~/.clawdbot/clawdbot.json
+cp ~/.clawdbot/agents/main/agent/auth-profiles.json.backup ~/.clawdbot/agents/main/agent/auth-profiles.json
+cp ~/.clawdbot/.env.backup ~/.clawdbot/.env
+clawdbot gateway start
+```
+
+**Validate JSON before restarting:**
+```bash
+cat ~/.clawdbot/clawdbot.json | jq . > /dev/null && echo "✅ Valid" || echo "❌ Invalid"
+```
+
+**Note:** Molly should ALWAYS create backups before modifying these files. If no `.backup` exists, you may need to manually fix the JSON or recreate the config.
 
 ---
 
