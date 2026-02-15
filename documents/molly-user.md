@@ -1,8 +1,8 @@
 ---
 title: "Molly: USER.md"
 tags: [system, notes]
-created: 2026-01-27T00:00:00+00:00
-updated: 2026-02-14T05:00:00+00:00
+created: 2026-02-15T05:00:00+00:00
+updated: 2026-02-15T05:00:00+00:00
 ---
 
 # USER.md - About Your Human
