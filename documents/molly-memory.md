@@ -1,8 +1,8 @@
 ---
 title: "Molly: MEMORY.md"
 tags: [system, notes]
-created: 2026-02-15T05:00:00+00:00
-updated: 2026-02-15T05:00:00+00:00
+created: 2026-01-27T00:00:00+00:00
+updated: 2026-02-16T05:00:00+00:00
 ---
 
 # MEMORY.md — Long-Term Memory
@@ -131,6 +131,22 @@ updated: 2026-02-15T05:00:00+00:00
    - WRONG: Edit `projects/KANBAN.md` (reference only, doesn't sync)
    - Made this mistake once - pushed to markdown instead of JSON
    - Mateo said "make sure this doesn't happen again"
+
+6. **ALWAYS backup config files before making changes** (Learned 2026-02-15)
+   - **clawdbot.json:** `cp ~/.clawdbot/clawdbot.json ~/.clawdbot/clawdbot.json.backup`
+   - **auth-profiles.json:** `cp ~/.clawdbot/agents/main/agent/auth-profiles.json ~/.clawdbot/agents/main/agent/auth-profiles.json.backup`
+   - **.env:** `cp ~/.clawdbot/.env ~/.clawdbot/.env.backup`
+   - Mateo had to restore from backup after I hosed the config
+   - Do this EVERY TIME before editing any of these files
+
+7. **All API keys must be in BOTH auth-profiles.json AND .env** (Learned 2026-02-15)
+   - auth-profiles.json = primary auth
+   - .env = fallback
+   - Always duplicate keys in both places
+
+8. **All models should have aliases in clawdbot.json** (Learned 2026-02-15)
+   - So they show up in /models command
+   - Add to agents.defaults.models section
 
 ### Auth Architecture
 - **Primary:** `~/.clawdbot/agents/main/agent/auth-profiles.json`
