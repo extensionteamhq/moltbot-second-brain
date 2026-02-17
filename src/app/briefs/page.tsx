@@ -36,20 +36,26 @@ function formatDate(dateStr: string): string {
  * Example: "Daily Brief - February 12, 2026 (Thursday)"
  */
 function formatBriefTitle(dateStr: string): string {
-  // Parse date as local time by adding T12:00:00 to avoid timezone shift issues
-  // "2026-02-16" -> "2026-02-16T12:00:00" (noon, safe from timezone shifts)
-  const dateWithTime = dateStr.includes('T') ? dateStr : `${dateStr}T12:00:00`;
-  const date = new Date(dateWithTime);
-  const options: Intl.DateTimeFormatOptions = { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric',
-    weekday: 'long'
-  };
-  const formatted = new Intl.DateTimeFormat('en-US', options).format(date);
-  const [weekday, ...dateParts] = formatted.split(', ');
-  const dateWithoutWeekday = dateParts.join(', ');
-  return `Daily Brief - ${dateWithoutWeekday} (${weekday})`;
+  // Parse the date parts directly to avoid any timezone issues
+  const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) return `Daily Brief - ${dateStr}`;
+  
+  const [, yearStr, monthStr, dayStr] = match;
+  const year = parseInt(yearStr, 10);
+  const month = parseInt(monthStr, 10) - 1; // JS months are 0-indexed
+  const day = parseInt(dayStr, 10);
+  
+  // Create date using UTC to avoid timezone shifts, then format
+  const date = new Date(Date.UTC(year, month, day, 12, 0, 0));
+  
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                  'July', 'August', 'September', 'October', 'November', 'December'];
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  
+  const weekday = days[date.getUTCDay()];
+  const monthName = months[date.getUTCMonth()];
+  
+  return `Daily Brief - ${monthName} ${day}, ${year} (${weekday})`;
 }
 
 /**
@@ -189,7 +195,7 @@ date: ${selectedBrief.date}
 
         {/* Footer */}
         <div className="p-3 border-t border-[var(--border)] text-xs text-[var(--muted)]">
-          {filteredBriefs.length} brief{filteredBriefs.length !== 1 ? 's' : ''} • v2
+          {filteredBriefs.length} brief{filteredBriefs.length !== 1 ? 's' : ''} • v3
         </div>
       </aside>
 
