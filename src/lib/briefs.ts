@@ -72,4 +72,3 @@ export function getBrief(slug: string): Brief | null {
   const briefs = getBriefs();
   return briefs.find(b => b.slug === slug) || null;
 }
-// Build timestamp: 2026-02-17T12:53:55Z
