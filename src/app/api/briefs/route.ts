@@ -14,5 +14,9 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET() {
   const briefs = getBriefs();
-  return NextResponse.json({ briefs });
+  return NextResponse.json({ briefs }, {
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+    }
+  });
 }

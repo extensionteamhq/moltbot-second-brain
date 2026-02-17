@@ -72,7 +72,7 @@ export default function BriefsPage() {
   const [, startTransition] = useTransition();
 
   useEffect(() => {
-    fetch('/api/briefs')
+    fetch('/api/briefs', { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         setBriefs(data.briefs || []);
