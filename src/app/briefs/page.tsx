@@ -18,7 +18,13 @@ interface Brief {
  * Format date as YYYY-MM-DD
  */
 function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
+  // If already in YYYY-MM-DD format, return as-is
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+  // Parse date as local time by adding T12:00:00 to avoid timezone shift
+  const dateWithTime = dateStr.includes('T') ? dateStr : `${dateStr}T12:00:00`;
+  const date = new Date(dateWithTime);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
@@ -30,9 +36,11 @@ function formatDate(dateStr: string): string {
  * Example: "Daily Brief - February 12, 2026 (Thursday)"
  */
 function formatBriefTitle(dateStr: string): string {
-  const date = new Date(dateStr);
+  // Parse date as local time by adding T12:00:00 to avoid timezone shift issues
+  // "2026-02-16" -> "2026-02-16T12:00:00" (noon, safe from timezone shifts)
+  const dateWithTime = dateStr.includes('T') ? dateStr : `${dateStr}T12:00:00`;
+  const date = new Date(dateWithTime);
   const options: Intl.DateTimeFormatOptions = { 
-    timeZone: 'America/New_York',
     year: 'numeric', 
     month: 'long', 
     day: 'numeric',
