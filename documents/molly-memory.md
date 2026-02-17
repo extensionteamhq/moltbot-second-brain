@@ -1,8 +1,8 @@
 ---
-title: "Molly: MEMORY.md"
+title: "Molly: MEMORY"
 tags: [system, notes]
-created: 2026-01-27T00:00:00+00:00
-updated: 2026-02-16T05:00:00+00:00
+created: 2026-02-17T05:00:00+00:00
+updated: 2026-02-17T05:00:00+00:00
 ---
 
 # MEMORY.md — Long-Term Memory

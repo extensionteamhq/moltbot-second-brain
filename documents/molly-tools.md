@@ -1,8 +1,8 @@
 ---
-title: "Molly: TOOLS.md"
+title: "Molly: TOOLS"
 tags: [system, notes]
-created: 2026-01-27T00:00:00+00:00
-updated: 2026-02-16T05:00:00+00:00
+created: 2026-02-17T05:00:00+00:00
+updated: 2026-02-17T05:00:00+00:00
 ---
 
 # TOOLS.md - Local Notes
@@ -176,9 +176,12 @@ Vercel auto-deploys after push. This keeps Mateo's second-brain site current wit
 
 `models.json` is **auto-generated** by the gateway on restart. It resolves env vars to actual values. Don't edit it directly - changes will be overwritten.
 
-### Model Switching Strategy
+### Model Selection
+See **HEARTBEAT.md → AI Model Selection Matrix** for full decision logic.
 
-- **Simple tasks** → Kimi K2 (cheapest)
-- **Normal work** → Sonnet 4.5 (default)
-- **Complex reasoning** → Opus 4.5
-- **Use Opus when explicitly requested** or for genuinely hard problems
+**Quick Reference:**
+- `kimi` → Simple stuff ($)
+- `sonnet` → Normal work ($$) ← DEFAULT
+- `opus` → Complex thinking ($$$) ← CONFIRM FIRST
+
+**Confirmation Protocol:** Before using Opus or spawning sub-agents, I'll confirm which model and why.
