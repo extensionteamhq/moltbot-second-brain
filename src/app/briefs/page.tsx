@@ -189,7 +189,7 @@ date: ${selectedBrief.date}
 
         {/* Footer */}
         <div className="p-3 border-t border-[var(--border)] text-xs text-[var(--muted)]">
-          {filteredBriefs.length} brief{filteredBriefs.length !== 1 ? 's' : ''}
+          {filteredBriefs.length} brief{filteredBriefs.length !== 1 ? 's' : ''} • v2
         </div>
       </aside>
 
