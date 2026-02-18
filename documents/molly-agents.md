@@ -1,8 +1,7 @@
 ---
-title: "Molly: AGENTS"
+title: "Molly: AGENTS.md"
 tags: [system, notes]
-created: 2026-02-17T05:00:00+00:00
-updated: 2026-02-17T05:00:00+00:00
+date: 2026-02-18
 ---
 
 # AGENTS.md - Your Workspace

@@ -1,8 +1,7 @@
 ---
-title: "Molly: MEMORY"
+title: "Molly: MEMORY.md"
 tags: [system, notes]
-created: 2026-02-17T05:00:00+00:00
-updated: 2026-02-17T05:00:00+00:00
+date: 2026-02-18
 ---
 
 # MEMORY.md — Long-Term Memory
@@ -115,38 +114,13 @@ updated: 2026-02-17T05:00:00+00:00
 
 ### Learned the Hard Way
 1. **Always verify model names** with `clawdbot models list --all` before using
-   - Wrong: `anthropic/claude-sonnet-4` (doesn't exist)
-   - Right: `anthropic/claude-sonnet-4-5` (correct)
-
-2. **models.json is auto-generated** — Don't try to edit it, gateway overwrites on restart
-
+2. **models.json is auto-generated** — Don't try to edit it
 3. **Use auth-profiles.json for API keys** — Not env.vars in clawdbot.json
-   - Benefits: Usage tracking, error monitoring, multi-account support
-   - Fallback: .env file
-
 4. **config.patch merges, doesn't delete** — Use null values or config.apply to remove keys
-
 5. **Second brain kanban uses JSON, not markdown** (Learned 2026-02-12)
-   - CORRECT: Edit `projects/second-brain/data/kanban.json` → push
-   - WRONG: Edit `projects/KANBAN.md` (reference only, doesn't sync)
-   - Made this mistake once - pushed to markdown instead of JSON
-   - Mateo said "make sure this doesn't happen again"
-
 6. **ALWAYS backup config files before making changes** (Learned 2026-02-15)
-   - **clawdbot.json:** `cp ~/.clawdbot/clawdbot.json ~/.clawdbot/clawdbot.json.backup`
-   - **auth-profiles.json:** `cp ~/.clawdbot/agents/main/agent/auth-profiles.json ~/.clawdbot/agents/main/agent/auth-profiles.json.backup`
-   - **.env:** `cp ~/.clawdbot/.env ~/.clawdbot/.env.backup`
-   - Mateo had to restore from backup after I hosed the config
-   - Do this EVERY TIME before editing any of these files
-
 7. **All API keys must be in BOTH auth-profiles.json AND .env** (Learned 2026-02-15)
-   - auth-profiles.json = primary auth
-   - .env = fallback
-   - Always duplicate keys in both places
-
 8. **All models should have aliases in clawdbot.json** (Learned 2026-02-15)
-   - So they show up in /models command
-   - Add to agents.defaults.models section
 
 ### Auth Architecture
 - **Primary:** `~/.clawdbot/agents/main/agent/auth-profiles.json`
@@ -159,19 +133,11 @@ Save money while maintaining quality:
 - Normal work → Sonnet 4.5 ($3/$15) — DEFAULT
 - Complex/requested → Opus 4.5 ($15/$75)
 
-**Rule:** Use Opus **ONLY** when explicitly requested or for genuinely hard problems. Otherwise default to Sonnet 4.5 or Kimi K2 for cost savings.
-
 ### Current Providers
 - Anthropic: Sonnet 4.5, Opus 4.5 ✅
 - xAI: Grok 3, Grok 3 Mini ✅
 - Moonshot: Kimi K2, K2 Turbo ✅
 - OpenAI: GPT-4o (out of budget)
 
-### Other API Keys (Non-AI)
-- **GoHighLevel:** `ghl:dirt-roamers` profile in auth-profiles.json + `GHL_API_KEY` in .env
-  - Location ID: FiYFwHcF6HtPefh7QiAK (Dirt Roamers)
-
 ### Security Rule
 **NEVER put API keys directly in workspace files** (TOOLS.md, MEMORY.md, etc.)
-- Store in: `auth-profiles.json` (primary) + `.env` (fallback)
-- Reference in docs: "Stored securely in auth-profiles.json"

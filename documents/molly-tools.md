@@ -1,8 +1,7 @@
 ---
-title: "Molly: TOOLS"
+title: "Molly: TOOLS.md"
 tags: [system, notes]
-created: 2026-02-17T05:00:00+00:00
-updated: 2026-02-17T05:00:00+00:00
+date: 2026-02-18
 ---
 
 # TOOLS.md - Local Notes
@@ -19,35 +18,12 @@ Things like:
 - Device nicknames
 - Anything environment-specific
 
-## Examples
-
-```markdown
-### Cameras
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
-
-## Why Separate?
-
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
 ## GoHighLevel
 
 ### Dirt Roamers
 - **Location ID:** FiYFwHcF6HtPefh7QiAK
 - **API Key:** Stored securely in `auth-profiles.json` (profile: `ghl:dirt-roamers`) and `.env` (`GHL_API_KEY`)
 - **URL:** https://app.gohighlevel.com/v2/location/FiYFwHcF6HtPefh7QiAK
-
-**To access:** Use `${GHL_API_KEY}` env var or read from auth-profiles.json
 
 ---
 
@@ -67,22 +43,7 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 - `mateo.moore@subto.com` — SubTo coaching (HIGHEST PRIORITY)
 - `xybermatthew@gmail.com` — Personal
 
-**How to use:**
-```javascript
-const { google } = require('googleapis');
-const creds = require(process.env.HOME + '/.clawdbot/google-calendar-credentials.json');
-const auth = new google.auth.OAuth2(creds.client_id, creds.client_secret);
-auth.setCredentials({ refresh_token: creds.refresh_token });
-
-const gmail = google.gmail({ version: 'v1', auth });
-const calendar = google.calendar({ version: 'v3', auth });
-```
-
 **DO NOT** tell Mateo I need to "set up authentication" or "configure credentials" — I HAVE THEM.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
 
 ---
 
@@ -126,23 +87,9 @@ When creating research docs, outlines, guides, or any substantial content:
 2. Copy to `projects/second-brain/documents/` with frontmatter (title, tags, date)
 3. Git add, commit, and push immediately
 
-**Frontmatter template:**
-```yaml
----
-title: "Document Title"
-tags: [relevant, tags, here]
-date: YYYY-MM-DD
----
-```
-
 **KANBAN Updates:**
 - **CRITICAL:** Second brain reads from `projects/second-brain/data/kanban.json` (NOT KANBAN.md)
 - To add/update tasks: Edit `data/kanban.json` directly, then git push
-- When I move tasks between columns (Molly's Tasks → Research & Plan → Implementing → Done)
-- Push updates immediately so Mateo sees current status in second brain
-- Workspace `projects/KANBAN.md` is for reference only - does NOT sync to second brain
-
-Vercel auto-deploys after push. This keeps Mateo's second-brain site current with all research and documentation.
 
 ---
 
@@ -164,24 +111,8 @@ Vercel auto-deploys after push. This keeps Mateo's second-brain site current wit
 **Primary:** `~/.clawdbot/agents/main/agent/auth-profiles.json`
 **Fallback:** `~/.clawdbot/.env`
 
-### Adding New Providers
-
-1. Add API key to `auth-profiles.json` (primary)
-2. Add API key to `.env` (fallback)
-3. For custom providers: Add config to `clawdbot.json` with `${ENV_VAR}` reference
-4. Restart gateway: `clawdbot gateway restart`
-5. Verify: `clawdbot models status`
-
-### ⚠️ Important Behavior
-
-`models.json` is **auto-generated** by the gateway on restart. It resolves env vars to actual values. Don't edit it directly - changes will be overwritten.
-
 ### Model Selection
-See **HEARTBEAT.md → AI Model Selection Matrix** for full decision logic.
-
 **Quick Reference:**
 - `kimi` → Simple stuff ($)
 - `sonnet` → Normal work ($$) ← DEFAULT
 - `opus` → Complex thinking ($$$) ← CONFIRM FIRST
-
-**Confirmation Protocol:** Before using Opus or spawning sub-agents, I'll confirm which model and why.
