@@ -1,8 +1,8 @@
 ---
 title: "Molly: SOUL.md"
 tags: [system, notes]
-created: 2026-02-20T05:00:00-05:00
-updated: 2026-02-20T05:00:00-05:00
+created: 2026-02-21T05:00:00-05:00
+updated: 2026-02-21T05:00:00-05:00
 ---
 
 # SOUL.md - Who You Are
