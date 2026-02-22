@@ -1,8 +1,8 @@
 ---
 title: "Molly: TOOLS.md"
 tags: [system, notes]
-created: 2026-02-21T05:00:00-05:00
-updated: 2026-02-21T05:00:00-05:00
+created: 2026-02-22T05:00:00-05:00
+updated: 2026-02-22T05:00:00-05:00
 ---
 
 # TOOLS.md - Local Notes
@@ -26,6 +26,8 @@ Things like:
 - **API Key:** Stored securely in `auth-profiles.json` (profile: `ghl:dirt-roamers`) and `.env` (`GHL_API_KEY`)
 - **URL:** https://app.gohighlevel.com/v2/location/FiYFwHcF6HtPefh7QiAK
 
+**To access:** Use `${GHL_API_KEY}` env var or read from auth-profiles.json
+
 ---
 
 ## Google API Access (partnerwithmateo@gmail.com)
@@ -46,28 +48,25 @@ Things like:
 
 ---
 
-## Email Settings
+## Second Brain Sync
 
-### Signature (partnerwithmateo@gmail.com)
-Always append this signature when drafting emails for Mateo:
+**ALWAYS sync generated files to second-brain and push to GitHub.**
 
-```
-Cheers,
+### Automated Nightly Sync (Midnight ET)
+- Daily journal (conversation history)
+- Core workspace files: AGENTS.md, IDENTITY.md, MEMORY.md, SOUL.md, USER.md, TOOLS.md
+- **KANBAN.md** → Keep task columns updated in real-time throughout the day
 
-Mateo Moore
-Land Investor | Creative Finance Enthusiast
-partnerwithmateo@gmail.com
-+1 (727) 919-1368
-https://partnerwithmateo.com
+### Ad-Hoc Content Sync
+When creating research docs, outlines, guides, or any substantial content:
+1. Save to appropriate project folder (e.g., `projects/dirt-roamers/research/`)
+2. Copy to `projects/second-brain/documents/` with frontmatter (title, tags, date)
+3. Git add, commit, and push immediately
 
----
-This email was crafted with love by Molly, Mateo's AI assistant, at his direction.
-```
-
-**Notes:**
-- No emojis in email subjects or body (encoding issues)
-- Signature is required on all outgoing emails
-- The "crafted by Molly" note goes after the main signature
+**KANBAN Updates:**
+- **CRITICAL:** Second brain reads from `projects/second-brain/data/kanban.json` (NOT KANBAN.md)
+- To add/update tasks: Edit `data/kanban.json` directly, then git push
+- Workspace `projects/KANBAN.md` is for reference only - does NOT sync to second brain
 
 ---
 
@@ -84,9 +83,16 @@ This email was crafted with love by Molly, Mateo's AI assistant, at his directio
 | Moonshot | Kimi K2, K2 Turbo | $0.60/$2.50 | Cheapest - simple tasks |
 | OpenAI | GPT-4o | $2.50/$10 | Out of budget |
 
+### Auth Architecture (Quick Reference)
+
+**Primary:** `~/.clawdbot/agents/main/agent/auth-profiles.json`
+**Fallback:** `~/.clawdbot/.env`
+
 ### Model Selection
 
 **Quick Reference:**
 - `kimi` → Simple stuff ($)
 - `sonnet` → Normal work ($$) ← DEFAULT
 - `opus` → Complex thinking ($$$) ← CONFIRM FIRST
+
+**Confirmation Protocol:** Before using Opus or spawning sub-agents, I'll confirm which model and why.

@@ -1,8 +1,8 @@
 ---
 title: "Molly: USER.md"
 tags: [system, notes]
-created: 2026-02-21T05:00:00-05:00
-updated: 2026-02-21T05:00:00-05:00
+created: 2026-02-22T05:00:00-05:00
+updated: 2026-02-22T05:00:00-05:00
 ---
 
 # USER.md - About Your Human
@@ -85,18 +85,37 @@ updated: 2026-02-21T05:00:00-05:00
 - Revenue streams: seller financing cash flow, produce/eggs/dairy/meat sales, flowers, honey, agritourism (hunting, camping, RV parks)
 - Secondary business model after enough flips generate capital (or acquire on seller financing)
 
+**Lead Generation Needs:**
+- Data sources for finding land (analytical — areas likely to sell)
+- Skip tracing owners (phone, email)
+- Pulling deeds/mortgages from county records, scraping owner details
+- Multi-touch outreach: calling, texting, email (cheaper than direct mail which had limited success)
+- Eventually: AI cold calling
+
+**Current Tools:**
+- landinsights.co — sourcing + skip tracing (recently downgraded, limited)
+- land.id — supplemental property info
+- Zillow + Joe McCall's Dirt Flippers training/strategies
+
+**Tools Under Consideration:**
+- landportal.com
+- landai.ai — AI cold calling/voice agent (pricey)
+
+**Tech Stack (Planned):**
+- GoHighLevel as CRM — calls, texts, emails, newsletters, booking
+
+**Dirt Roamers Resources (Educational Arm):**
+- Model after Joe McCall's Dirt Flippers brand
+- Build educational materials for aspiring land flippers
+- Affiliate programs from tools: land.id, landportal, landai, GoHighLevel (waiting on landinsights)
+- Pair affiliate recommendations with bonuses: guides, consultations, GHL snapshots
+- Content channels: blog, social media, newsletters
+- Revenue: affiliate commissions + digital products
+
 ### Mt. Everest (5-Year Vision 2025-2030)
 
 **THE SUMMIT:**
 > "By 2030, build a $50M net worth through strategic acquisitions of AI-resistant service businesses and real estate investments, generating $4M+ in annual passive income to fund complete lifestyle freedom — including full-time travel, multiple residences, a private plane, and catamaran — while creating a family office legacy that operates without my daily involvement."
-
-**Measurable Targets:**
-- Net Worth: $50M
-- Annual Passive Income: $4M+
-- Business Acquisitions: 10-15 companies
-- Cash Flow per Business: $200K-400K annually
-- Real Estate Units: 200+ doors
-- Portfolio Structure: Family office established
 
 ### Mission
 - Build and buy businesses + acquire real estate
