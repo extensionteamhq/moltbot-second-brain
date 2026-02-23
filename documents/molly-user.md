@@ -1,8 +1,8 @@
 ---
 title: "Molly: USER.md"
 tags: [system, notes]
-created: 2026-02-22T05:00:00-05:00
-updated: 2026-02-22T05:00:00-05:00
+created: 2026-02-23T05:00:00-05:00
+updated: 2026-02-23T05:00:00-05:00
 ---
 
 # USER.md - About Your Human
@@ -51,76 +51,20 @@ updated: 2026-02-22T05:00:00-05:00
 - **Dirt Roamers (dirtroamers.com):** Land acquisition business — direct-to-seller cash offers
 - **Bigger buy box:** SFH, small multi-family, multi-family, mobile home parks, RV parks
 - **Communities:** Pace Morby's SubTo, Gator, Top-Tier TC, Owners Club
-- **SubTo Coaching (mateo.moore@subto.com):** PAID coaching sessions — can't miss these. High priority.
-- **Partner With Mateo:** Pathway to working with community members on deals
-- **Personal Calendar (xybermatthew@gmail.com):** Non-negotiables — things he wants to protect but struggles to stick to. Needs accountability.
-- **Agency Calendar (mateo@anchorandstaff.com):** Anchor & Staff agency calendar — VERY IMPORTANT, don't miss these events
-
-### Dirt Roamers — Detailed Strategy
-
-**Target Properties:**
-- 5-50 acres (larger parcels for subdivision into 5-10 acre lots)
-- Just outside metro areas OR small towns with growth/people moving in
-- Areas where people want to build dream homes or homesteads
-
-**Target Sellers:**
-- 40+ years old
-- Owned land 10+ years
-- Inherited via probate
-- Tax liens or foreclosure situations
-
-**Acquisition Offers (Two-Option Strategy):**
-1. **Cash offer:** 40-50% of market value
-2. **Seller financing:** 80-90% of market value (if terms work)
-
-**Exit Strategy:**
-- Cash/financed buyers: List at 80-95% market value (instant equity for buyer)
-- Seller financing to buyer: 100-120% market value (cash flow play)
-- Require 20-30% down from buyer to pay off/reduce acquisition debt
-
-**Long-Term Vision — Homesteading Community:**
-- Buy larger parcels, subdivide, place homesteaders on lots
-- Self-sufficient community: grow food, raise livestock (chickens, ducks, goats, pigs, cattle)
-- Shared responsibilities — families can vacation while others cover
-- Revenue streams: seller financing cash flow, produce/eggs/dairy/meat sales, flowers, honey, agritourism (hunting, camping, RV parks)
-- Secondary business model after enough flips generate capital (or acquire on seller financing)
-
-**Lead Generation Needs:**
-- Data sources for finding land (analytical — areas likely to sell)
-- Skip tracing owners (phone, email)
-- Pulling deeds/mortgages from county records, scraping owner details
-- Multi-touch outreach: calling, texting, email (cheaper than direct mail which had limited success)
-- Eventually: AI cold calling
-
-**Current Tools:**
-- landinsights.co — sourcing + skip tracing (recently downgraded, limited)
-- land.id — supplemental property info
-- Zillow + Joe McCall's Dirt Flippers training/strategies
-
-**Tools Under Consideration:**
-- landportal.com
-- landai.ai — AI cold calling/voice agent (pricey)
-
-**Tech Stack (Planned):**
-- GoHighLevel as CRM — calls, texts, emails, newsletters, booking
-
-**Dirt Roamers Resources (Educational Arm):**
-- Model after Joe McCall's Dirt Flippers brand
-- Build educational materials for aspiring land flippers
-- Affiliate programs from tools: land.id, landportal, landai, GoHighLevel (waiting on landinsights)
-- Pair affiliate recommendations with bonuses: guides, consultations, GHL snapshots
-- Content channels: blog, social media, newsletters
-- Revenue: affiliate commissions + digital products
 
 ### Mt. Everest (5-Year Vision 2025-2030)
 
 **THE SUMMIT:**
-> "By 2030, build a $50M net worth through strategic acquisitions of AI-resistant service businesses and real estate investments, generating $4M+ in annual passive income to fund complete lifestyle freedom — including full-time travel, multiple residences, a private plane, and catamaran — while creating a family office legacy that operates without my daily involvement."
+> "By 2030, build a $50M net worth through strategic acquisitions of AI-resistant service businesses and real estate investments, generating $4M+ in annual passive income to fund complete lifestyle freedom."
 
-### Mission
-- Build and buy businesses + acquire real estate
-- Execute the Mt. Everest vision (documented above)
-- Needs more active income to fund the vision
+### Projects in Progress
+- **Books (2):** Affiliate marketing + Personal branding
+- **Bootcamp/Workshop:** With Owner's Club group
+- **Rank-n-Soar:** Rank and rent model using Payload CMS
+- **Consulting Agency:** Anchor & Staff with Mike Davis & Cheryl Trosky
+- **Partner With Mateo Resources:** Affiliate resources for SubTo/Gator/Top-Tier TC
+- **Dirt Roamers Resources:** Affiliate + digital products for land investors
+- **Personal Brand/Social Media:** Building presence, planning AI avatar (Blotato)
 
 ### Websites
 - **mrmateomoore.com** — Personal professional site
