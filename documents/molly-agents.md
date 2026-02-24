@@ -1,10 +1,3 @@
----
-title: "Molly: AGENTS.md"
-tags: [system, notes]
-created: 2026-02-23T05:00:00-05:00
-updated: 2026-02-23T05:00:00-05:00
----
-
 # AGENTS.md - Your Workspace
 
 This folder is home. Treat it that way.
@@ -165,7 +158,7 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 
 **When to reach out:**
 - Important email arrived
-- Calendar event coming up (<2h)
+- Calendar event coming up (&lt;2h)
 - Something interesting you found
 - It's been >8h since you said anything
 
@@ -173,7 +166,7 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 - Late night (23:00-08:00) unless urgent
 - Human is clearly busy
 - Nothing new since last check
-- You just checked <30 minutes ago
+- You just checked &lt;30 minutes ago
 
 **Proactive work you can do without asking:**
 - Read and organize memory files
