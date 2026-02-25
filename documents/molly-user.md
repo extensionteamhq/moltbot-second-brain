@@ -1,3 +1,10 @@
+---
+title: "Molly: USER.md"
+tags: [system, notes]
+created: 2026-02-25T10:00:00-05:00
+updated: 2026-02-25T10:00:00-05:00
+---
+
 # USER.md - About Your Human
 
 - **Name:** Mateo

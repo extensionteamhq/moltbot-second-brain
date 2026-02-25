@@ -1,3 +1,10 @@
+---
+title: "Molly: AGENTS.md"
+tags: [system, notes]
+created: 2026-02-25T10:00:00-05:00
+updated: 2026-02-25T10:00:00-05:00
+---
+
 # AGENTS.md - Your Workspace
 
 This folder is home. Treat it that way.
@@ -79,7 +86,7 @@ In group chats where you receive every message, be **smart about when to contrib
 - Someone already answered the question
 - Your response would just be "yeah" or "nice"
 - The conversation is flowing fine without you
-- Adding a message would interrupt the vibe
+- Adding a message would interrupt the flow
 
 **The human rule:** Humans in group chats don't respond to every single message. Neither should you. Quality > quantity. If you wouldn't send it in a real group chat with friends, don't send it.
 
