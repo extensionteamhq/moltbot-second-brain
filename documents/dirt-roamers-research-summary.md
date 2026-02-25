@@ -4,13 +4,66 @@ tags:
   - dirt-roamers
   - research
   - notes
+  - requested
 created: '2026-02-07T19:47:30+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+updated: '2026-02-25T07:00:00+00:00'
 ---
 
 # Dirt Roamers Research Summary
 
-*Last Updated: February 12, 2026 (2am ET research window)*
+*Last Updated: February 25, 2026 (2am ET research window)*
+
+---
+
+## Latest Research Updates (February 25, 2026)
+
+### Land Portal Pricing (Updated)
+
+| Plan | Monthly | Annual | Best For |
+|------|---------|--------|----------|
+| **Starter** | $59.95/mo | $42.45/mo | Beginners, 1st deal |
+| **Advanced** | $99.95/mo | $83.25/mo | Most users — MLS + unlimited AI comps |
+| **Pro** | $497/mo | $458/mo | Teams, 20K exports/mo |
+| **Enterprise** | $650+/mo | Custom | Large teams, unlimited everything |
+
+**Skip Tracing Costs:**
+- Starter/Advanced: $0.05/record
+- Pro: $0.04/record
+- Enterprise: $0.015/record (lowest)
+
+**Affiliate Program:** ✅ **30% lifetime recurring commissions** — Apply at thelandportal.com/affiliates/
+
+### Land AI (Updated)
+- Fully managed AI cold calling service (not DIY software)
+- Maya AI qualifies leads, routes hot sellers to CRM
+- Claims 5× more effective than cold calling (1 deal per 20 qualified leads vs 1 per 100)
+- Integrates with GoHighLevel, HubSpot, REI Conversion, InvestorFuse
+- **Pricing:** Not public — requires consultation call
+- **Verdict:** Table for Phase 2-3 after deal flow is proven
+
+### Skip Tracing Alternatives (Updated)
+
+| Service | Cost/Record | Best For |
+|---------|-------------|----------|
+| **Land Portal** (built-in) | $0.04-0.05 | If already using LP |
+| **Land Insights Lite** | $0.06 | Budget, pay-as-you-go |
+| **Tracerfy** | $0.02-0.04 | Bulk, API users |
+| **REISift** | $0.12-0.17 | REI-focused, bundled |
+| **BatchSkipTracing** | $0.20 | Quality assurance |
+
+### Growth Market Data Sources (Updated)
+
+**Free Tools:**
+- **Census.gov** — Population, migration, demographic trends
+- **Zillow Research** — Housing market data, trends
+- **Redfin Data Center** — Weekly market pulse, sales data
+- **IRS Migration Data** — County-to-county migration flows
+
+**2025-2026 Growth Leaders:**
+- Texas: +1.5% (highest)
+- Idaho: +1.4%
+- North Carolina: +1.3%
+- Florida, Georgia, Tennessee continue strong
 
 ---
 
