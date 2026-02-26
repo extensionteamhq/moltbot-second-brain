@@ -85,6 +85,10 @@ export default function AccountabilityPage() {
     if (entry.response?.bible !== undefined) bible = !!entry.response.bible;
     if (entry.response?.gym !== undefined) gym = !!entry.response.gym;
     
+    // Format: {workout: { completed: true/false }, morningReading: { completed: true/false }}
+    if ((entry as any).workout?.completed !== undefined) gym = !!(entry as any).workout?.completed;
+    if ((entry as any).morningReading?.completed !== undefined) bible = !!(entry as any).morningReading?.completed;
+    
     // Format: {workout: true/false, morningReading: true/false}
     if (entry.workout !== undefined && typeof entry.workout === 'boolean') gym = entry.workout;
     if ((entry as any).morningReading !== undefined && typeof (entry as any).morningReading === 'boolean') bible = (entry as any).morningReading;
