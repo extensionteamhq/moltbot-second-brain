@@ -1,0 +1,79 @@
+# Daily Brief Format (CRITICAL)
+
+**Applies to:** Both Telegram message AND Second Brain file storage
+
+---
+
+## Template
+
+```
+Daily Brief - February 25, 2026 (Wednesday)
+📅 Today's Calendar
+==============================
+• 8:45 AM — OC weekly accountability call (Partner With Mateo)
+• 3:00 PM — Daily Sync - Mike & Mateo (Anchor & Staff)
+
+📰 News - AI Tools & Models
+==============================
+[News item 1 with description and link]
+📎 [URL]
+
+[News item 2...]
+📎 [URL]
+
+🤖 Molly's Task Recommendations
+==============================
+1. [Task recommendation 1]
+2. [Task recommendation 2]
+
+🤖 Molly's Proactive Work
+==============================
+1. [Proactive work item 1 - ONLY include if I actually did work]
+2. [Proactive work item 2 - ONLY include if I actually did work]
+
+💭 Thought
+==============================
+"[Quote]"
+
+[Closing line if desired]
+
+Synced to Second Brain
+==============================
+• Daily journal (Feb 25)
+• Newly created documents
+• Core workspace files
+• Today's briefing
+```
+
+---
+
+## Calendar Filtering Rules
+
+**INCLUDE (show these):**
+- All events from:
+  - partnerwithmateo@gmail.com (Partner With Mateo)
+  - mateo.moore@subto.com (SubTo)
+  - mateo@anchorandstaff.com (Anchor & Staff)
+  - xybermatthew@gmail.com (Mateo's Personal)
+
+**EXCLUDE (hide these):**
+- Wake up
+- Breakfast
+- Lunch
+- Dinner
+- Free-time
+- Bedtime
+- Any other routine personal items
+
+---
+
+## Section Rules
+
+- **Molly's Task Recommendations:** Only tasks I can do (research, automation, etc.)
+- **Molly's Proactive Work:** ONLY include if I actually did proactive work during this period. If I didn't do anything proactive, omit this section entirely. Do NOT create fake proactive work to fill space.
+
+---
+
+## Separate Calendar Cron Job
+
+**DISABLED** — Calendar is now included in daily brief. No need for separate 7am ET calendar cron job.
