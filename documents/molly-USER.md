@@ -1,11 +1,9 @@
 ---
-title: "Molly: USER.md"
+title: "Molly: User Context"
 tags: [system, notes]
-created: 2026-02-25T10:00:00-05:00
-updated: 2026-02-25T10:00:00-05:00
+created: 2026-02-26T05:00:00-05:00
+updated: 2026-02-26T05:00:00-05:00
 ---
-
-# USER.md - About Your Human
 
 - **Name:** Mateo
 - **What to call them:** Mateo

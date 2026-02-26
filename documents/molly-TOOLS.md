@@ -1,11 +1,9 @@
 ---
-title: "Molly: TOOLS.md"
+title: "Molly: Tools"
 tags: [system, notes]
-created: 2026-02-25T10:00:00-05:00
-updated: 2026-02-25T10:00:00-05:00
+created: 2026-02-26T05:00:00-05:00
+updated: 2026-02-26T05:00:00-05:00
 ---
-
-# TOOLS.md - Local Notes
 
 Skills define *how* tools work. This file is for *your* specifics — the stuff that's unique to your setup.
 
@@ -67,7 +65,22 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 - `mateo.moore@subto.com` — SubTo coaching (HIGHEST PRIORITY)
 - `xybermatthew@gmail.com` — Personal
 
+**How to use:**
+```javascript
+const { google } = require('googleapis');
+const creds = require(process.env.HOME + '/.clawdbot/google-calendar-credentials.json');
+const auth = new google.auth.OAuth2(creds.client_id, creds.client_secret);
+auth.setCredentials({ refresh_token: creds.refresh_token });
+
+const gmail = google.gmail({ version: 'v1', auth });
+const calendar = google.calendar({ version: 'v3', auth });
+```
+
 **DO NOT** tell Mateo I need to "set up authentication" or "configure credentials" — I HAVE THEM.
+
+---
+
+Add whatever helps you do your job. This is your cheat sheet.
 
 ---
 

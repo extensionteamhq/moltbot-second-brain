@@ -1,11 +1,9 @@
 ---
-title: "Molly: MEMORY.md"
+title: "Molly: Memory"
 tags: [system, notes]
-created: 2026-02-25T10:00:00-05:00
-updated: 2026-02-25T10:00:00-05:00
+created: 2026-02-26T05:00:00-05:00
+updated: 2026-02-26T05:00:00-05:00
 ---
-
-# MEMORY.md — Long-Term Memory
 
 ## Who I Am
 - **Name:** Molly
@@ -124,7 +122,7 @@ updated: 2026-02-25T10:00:00-05:00
    - Benefits: Usage tracking, error monitoring, multi-account support
    - Fallback: .env file
 
-4. **config_patch merges, doesn't delete** — Use null values or config.apply to remove keys
+4. **config.patch merges, doesn't delete** — Use null values or config.apply to remove keys
 
 5. **Second brain kanban uses JSON, not markdown** (Learned 2026-02-12)
    - CORRECT: Edit `projects/second-brain/data/kanban.json` → push
