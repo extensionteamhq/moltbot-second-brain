@@ -68,25 +68,50 @@ export default function AccountabilityPage() {
   };
 
   const parseResponse = (entry: AccountabilityEntry) => {
-    // Handle different data formats
+    let bible: boolean | null = null;
+    let gym: boolean | null = null;
+    
+    // Format: {checkin: {workout: {...}, morning_reading: {...}}}
     if (entry.checkin?.morning_reading?.response) {
-      return {
-        bible: entry.checkin.morning_reading.response.toLowerCase().includes('yes') || 
-               entry.checkin.morning_reading.response.toLowerCase().includes('✅') ||
-               entry.checkin.morning_reading.response === 'Sup' ? true : false,
-        gym: entry.checkin.workout?.response ? 
-             (entry.checkin.workout.response.toLowerCase().includes('yes') || 
-              entry.checkin.workout.response.toLowerCase().includes('✅') ||
-              entry.checkin.workout.response === 'Sup' ? true : false) : null
-      };
+      const resp = entry.checkin.morning_reading.response.toLowerCase();
+      bible = resp.includes('yes') || resp.includes('✅') || resp === 'sup' || resp.includes('true');
     }
-    if (entry.response?.bible !== undefined || entry.response?.gym !== undefined) {
-      return {
-        bible: entry.response.bible,
-        gym: entry.response.gym
-      };
+    if (entry.checkin?.workout?.response) {
+      const resp = entry.checkin.workout.response.toLowerCase();
+      gym = resp.includes('yes') || resp.includes('✅') || resp === 'sup' || resp.includes('true');
     }
-    return { bible: null, gym: null };
+    
+    // Format: {response: {bible: ..., gym: ...}}
+    if (entry.response?.bible !== undefined) bible = !!entry.response.bible;
+    if (entry.response?.gym !== undefined) gym = !!entry.response.gym;
+    
+    // Format: {workout: true/false, morningReading: true/false}
+    if (entry.workout !== undefined && typeof entry.workout === 'boolean') gym = entry.workout;
+    if ((entry as any).morningReading !== undefined && typeof (entry as any).morningReading === 'boolean') bible = (entry as any).morningReading;
+    
+    // Format: {bible_reading: true/false, workout: true/false}
+    if ((entry as any).bible_reading !== undefined && typeof (entry as any).bible_reading === 'boolean') bible = (entry as any).bible_reading;
+    
+    // Format: {responses: {workout: ..., morningReading: ...}}
+    if ((entry as any).responses?.morningReading !== undefined) bible = (entry as any).responses?.morningReading;
+    if ((entry as any).responses?.workout !== undefined) gym = (entry as any).responses?.workout;
+    
+    // Format: {responses: {morning_reading_bible: ...}}
+    if ((entry as any).responses?.morning_reading_bible !== undefined) bible = (entry as any).responses?.morning_reading_bible;
+    
+    // Check response string for "yes" or "no"
+    const responseStr = (entry as any).response;
+    if (typeof responseStr === 'string') {
+      const lower = responseStr.toLowerCase();
+      if (lower.includes('bible') || lower.includes('reading')) {
+        bible = lower.includes('yes') && !lower.includes('no');
+      }
+      if (lower.includes('gym') || lower.includes('workout')) {
+        gym = lower.includes('yes') && !lower.includes('no');
+      }
+    }
+    
+    return { bible, gym };
   };
 
   const navigate = (direction: number) => {
