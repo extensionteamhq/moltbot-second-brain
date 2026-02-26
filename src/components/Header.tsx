@@ -11,6 +11,7 @@ const navItems = [
   { href: '/', label: 'Documents', icon: '📄' },
   { href: '/journal', label: 'Journal', icon: '📅' },
   { href: '/briefs', label: 'Briefs', icon: '📋' },
+  { href: '/accountability', label: 'Accountability', icon: '✅' },
 ];
 
 /**
@@ -27,8 +28,8 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
-  // Show hamburger on pages with sidebars (not on /projects)
-  const showHamburger = pathname === '/' || pathname === '/journal' || pathname === '/briefs';
+  // Show hamburger on pages with sidebars
+  const showHamburger = pathname === '/' || pathname === '/journal' || pathname === '/briefs' || pathname === '/accountability';
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--sidebar)] border-b border-[var(--border)]">
