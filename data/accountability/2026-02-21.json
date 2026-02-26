@@ -1,0 +1,12 @@
+{
+  "date": "2026-02-21",
+  "checkInSentAt": "2026-02-21T23:00:00Z",
+  "checkInSentAtET": "2026-02-21T18:00:00-05:00",
+  "asked": {
+    "workout": true,
+    "morningReading": true
+  },
+  "workoutScheduled": true,
+  "response": null,
+  "notes": "Saturday check-in sent. Workout was scheduled 6:00-7:45 AM ET."
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-02-11",
+  "checkin_time": "2026-02-11T23:00:00Z",
+  "checkin_time_et": "2026-02-11T18:00:00-05:00",
+  "message_sent": true,
+  "telegram_message_id": "698",
+  "questions": [
+    "Workout",
+    "Morning reading/Bible time"
+  ],
+  "response_pending": true
+}

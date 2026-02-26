@@ -4,7 +4,8 @@ import path from 'path';
 
 export async function GET() {
   try {
-    const accountabilityDir = path.join(process.env.HOME || '/home/ubuntu', 'clawd/memory/accountability');
+    // Read from bundled data in the app (committed to GitHub)
+    const accountabilityDir = path.join(process.cwd(), 'data/accountability');
     
     // Check if directory exists
     if (!fs.existsSync(accountabilityDir)) {

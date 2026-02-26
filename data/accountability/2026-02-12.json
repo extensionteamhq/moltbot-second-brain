@@ -1,0 +1,14 @@
+{
+  "date": "2026-02-12",
+  "checkInSent": {
+    "timestamp": "2026-02-12T23:00:00Z",
+    "timestampET": "2026-02-12T18:00:00-05:00",
+    "messageId": "1027",
+    "questions": [
+      "Workout completed?",
+      "Morning reading/Bible time completed?"
+    ]
+  },
+  "response": null,
+  "notes": "Accountability check-in sent via Telegram. Awaiting response."
+}
