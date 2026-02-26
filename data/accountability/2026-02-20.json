@@ -1,7 +1,1 @@
-{
-  "date": "2026-02-20",
-  "checkinSentAt": "2026-02-20T23:00:00Z",
-  "checkinMessageId": "1728",
-  "items": ["morning_reading", "workout"],
-  "responses": null
-}
+{"date": "2026-02-20", "bible": true, "gym": true}

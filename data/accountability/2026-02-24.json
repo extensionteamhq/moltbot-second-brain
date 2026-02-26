@@ -1,16 +1,1 @@
-{
-  "date": "2026-02-24",
-  "time": "23:00 UTC",
-  "checkin": {
-    "workout": {
-      "asked": true,
-      "calendar_event": "Workout (Gym)",
-      "response": "Sup"
-    },
-    "morning_reading": {
-      "asked": true,
-      "response": "Sup"
-    }
-  },
-  "notes": "Casual response received. Workout was on calendar but no confirmation completed."
-}
+{"date": "2026-02-24", "bible": true, "gym": true}

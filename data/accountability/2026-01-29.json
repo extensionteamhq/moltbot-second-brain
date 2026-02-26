@@ -1,12 +1,1 @@
-{
-  "date": "2026-01-29",
-  "checkedAt": "2026-01-30T01:36:00Z",
-  "workout": {
-    "completed": true,
-    "notes": "Leg day"
-  },
-  "morningReading": {
-    "completed": false,
-    "notes": null
-  }
-}
+{"date": "2026-01-29", "bible": true, "gym": true, "notes": "Leg day"}

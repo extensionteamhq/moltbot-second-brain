@@ -1,9 +1,1 @@
-{
-  "date": "2026-02-05",
-  "checkinSentAt": "2026-02-05T23:00:00Z",
-  "checkinMessageId": "302",
-  "workout": null,
-  "morningReading": null,
-  "responseReceivedAt": null,
-  "notes": null
-}
+{"date": "2026-02-05", "bible": true, "gym": true}

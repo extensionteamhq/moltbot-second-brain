@@ -1,9 +1,1 @@
-{
-  "date": "2026-02-07",
-  "dayOfWeek": "Saturday",
-  "checkInSentAt": "2026-02-07T23:00:00Z",
-  "checkInMessageId": "480",
-  "questions": ["workout", "morning_reading_bible"],
-  "responses": null,
-  "notes": null
-}
+{"date": "2026-02-07", "bible": true, "gym": true}

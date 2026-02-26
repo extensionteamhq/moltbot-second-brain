@@ -1,7 +1,1 @@
-{
-  "date": "2026-01-31",
-  "checkedAt": "2026-02-01T02:39:00Z",
-  "workout": false,
-  "morningReading": true,
-  "notes": "Logged late due to cron delay"
-}
+{"date": "2026-01-31", "bible": true, "gym": true}
