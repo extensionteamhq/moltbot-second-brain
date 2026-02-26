@@ -71,6 +71,14 @@ export default function AccountabilityPage() {
     let bible: boolean | null = null;
     let gym: boolean | null = null;
     
+    // Format: {bible: true/false, gym: true/false} - SIMPLE FORMAT
+    if ((entry as any).bible !== undefined && typeof (entry as any).bible === 'boolean') {
+      bible = (entry as any).bible;
+    }
+    if ((entry as any).gym !== undefined && typeof (entry as any).gym === 'boolean') {
+      gym = (entry as any).gym;
+    }
+    
     // Format: {checkin: {workout: {...}, morning_reading: {...}}}
     if (entry.checkin?.morning_reading?.response) {
       const resp = entry.checkin.morning_reading.response.toLowerCase();
