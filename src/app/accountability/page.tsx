@@ -5,6 +5,9 @@ import Link from 'next/link';
 
 interface AccountabilityEntry {
   date: string;
+  bible?: boolean;
+  reading?: boolean;
+  gym?: boolean | null;
   checkin?: {
     workout?: { asked: boolean; response?: string };
     morning_reading?: { asked: boolean; response?: string };
@@ -67,13 +70,17 @@ export default function AccountabilityPage() {
     return data.find(d => d.date === dateStr);
   };
 
-  const parseResponse = (entry: AccountabilityEntry) => {
+  const parseResponse = (entry: AccountabilityEntry): { bible: boolean | null; reading: boolean | null; gym: boolean | null } => {
     let bible: boolean | null = null;
+    let reading: boolean | null = null;
     let gym: boolean | null = null;
     
-    // Format: {bible: true/false, gym: true/false} - SIMPLE FORMAT
+    // Format: {bible: true/false, reading: true/false, gym: true/false} - SIMPLE FORMAT
     if ((entry as any).bible !== undefined && typeof (entry as any).bible === 'boolean') {
       bible = (entry as any).bible;
+    }
+    if ((entry as any).reading !== undefined && typeof (entry as any).reading === 'boolean') {
+      reading = (entry as any).reading;
     }
     if ((entry as any).gym !== undefined && typeof (entry as any).gym === 'boolean') {
       gym = (entry as any).gym;
@@ -123,7 +130,7 @@ export default function AccountabilityPage() {
       }
     }
     
-    return { bible, gym };
+    return { bible, reading, gym };
   };
 
   const navigate = (direction: number) => {
@@ -166,16 +173,18 @@ export default function AccountabilityPage() {
 
   const displayDays = getDisplayDays();
 
+  const parsedDefault = { bible: null, reading: null, gym: null };
   const totals = displayDays.reduce((acc, day) => {
     const dateStr = formatDate(day);
     const entry = getEntryForDate(dateStr);
-    const parsed = entry ? parseResponse(entry) : { bible: null, gym: null };
+    const parsed = entry ? parseResponse(entry) : parsedDefault;
     
     if (parsed.bible === true) acc.bible++;
+    if (parsed.reading === true) acc.reading++;
     if (parsed.gym === true) acc.gym++;
     
     return acc;
-  }, { bible: 0, gym: 0 });
+  }, { bible: 0, reading: 0, gym: 0 });
 
   if (loading) {
     return (
@@ -239,22 +248,23 @@ export default function AccountabilityPage() {
 
       {/* Grid */}
       <div className="bg-[var(--card)] rounded-xl overflow-hidden border border-[var(--border)]">
-        <div className="grid grid-cols-8 border-b border-[var(--border)]">
+        <div className="grid grid-cols-5 border-b border-[var(--border)]">
           <div className="p-3 text-sm font-semibold text-[var(--muted)]">Day</div>
-          <div className="p-3 text-sm font-semibold text-center">📖<br/>Bible/Reading</div>
+          <div className="p-3 text-sm font-semibold text-center">📖<br/>Bible</div>
+          <div className="p-3 text-sm font-semibold text-center">📚<br/>Reading</div>
           <div className="p-3 text-sm font-semibold text-center">🏋️<br/>Gym</div>
         </div>
         
         {displayDays.map((day, idx) => {
           const dateStr = formatDate(day);
           const entry = getEntryForDate(dateStr);
-          const parsed = entry ? parseResponse(entry) : { bible: null, gym: null };
+          const parsed = entry ? parseResponse(entry) : { bible: null, reading: null, gym: null };
           const isToday = formatDate(new Date()) === dateStr;
           
           return (
             <div 
               key={dateStr} 
-              className={`grid grid-cols-8 border-b border-[var(--border)] last:border-b-0 ${
+              className={`grid grid-cols-5 border-b border-[var(--border)] last:border-b-0 ${
                 isToday ? 'bg-[var(--accent)]/10' : ''
               }`}
             >
@@ -272,6 +282,11 @@ export default function AccountabilityPage() {
                 {parsed.bible === null && <span className="text-[var(--muted)]">-</span>}
               </div>
               <div className="p-3 flex items-center justify-center">
+                {parsed.reading === true && <span className="text-green-500 text-xl">✅</span>}
+                {parsed.reading === false && <span className="text-red-500 text-xl">❌</span>}
+                {parsed.reading === null && <span className="text-[var(--muted)]">-</span>}
+              </div>
+              <div className="p-3 flex items-center justify-center">
                 {parsed.gym === true && <span className="text-green-500 text-xl">✅</span>}
                 {parsed.gym === false && <span className="text-red-500 text-xl">❌</span>}
                 {parsed.gym === null && <span className="text-[var(--muted)]">-</span>}
@@ -281,13 +296,16 @@ export default function AccountabilityPage() {
         })}
 
         {/* Totals Row */}
-        <div className="grid grid-cols-8 bg-[var(--sidebar)] border-t-2 border-[var(--border)]">
+        <div className="grid grid-cols-5 bg-[var(--sidebar)] border-t-2 border-[var(--border)]">
           <div className="p-3 text-sm font-bold">TOTAL</div>
           <div className="p-3 text-center font-bold text-green-500">
             {totals.bible}/{displayDays.length}
           </div>
           <div className="p-3 text-center font-bold text-green-500">
-            {totals.gym}/{displayDays.length}
+            {(totals.reading || 0)}/{displayDays.length}
+          </div>
+          <div className="p-3 text-center font-bold text-green-500">
+            {(totals.gym || 0)}/{displayDays.length}
           </div>
         </div>
       </div>
