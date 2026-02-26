@@ -13,12 +13,14 @@ Daily Brief - February 25, 2026 (Wednesday)
 • 8:45 AM — OC weekly accountability call (Partner With Mateo)
 • 3:00 PM — Daily Sync - Mike & Mateo (Anchor & Staff)
 
-📰 News - AI Tools & Models
+📰 News - AI & Marketing
 ==============================
-[News item 1 with description and link]
+### AI Tools & Models
+[News item with description and link]
 📎 [URL]
 
-[News item 2...]
+### Marketing + AI
+[Marketing trend/case study with description and link]
 📎 [URL]
 
 🤖 Molly's Task Recommendations
@@ -28,14 +30,11 @@ Daily Brief - February 25, 2026 (Wednesday)
 
 🤖 Molly's Proactive Work
 ==============================
-1. [Proactive work item 1 - ONLY include if I actually did work]
-2. [Proactive work item 2 - ONLY include if I actually did work]
+1. [Proactive work item - ONLY include if actually did work]
 
 💭 Thought
 ==============================
 "[Quote]"
-
-[Closing line if desired]
 
 Synced to Second Brain
 ==============================
@@ -77,3 +76,13 @@ Synced to Second Brain
 ## Separate Calendar Cron Job
 
 **DISABLED** — Calendar is now included in daily brief. No need for separate 7am ET calendar cron job.
+
+---
+
+## Accountability Data Sync
+
+After each accountability check-in (daily at 11pm ET):
+1. Copy accountability JSON to Second Brain: `cp ~/clawd/memory/accountability/YYYY-MM-DD.json ~/clawd/projects/second-brain/data/accountability/`
+2. Git add, commit, and push to Second Brain
+
+This keeps the accountability grid page up to date.
