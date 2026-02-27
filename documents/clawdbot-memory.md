@@ -1,10 +1,3 @@
----
-title: "Clawdbot: MEMORY"
-tags: [clawdbot, workspace, auto]
-created: 2026-01-27T00:00:00+00:00
-updated: 2026-02-16T05:04:54+00:00
----
-
 # MEMORY.md — Long-Term Memory
 
 ## Who I Am
@@ -14,6 +7,7 @@ updated: 2026-02-16T05:04:54+00:00
 
 ## Maintenance Tasks
 - **Second Brain sync:** When I update SOUL.md, IDENTITY.md, USER.md, AGENTS.md, or MEMORY.md — also update the copies in `projects/second-brain/documents/clawdbot-*.md` and push to GitHub
+- **CRITICAL:** Second Brain repo is in `projects/second-brain/` — ALWAYS cd there before git push, not the main workspace
 
 ## Who Mateo Is
 - Growth & Marketing Operations Executive, 20+ years experience
@@ -175,3 +169,7 @@ Save money while maintaining quality:
 **NEVER put API keys directly in workspace files** (TOOLS.md, MEMORY.md, etc.)
 - Store in: `auth-profiles.json` (primary) + `.env` (fallback)
 - Reference in docs: "Stored securely in auth-profiles.json"
+
+## Lessons Learned (2026-02-27)
+- **Morning brief Task Recommendations** should ONLY be tasks I CAN do, not tasks for Mateo. He got frustrated seeing "Mike needs to review" as a recommendation.
+- **Second Brain git push** — The repo lives in `projects/second-brain/`, NOT the main ~/clawd workspace. Must `cd ~/clawd/projects/second-brain` before git commands.
