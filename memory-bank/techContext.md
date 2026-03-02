@@ -43,7 +43,17 @@ pnpm lint
 
 ```
 moltbot-second-brain/
-├── documents/                   # All markdown content (auto-served by API)
+├── briefs/                      # Daily morning briefs (YYYY-MM-DD-brief.md)
+├── journals/                    # Daily journal entries (YYYY-MM-DD[-journal].md)
+├── documents/                   # Knowledge base (subfolders by company/focus)
+│   ├── README.md                # Structure guide
+│   ├── dirt-roamers/            # Land flipping business docs
+│   ├── anchor-staff/            # Marketing agency docs
+│   ├── partner-with-mateo/      # Affiliate resource docs
+│   ├── rank-n-soar/             # Rank & rent business docs
+│   ├── mr-mateo-moore/          # Personal brand docs
+│   ├── marketing/               # Cross-cutting marketing research
+│   └── system/                  # Molly/Clawdbot workspace files
 ├── data/
 │   └── accountability/
 │       ├── config.json          # Habit schema (key, label, emoji) — add new habits here
@@ -139,7 +149,7 @@ moltbot-second-brain/
 1. **No write API** — Documents are read-only through the UI; writes happen via git push
 2. **No database** — All data is file-system based (Supabase migration is planned but not implemented)
 3. **Kanban removed** — The Kanban board and `data/kanban.json` were removed on 2026-03-02. Task management moved to Trello (external). Tasks archived in `documents/kanban-tasks-archive.md`.
-4. **Documents directory is flat** — No subdirectory support (all `.md` files must be directly in `documents/`)
+4. **Documents directory is recursive** — `documents/` now has company/focus subfolders scanned recursively. `journals/` and `briefs/` are flat root-level directories also scanned by the parser.
 5. **Next.js 16** — Not latest stable; upgrade not needed unless required by features
 
 ## Environment

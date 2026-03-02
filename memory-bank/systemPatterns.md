@@ -3,7 +3,9 @@
 ## Architecture Overview
 
 ```
-documents/*.md  ──→  src/lib/documents.ts  ──→  GET /api/documents  ──→  UI (src/app/page.tsx)
+documents/**/*.md  ─┐
+journals/*.md      ─┤  src/lib/documents.ts  ──→  GET /api/documents  ──→  UI (src/app/page.tsx)
+briefs/*.md        ─┘
 
 data/accountability/config.json  ─┐
 data/accountability/YYYY-MM-DD.json  ─┤  GET /api/accountability  ──→  /accountability page
@@ -14,10 +16,43 @@ src/lib/accountability.ts  (utils)  ─┘       ↳ AccountabilityGrid, GridNav
 
 ### File-Based Storage
 
-- All documents are `.md` files in the `documents/` directory
+- Documents are `.md` files organized across three root-level directories:
+    - `documents/` — company/focus subfolders (recursive scan)
+    - `journals/` — daily journal entries (flat)
+    - `briefs/` — daily morning briefs (flat)
 - Parsed at request time using `gray-matter` for frontmatter + content split
 - No database — everything is file system (Supabase migration is a future Backlog item)
 - `src/lib/documents.ts` is the single source of truth for document parsing logic
+
+### Scan Directory Configuration
+
+`SCAN_DIRECTORIES` in `documents.ts` defines all content roots:
+
+```typescript
+const SCAN_DIRECTORIES: ScanDirectory[] = [
+    { base: "documents", section: "documents", recursive: true },
+    { base: "journals", section: "journals", recursive: false },
+    { base: "briefs", section: "briefs", recursive: false },
+];
+```
+
+To add a new content area, append one entry — no other code changes required.
+
+### Document Subfolder Structure
+
+```
+documents/
+├── README.md                  ← stays at root, not served by API
+├── dirt-roamers/              tag: dirt-roamers
+├── anchor-staff/              tag: anchor-staff
+├── partner-with-mateo/        tag: partner-with-mateo
+├── rank-n-soar/               tag: rank-n-soar
+├── mr-mateo-moore/            tag: mr-mateo-moore
+├── marketing/                 tag: marketing
+└── system/                    tag: system
+```
+
+Each file must include a **folder tag** matching its directory so the UI category filter works correctly.
 
 ### Frontmatter Schema
 
@@ -41,16 +76,24 @@ updated: ISO8601_TIMESTAMP
 
 ```typescript
 interface Document {
-    slug: string; // filename without .md
+    slug: string; // filename without .md (unique across all dirs)
     title: string; // from frontmatter or slug
     content: string; // raw markdown (no frontmatter)
     tags: string[]; // from frontmatter, defaults to ['notes']
-    date: string; // for sorting
+    date: string; // for sorting (backward compat alias for created)
     created: string; // ISO timestamp
     updated: string; // ISO timestamp
     excerpt: string; // first 150 chars, markdown stripped
+    section: string; // 'documents' | 'journals' | 'briefs'
+    subfolder: string; // e.g. 'dirt-roamers', 'system', '' for root
 }
 ```
+
+### Additional Exports in `documents.ts`
+
+- `getDocumentsBySection(section)` — filter by `'journals'`, `'briefs'`, or `'documents'`
+- `getDocumentsBySubfolder(subfolder)` — filter by `'dirt-roamers'`, `'system'`, etc.
+- `SCAN_DIRECTORIES` — exported constant for inspection/extension
 
 ### API
 

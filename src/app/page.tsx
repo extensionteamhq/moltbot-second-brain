@@ -1,117 +1,136 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef, useTransition, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { useSidebar } from '@/lib/SidebarContext';
+import { useState, useEffect, useRef, useTransition, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { useSidebar } from "@/lib/SidebarContext";
 
 /**
  * Document interface
  */
 interface Document {
-  slug: string;
-  title: string;
-  content: string;
-  tags: string[];
-  date: string;
-  created: string;
-  updated: string;
-  excerpt: string;
+    slug: string;
+    title: string;
+    content: string;
+    tags: string[];
+    date: string;
+    created: string;
+    updated: string;
+    excerpt: string;
 }
 
 /**
  * Category Tags (Primary) - Business/Topic level
  */
-const CATEGORIES: Record<string, { light: string; dark: string; label: string }> = {
-  'anchor-staff': { 
-    light: 'bg-blue-200 text-blue-800 hover:bg-blue-300', 
-    dark: 'bg-blue-600 text-white',
-    label: 'Anchor & Staff'
-  },
-  'mr-mateo-moore': { 
-    light: 'bg-purple-200 text-purple-800 hover:bg-purple-300', 
-    dark: 'bg-purple-600 text-white',
-    label: 'Mr Mateo Moore'
-  },
-  'dirt-roamers': { 
-    light: 'bg-orange-200 text-orange-800 hover:bg-orange-300', 
-    dark: 'bg-orange-600 text-white',
-    label: 'Dirt Roamers'
-  },
-  'rank-n-soar': { 
-    light: 'bg-green-200 text-green-800 hover:bg-green-300', 
-    dark: 'bg-green-600 text-white',
-    label: 'Rank-n-Soar'
-  },
-  'partner-with-mateo': { 
-    light: 'bg-teal-200 text-teal-800 hover:bg-teal-300', 
-    dark: 'bg-teal-600 text-white',
-    label: 'Partner With Mateo'
-  },
-  'marketing': { 
-    light: 'bg-rose-200 text-rose-800 hover:bg-rose-300', 
-    dark: 'bg-rose-600 text-white',
-    label: 'Marketing'
-  },
-  'system': { 
-    light: 'bg-slate-200 text-slate-800 hover:bg-slate-300', 
-    dark: 'bg-slate-600 text-white',
-    label: 'System'
-  },
-  'other': { 
-    light: 'bg-gray-200 text-gray-800 hover:bg-gray-300', 
-    dark: 'bg-gray-600 text-white',
-    label: 'Other'
-  },
+const CATEGORIES: Record<
+    string,
+    { light: string; dark: string; label: string }
+> = {
+    "anchor-staff": {
+        light: "bg-blue-200 text-blue-800 hover:bg-blue-300",
+        dark: "bg-blue-600 text-white",
+        label: "Anchor & Staff",
+    },
+    "mr-mateo-moore": {
+        light: "bg-purple-200 text-purple-800 hover:bg-purple-300",
+        dark: "bg-purple-600 text-white",
+        label: "Mr Mateo Moore",
+    },
+    "dirt-roamers": {
+        light: "bg-orange-200 text-orange-800 hover:bg-orange-300",
+        dark: "bg-orange-600 text-white",
+        label: "Dirt Roamers",
+    },
+    "rank-n-soar": {
+        light: "bg-green-200 text-green-800 hover:bg-green-300",
+        dark: "bg-green-600 text-white",
+        label: "Rank-n-Soar",
+    },
+    "partner-with-mateo": {
+        light: "bg-teal-200 text-teal-800 hover:bg-teal-300",
+        dark: "bg-teal-600 text-white",
+        label: "Partner With Mateo",
+    },
+    marketing: {
+        light: "bg-rose-200 text-rose-800 hover:bg-rose-300",
+        dark: "bg-rose-600 text-white",
+        label: "Marketing",
+    },
+    system: {
+        light: "bg-slate-200 text-slate-800 hover:bg-slate-300",
+        dark: "bg-slate-600 text-white",
+        label: "System",
+    },
+    journal: {
+        light: "bg-blue-200 text-blue-800 hover:bg-blue-300",
+        dark: "bg-blue-600 text-white",
+        label: "Journal",
+    },
+    brief: {
+        light: "bg-amber-200 text-amber-800 hover:bg-amber-300",
+        dark: "bg-amber-600 text-white",
+        label: "Brief",
+    },
+    other: {
+        light: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+        dark: "bg-gray-600 text-white",
+        label: "Other",
+    },
 };
 
 /**
  * Type Tags (Secondary) - Document type level
  */
 const TYPES: Record<string, { color: string; label: string }> = {
-  'guide': { color: 'bg-sky-500', label: 'Guide' },
-  'newsletter': { color: 'bg-amber-500', label: 'Newsletter' },
-  'sop': { color: 'bg-rose-500', label: 'SOP' },
-  'email-sequence': { color: 'bg-teal-500', label: 'Email Sequence' },
-  'script': { color: 'bg-pink-500', label: 'Script' },
-  'notes': { color: 'bg-indigo-500', label: 'Notes' },
-  'journal': { color: 'bg-blue-500', label: 'Journal' },
-  'ideas': { color: 'bg-violet-500', label: 'Ideas' },
-  'research': { color: 'bg-emerald-500', label: 'Research' },
-  'template': { color: 'bg-cyan-500', label: 'Template' },
-  'social-media': { color: 'bg-fuchsia-500', label: 'Social Media' },
-  'framework': { color: 'bg-lime-500', label: 'Framework' },
-  'uncategorized': { color: 'bg-gray-400', label: 'Uncategorized' },
+    guide: { color: "bg-sky-500", label: "Guide" },
+    newsletter: { color: "bg-amber-500", label: "Newsletter" },
+    sop: { color: "bg-rose-500", label: "SOP" },
+    "email-sequence": { color: "bg-teal-500", label: "Email Sequence" },
+    script: { color: "bg-pink-500", label: "Script" },
+    notes: { color: "bg-indigo-500", label: "Notes" },
+    ideas: { color: "bg-violet-500", label: "Ideas" },
+    research: { color: "bg-emerald-500", label: "Research" },
+    template: { color: "bg-cyan-500", label: "Template" },
+    "social-media": { color: "bg-fuchsia-500", label: "Social Media" },
+    framework: { color: "bg-lime-500", label: "Framework" },
+    uncategorized: { color: "bg-gray-400", label: "Uncategorized" },
 };
 
 /**
  * Categorize a tag
  */
-function categorizeTag(tag: string): { type: 'category' | 'doctype' | 'other'; key: string } {
-  const normalizedTag = tag.toLowerCase().replace(/\s+/g, '-');
-  if (CATEGORIES[normalizedTag]) return { type: 'category', key: normalizedTag };
-  if (TYPES[normalizedTag]) return { type: 'doctype', key: normalizedTag };
-  return { type: 'other', key: tag };
+function categorizeTag(tag: string): {
+    type: "category" | "doctype" | "other";
+    key: string;
+} {
+    const normalizedTag = tag.toLowerCase().replace(/\s+/g, "-");
+    if (CATEGORIES[normalizedTag])
+        return { type: "category", key: normalizedTag };
+    if (TYPES[normalizedTag]) return { type: "doctype", key: normalizedTag };
+    return { type: "other", key: tag };
 }
 
 /**
  * Get category and types from tags
  */
-function getTagCategories(tags: string[]): { category: string | null; types: string[] } {
-  let category: string | null = null;
-  const types: string[] = [];
-  
-  for (const tag of tags) {
-    const cat = categorizeTag(tag);
-    if (cat.type === 'category' && !category) {
-      category = cat.key;
-    } else if (cat.type === 'doctype') {
-      types.push(cat.key);
+function getTagCategories(tags: string[]): {
+    category: string | null;
+    types: string[];
+} {
+    let category: string | null = null;
+    const types: string[] = [];
+
+    for (const tag of tags) {
+        const cat = categorizeTag(tag);
+        if (cat.type === "category" && !category) {
+            category = cat.key;
+        } else if (cat.type === "doctype") {
+            types.push(cat.key);
+        }
     }
-  }
-  
-  return { category, types };
+
+    return { category, types };
 }
 
 /**
@@ -119,456 +138,552 @@ function getTagCategories(tags: string[]): { category: string | null; types: str
  * Converts UTC timestamps to Eastern Time
  */
 function formatDateTime(dateStr: string): string {
-  const date = new Date(dateStr);
-  
-  // Convert to ET (UTC-5 or UTC-4 depending on DST)
-  // Using Intl.DateTimeFormat for proper timezone handling
-  const etFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
-  
-  const parts = etFormatter.formatToParts(date);
-  const year = parts.find(p => p.type === 'year')?.value;
-  const month = parts.find(p => p.type === 'month')?.value;
-  const day = parts.find(p => p.type === 'day')?.value;
-  const hour = parts.find(p => p.type === 'hour')?.value;
-  const minute = parts.find(p => p.type === 'minute')?.value;
-  
-  return `${year}-${month}-${day} ${hour}:${minute} ET`;
+    const date = new Date(dateStr);
+
+    // Convert to ET (UTC-5 or UTC-4 depending on DST)
+    // Using Intl.DateTimeFormat for proper timezone handling
+    const etFormatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    });
+
+    const parts = etFormatter.formatToParts(date);
+    const year = parts.find((p) => p.type === "year")?.value;
+    const month = parts.find((p) => p.type === "month")?.value;
+    const day = parts.find((p) => p.type === "day")?.value;
+    const hour = parts.find((p) => p.type === "hour")?.value;
+    const minute = parts.find((p) => p.type === "minute")?.value;
+
+    return `${year}-${month}-${day} ${hour}:${minute} ET`;
 }
 
 /**
  * Documents Page Component (Internal)
  */
 function HomeContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  
-  const [documents, setDocuments] = useState<Document[]>([]);
-  const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
-  const { isOpen: sidebarOpen, close: closeSidebar } = useSidebar();
-  const mainContentRef = useRef<HTMLElement>(null);
-  const [, startTransition] = useTransition();
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
-  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
-  const [availableTypes, setAvailableTypes] = useState<string[]>([]);
+    const [documents, setDocuments] = useState<Document[]>([]);
+    const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(
+        null,
+    );
+    const [selectedType, setSelectedType] = useState<string | null>(null);
+    const { isOpen: sidebarOpen, close: closeSidebar } = useSidebar();
+    const mainContentRef = useRef<HTMLElement>(null);
+    const [, startTransition] = useTransition();
 
-  useEffect(() => {
-    fetch('/api/documents')
-      .then(res => res.json())
-      .then(data => {
-        // Sort by updated date (most recent first)
-        const sortedDocs = [...data.documents].sort((a: Document, b: Document) => 
-          new Date(b.updated).getTime() - new Date(a.updated).getTime()
-        );
-        setDocuments(sortedDocs);
-        
-        // Check URL for document slug
-        const docSlug = searchParams.get('doc');
-        
-        if (docSlug && sortedDocs.length > 0) {
-          // Try to find document matching the URL slug
-          const urlDoc = sortedDocs.find(d => d.slug === docSlug);
-          setSelectedDoc(urlDoc || sortedDocs[0]);
-        } else if (sortedDocs.length > 0) {
-          setSelectedDoc(sortedDocs[0]);
+    const [availableCategories, setAvailableCategories] = useState<string[]>(
+        [],
+    );
+    const [availableTypes, setAvailableTypes] = useState<string[]>([]);
+
+    useEffect(() => {
+        fetch("/api/documents")
+            .then((res) => res.json())
+            .then((data) => {
+                // Sort by updated date (most recent first)
+                const sortedDocs = [...data.documents].sort(
+                    (a: Document, b: Document) =>
+                        new Date(b.updated).getTime() -
+                        new Date(a.updated).getTime(),
+                );
+                setDocuments(sortedDocs);
+
+                // Check URL for document slug
+                const docSlug = searchParams.get("doc");
+
+                if (docSlug && sortedDocs.length > 0) {
+                    // Try to find document matching the URL slug
+                    const urlDoc = sortedDocs.find((d) => d.slug === docSlug);
+                    setSelectedDoc(urlDoc || sortedDocs[0]);
+                } else if (sortedDocs.length > 0) {
+                    setSelectedDoc(sortedDocs[0]);
+                }
+
+                // Extract available tags
+                const categories = new Set<string>();
+                const types = new Set<string>();
+
+                for (const doc of sortedDocs) {
+                    for (const tag of doc.tags) {
+                        const cat = categorizeTag(tag);
+                        if (cat.type === "category") categories.add(cat.key);
+                        if (cat.type === "doctype") types.add(cat.key);
+                    }
+                }
+
+                setAvailableCategories(Array.from(categories));
+                setAvailableTypes(Array.from(types));
+            });
+    }, [searchParams]);
+
+    // Separate effect to handle URL changes after documents are loaded
+    useEffect(() => {
+        if (documents.length === 0) return;
+
+        const docSlug = searchParams.get("doc");
+        if (docSlug) {
+            const urlDoc = documents.find((d) => d.slug === docSlug);
+            if (urlDoc && urlDoc.slug !== selectedDoc?.slug) {
+                setSelectedDoc(urlDoc);
+            }
         }
-        
-        // Extract available tags
-        const categories = new Set<string>();
-        const types = new Set<string>();
-        
-        for (const doc of sortedDocs) {
-          for (const tag of doc.tags) {
-            const cat = categorizeTag(tag);
-            if (cat.type === 'category') categories.add(cat.key);
-            if (cat.type === 'doctype') types.add(cat.key);
-          }
-        }
-        
-        setAvailableCategories(Array.from(categories));
-        setAvailableTypes(Array.from(types));
-      });
-  }, [searchParams]);
-  
-  // Separate effect to handle URL changes after documents are loaded
-  useEffect(() => {
-    if (documents.length === 0) return;
-    
-    const docSlug = searchParams.get('doc');
-    if (docSlug) {
-      const urlDoc = documents.find(d => d.slug === docSlug);
-      if (urlDoc && urlDoc.slug !== selectedDoc?.slug) {
-        setSelectedDoc(urlDoc);
-      }
-    }
-  }, [searchParams, documents, selectedDoc]);
+    }, [searchParams, documents, selectedDoc]);
 
-  // Filter documents (include all - journals and documents)
-  const filteredDocs = documents.filter(doc => {
-    const matchesSearch = searchQuery === '' || 
-      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.content.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const { category, types } = getTagCategories(doc.tags);
-    const matchesCategory = selectedCategory === null || category === selectedCategory;
-    const matchesType = selectedType === null || types.includes(selectedType);
-    
-    return matchesSearch && matchesCategory && matchesType;
-  });
+    // Filter documents (include all - journals and documents)
+    const filteredDocs = documents.filter((doc) => {
+        const matchesSearch =
+            searchQuery === "" ||
+            doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            doc.content.toLowerCase().includes(searchQuery.toLowerCase());
 
-  const handleDocSelect = (doc: Document) => {
-    closeSidebar();
-    startTransition(() => {
-      setSelectedDoc(doc);
-      // Update URL with document slug for shareable links
-      router.push(`/?doc=${doc.slug}`, { scroll: false });
+        const { category, types } = getTagCategories(doc.tags);
+        const matchesCategory =
+            selectedCategory === null || category === selectedCategory;
+        const matchesType =
+            selectedType === null || types.includes(selectedType);
+
+        return matchesSearch && matchesCategory && matchesType;
     });
-    requestAnimationFrame(() => {
-      if (mainContentRef.current) {
-        mainContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-  };
 
-  const handleDownload = () => {
-    if (!selectedDoc) return;
-    
-    const frontmatter = `---
+    const handleDocSelect = (doc: Document) => {
+        closeSidebar();
+        startTransition(() => {
+            setSelectedDoc(doc);
+            // Update URL with document slug for shareable links
+            router.push(`/?doc=${doc.slug}`, { scroll: false });
+        });
+        requestAnimationFrame(() => {
+            if (mainContentRef.current) {
+                mainContentRef.current.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        });
+    };
+
+    const handleDownload = () => {
+        if (!selectedDoc) return;
+
+        const frontmatter = `---
 title: "${selectedDoc.title}"
-tags: [${selectedDoc.tags.join(', ')}]
+tags: [${selectedDoc.tags.join(", ")}]
 date: ${selectedDoc.date}
 ---
 
 `;
-    const fullContent = frontmatter + selectedDoc.content;
-    const blob = new Blob([fullContent], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${selectedDoc.slug}.md`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
+        const fullContent = frontmatter + selectedDoc.content;
+        const blob = new Blob([fullContent], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${selectedDoc.slug}.md`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
 
-  const clearFilters = () => {
-    setSelectedCategory(null);
-    setSelectedType(null);
-  };
+    const clearFilters = () => {
+        setSelectedCategory(null);
+        setSelectedType(null);
+    };
 
-  return (
-    <div className="flex h-[calc(100vh-3.5rem)] relative">
-      {/* Overlay for mobile - closes sidebar when tapping outside */}
-      {sidebarOpen && (
-        <div 
-          className="md:hidden fixed inset-0 bg-black/50 z-30"
-          onClick={closeSidebar}
-        />
-      )}
+    return (
+        <div className="flex h-[calc(100vh-3.5rem)] relative">
+            {/* Overlay for mobile - closes sidebar when tapping outside */}
+            {sidebarOpen && (
+                <div
+                    className="md:hidden fixed inset-0 bg-black/50 z-30"
+                    onClick={closeSidebar}
+                />
+            )}
 
-      {/* Sidebar */}
-      <aside className={`
+            {/* Sidebar */}
+            <aside
+                className={`
         fixed md:relative inset-y-0 left-0 z-40
         w-72 bg-[var(--sidebar)] border-r border-[var(--border)] flex flex-col
         transform transition-transform duration-200 ease-in-out
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         top-14 md:top-0 h-[calc(100vh-3.5rem)]
       `}>
-        {/* Search */}
-        <div className="p-3">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-3 py-2 bg-[var(--card)] border border-[var(--border)] rounded-lg text-sm focus:outline-none focus:border-[var(--accent)]"
-          />
-        </div>
-
-        {/* Category Tags */}
-        <div className="px-3 pb-2">
-          <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
-            Category
-          </div>
-          <div className="flex flex-wrap gap-1">
-            <button
-              onClick={clearFilters}
-              className={`px-2 py-1 text-xs rounded-full transition ${
-                selectedCategory === null && selectedType === null
-                  ? 'bg-[var(--accent)] text-white' 
-                  : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
-              }`}
-            >
-              All
-            </button>
-            {availableCategories.map(key => {
-              const config = CATEGORIES[key];
-              if (!config) return null;
-              const isSelected = selectedCategory === key;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setSelectedCategory(isSelected ? null : key)}
-                  className={`px-2 py-1 text-xs rounded-full transition ${
-                    isSelected ? config.dark : config.light
-                  }`}
-                >
-                  {config.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Type Tags */}
-        <div className="px-3 pb-3">
-          <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
-            Type
-          </div>
-          <div className="flex flex-wrap gap-1">
-            {availableTypes.map(key => {
-              const config = TYPES[key];
-              if (!config) return null;
-              const isSelected = selectedType === key;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setSelectedType(isSelected ? null : key)}
-                  className={`px-2 py-1 text-xs rounded-full transition ${
-                    isSelected 
-                      ? `${config.color} text-white` 
-                      : 'bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]'
-                  }`}
-                >
-                  {config.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Active Filters */}
-        {(selectedCategory || selectedType) && (
-          <div className="px-3 pb-2">
-            <button
-              onClick={clearFilters}
-              className="text-xs text-[var(--accent)] hover:underline flex items-center gap-1"
-            >
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              Clear filters
-            </button>
-          </div>
-        )}
-
-        {/* Document List */}
-        <div className="flex-1 overflow-y-auto border-t border-[var(--border)]">
-          {filteredDocs.map(doc => (
-            <DocItem
-              key={doc.slug}
-              doc={doc}
-              isSelected={selectedDoc?.slug === doc.slug}
-              onClick={() => handleDocSelect(doc)}
-            />
-          ))}
-
-          {filteredDocs.length === 0 && (
-            <div className="px-4 py-8 text-center text-[var(--muted)] text-sm">
-              No items found
-            </div>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="p-3 border-t border-[var(--border)] text-xs text-[var(--muted)]">
-          {filteredDocs.length} of {documents.length} items
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main ref={mainContentRef} className="flex-1 overflow-y-auto md:ml-0">
-        {selectedDoc ? (
-          <article className="max-w-4xl mx-auto p-4 md:p-8">
-            {/* Document Header */}
-            <header className="mb-6 md:mb-8 pb-4 md:pb-6 border-b border-[var(--border)]">
-              <div className="flex items-center justify-between mb-3">
-                <DocumentTags tags={selectedDoc.tags} />
-                <button
-                  onClick={handleDownload}
-                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-[var(--card)] hover:bg-[var(--border)] border border-[var(--border)] rounded-lg transition"
-                  title="Download as Markdown"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  <span className="hidden sm:inline">Download</span>
-                </button>
-              </div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">{selectedDoc.title}</h1>
-              <div className="flex flex-wrap gap-3 text-[var(--muted)] text-sm">
-                <div className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  <span>Created: {formatDateTime(selectedDoc.created)}</span>
+                {/* Search */}
+                <div className="p-3">
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full px-3 py-2 bg-[var(--card)] border border-[var(--border)] rounded-lg text-sm focus:outline-none focus:border-[var(--accent)]"
+                    />
                 </div>
-                {selectedDoc.created !== selectedDoc.updated && (
-                  <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                    <span>Updated: {formatDateTime(selectedDoc.updated)}</span>
-                  </div>
-                )}
-              </div>
-            </header>
 
-            {/* Document Content */}
-            <div className="prose prose-sm md:prose-base">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {selectedDoc.content}
-              </ReactMarkdown>
-            </div>
-          </article>
-        ) : (
-          <div className="flex items-center justify-center h-full text-[var(--muted)]">
-            <div className="text-center">
-              <div className="text-6xl mb-4">🧠</div>
-              <p>Select an item to view</p>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
-  );
+                {/* Category Tags */}
+                <div className="px-3 pb-2">
+                    <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
+                        Category
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                        <button
+                            onClick={clearFilters}
+                            className={`px-2 py-1 text-xs rounded-full transition ${
+                                selectedCategory === null &&
+                                selectedType === null
+                                    ? "bg-[var(--accent)] text-white"
+                                    : "bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]"
+                            }`}>
+                            All
+                        </button>
+                        {availableCategories.map((key) => {
+                            const config = CATEGORIES[key];
+                            if (!config) return null;
+                            const isSelected = selectedCategory === key;
+                            return (
+                                <button
+                                    key={key}
+                                    onClick={() =>
+                                        setSelectedCategory(
+                                            isSelected ? null : key,
+                                        )
+                                    }
+                                    className={`px-2 py-1 text-xs rounded-full transition ${
+                                        isSelected ? config.dark : config.light
+                                    }`}>
+                                    {config.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Type Tags */}
+                <div className="px-3 pb-3">
+                    <div className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider mb-2">
+                        Type
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                        {availableTypes.map((key) => {
+                            const config = TYPES[key];
+                            if (!config) return null;
+                            const isSelected = selectedType === key;
+                            return (
+                                <button
+                                    key={key}
+                                    onClick={() =>
+                                        setSelectedType(isSelected ? null : key)
+                                    }
+                                    className={`px-2 py-1 text-xs rounded-full transition ${
+                                        isSelected
+                                            ? `${config.color} text-white`
+                                            : "bg-[var(--card)] text-[var(--muted)] hover:bg-[var(--border)]"
+                                    }`}>
+                                    {config.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Active Filters */}
+                {(selectedCategory || selectedType) && (
+                    <div className="px-3 pb-2">
+                        <button
+                            onClick={clearFilters}
+                            className="text-xs text-[var(--accent)] hover:underline flex items-center gap-1">
+                            <svg
+                                className="w-3 h-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                            Clear filters
+                        </button>
+                    </div>
+                )}
+
+                {/* Document List */}
+                <div className="flex-1 overflow-y-auto border-t border-[var(--border)]">
+                    {filteredDocs.map((doc) => (
+                        <DocItem
+                            key={doc.slug}
+                            doc={doc}
+                            isSelected={selectedDoc?.slug === doc.slug}
+                            onClick={() => handleDocSelect(doc)}
+                        />
+                    ))}
+
+                    {filteredDocs.length === 0 && (
+                        <div className="px-4 py-8 text-center text-[var(--muted)] text-sm">
+                            No items found
+                        </div>
+                    )}
+                </div>
+
+                {/* Footer */}
+                <div className="p-3 border-t border-[var(--border)] text-xs text-[var(--muted)]">
+                    {filteredDocs.length} of {documents.length} items
+                </div>
+            </aside>
+
+            {/* Main Content */}
+            <main
+                ref={mainContentRef}
+                className="flex-1 overflow-y-auto md:ml-0">
+                {selectedDoc ? (
+                    <article className="max-w-4xl mx-auto p-4 md:p-8">
+                        {/* Document Header */}
+                        <header className="mb-6 md:mb-8 pb-4 md:pb-6 border-b border-[var(--border)]">
+                            <div className="flex items-center justify-between mb-3">
+                                <DocumentTags tags={selectedDoc.tags} />
+                                <button
+                                    onClick={handleDownload}
+                                    className="flex items-center gap-2 px-3 py-1.5 text-sm bg-[var(--card)] hover:bg-[var(--border)] border border-[var(--border)] rounded-lg transition"
+                                    title="Download as Markdown">
+                                    <svg
+                                        className="w-4 h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                        />
+                                    </svg>
+                                    <span className="hidden sm:inline">
+                                        Download
+                                    </span>
+                                </button>
+                            </div>
+                            <h1 className="text-2xl md:text-3xl font-bold mb-2">
+                                {selectedDoc.title}
+                            </h1>
+                            <div className="flex flex-wrap gap-3 text-[var(--muted)] text-sm">
+                                <div className="flex items-center gap-1">
+                                    <svg
+                                        className="w-4 h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                        />
+                                    </svg>
+                                    <span>
+                                        Created:{" "}
+                                        {formatDateTime(selectedDoc.created)}
+                                    </span>
+                                </div>
+                                {selectedDoc.created !==
+                                    selectedDoc.updated && (
+                                    <div className="flex items-center gap-1">
+                                        <svg
+                                            className="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                            />
+                                        </svg>
+                                        <span>
+                                            Updated:{" "}
+                                            {formatDateTime(
+                                                selectedDoc.updated,
+                                            )}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </header>
+
+                        {/* Document Content */}
+                        <div className="prose prose-sm md:prose-base">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {selectedDoc.content}
+                            </ReactMarkdown>
+                        </div>
+                    </article>
+                ) : (
+                    <div className="flex items-center justify-center h-full text-[var(--muted)]">
+                        <div className="text-center">
+                            <div className="text-6xl mb-4">🧠</div>
+                            <p>Select an item to view</p>
+                        </div>
+                    </div>
+                )}
+            </main>
+        </div>
+    );
 }
 
 /**
  * Document Tags Display - <Category>: <Type>|<Type>
  */
 function DocumentTags({ tags }: { tags: string[] }) {
-  const { category, types } = getTagCategories(tags);
-  
-  return (
-    <div className="flex items-center gap-2 flex-wrap">
-      {category && CATEGORIES[category] && (
-        <span className={`px-2 py-0.5 text-xs rounded-full ${CATEGORIES[category].dark}`}>
-          {CATEGORIES[category].label}
-        </span>
-      )}
-      {category && types.length > 0 && (
-        <span className="text-[var(--muted)]">:</span>
-      )}
-      {types.map((type, idx) => (
-        <span key={type} className="flex items-center">
-          {idx > 0 && <span className="text-[var(--muted)] mx-1">|</span>}
-          <span className={`px-2 py-0.5 text-xs rounded-full text-white ${TYPES[type]?.color || 'bg-gray-500'}`}>
-            {TYPES[type]?.label || type}
-          </span>
-        </span>
-      ))}
-      {!category && types.length === 0 && (
-        <span className="px-2 py-0.5 text-xs rounded-full bg-gray-500 text-white">
-          Uncategorized
-        </span>
-      )}
-    </div>
-  );
+    const { category, types } = getTagCategories(tags);
+
+    return (
+        <div className="flex items-center gap-2 flex-wrap">
+            {category && CATEGORIES[category] && (
+                <span
+                    className={`px-2 py-0.5 text-xs rounded-full ${CATEGORIES[category].dark}`}>
+                    {CATEGORIES[category].label}
+                </span>
+            )}
+            {category && types.length > 0 && (
+                <span className="text-[var(--muted)]">:</span>
+            )}
+            {types.map((type, idx) => (
+                <span key={type} className="flex items-center">
+                    {idx > 0 && (
+                        <span className="text-[var(--muted)] mx-1">|</span>
+                    )}
+                    <span
+                        className={`px-2 py-0.5 text-xs rounded-full text-white ${TYPES[type]?.color || "bg-gray-500"}`}>
+                        {TYPES[type]?.label || type}
+                    </span>
+                </span>
+            ))}
+            {!category && types.length === 0 && (
+                <span className="px-2 py-0.5 text-xs rounded-full bg-gray-500 text-white">
+                    Uncategorized
+                </span>
+            )}
+        </div>
+    );
 }
 
 /**
  * Document Item for sidebar - shows title, timestamp, and tags
  */
-function DocItem({ 
-  doc, 
-  isSelected, 
-  onClick,
-}: { 
-  doc: Document; 
-  isSelected: boolean; 
-  onClick: () => void;
+function DocItem({
+    doc,
+    isSelected,
+    onClick,
+}: {
+    doc: Document;
+    isSelected: boolean;
+    onClick: () => void;
 }) {
-  const { category, types } = getTagCategories(doc.tags);
-  
-  return (
-    <button
-      onClick={onClick}
-      className={`w-full text-left px-4 py-3 transition ${
-        isSelected 
-          ? 'bg-[var(--accent)]/10 border-l-2 border-[var(--accent)]' 
-          : 'hover:bg-[var(--card)] border-l-2 border-transparent'
-      }`}
-    >
-      <div className="font-medium text-sm truncate">{doc.title}</div>
-      <div className="text-xs text-[var(--muted)] mt-1">
-        {doc.created !== doc.updated ? `Updated: ${formatDateTime(doc.updated)}` : formatDateTime(doc.created)}
-      </div>
-      {/* Tags under timestamp */}
-      <div className="flex items-center gap-1 mt-2 flex-wrap">
-        {category && CATEGORIES[category] && (
-          <span 
-            className="px-1.5 py-0.5 text-[10px] rounded-full text-white"
-            style={{
-              backgroundColor: category === 'anchor-staff' ? '#2563eb' :
-                              category === 'mr-mateo-moore' ? '#9333ea' :
-                              category === 'dirt-roamers' ? '#ea580c' :
-                              category === 'rank-n-soar' ? '#16a34a' :
-                              category === 'partner-with-mateo' ? '#0d9488' :
-                              category === 'marketing' ? '#e11d48' :
-                              category === 'system' ? '#475569' :
-                              '#4b5563'
-            }}
-          >
-            {CATEGORIES[category].label}
-          </span>
-        )}
-        {types.map(type => (
-          <span
-            key={type}
-            className="px-1.5 py-0.5 text-[10px] rounded-full text-white"
-            style={{
-              backgroundColor: type === 'guide' ? '#0ea5e9' :
-                              type === 'newsletter' ? '#f59e0b' :
-                              type === 'sop' ? '#f43f5e' :
-                              type === 'email-sequence' ? '#14b8a6' :
-                              type === 'script' ? '#ec4899' :
-                              type === 'notes' ? '#6366f1' :
-                              type === 'journal' ? '#3b82f6' :
-                              type === 'ideas' ? '#8b5cf6' :
-                              type === 'research' ? '#10b981' :
-                              type === 'template' ? '#06b6d4' :
-                              type === 'social-media' ? '#d946ef' :
-                              type === 'framework' ? '#84cc16' :
-                              '#6b7280'
-            }}
-          >
-            {TYPES[type]?.label || type}
-          </span>
-        ))}
-      </div>
-    </button>
-  );
+    const { category, types } = getTagCategories(doc.tags);
+
+    return (
+        <button
+            onClick={onClick}
+            className={`w-full text-left px-4 py-3 transition ${
+                isSelected
+                    ? "bg-[var(--accent)]/10 border-l-2 border-[var(--accent)]"
+                    : "hover:bg-[var(--card)] border-l-2 border-transparent"
+            }`}>
+            <div className="font-medium text-sm truncate">{doc.title}</div>
+            <div className="text-xs text-[var(--muted)] mt-1">
+                {doc.created !== doc.updated
+                    ? `Updated: ${formatDateTime(doc.updated)}`
+                    : formatDateTime(doc.created)}
+            </div>
+            {/* Tags under timestamp */}
+            <div className="flex items-center gap-1 mt-2 flex-wrap">
+                {category && CATEGORIES[category] && (
+                    <span
+                        className="px-1.5 py-0.5 text-[10px] rounded-full text-white"
+                        style={{
+                            backgroundColor:
+                                category === "anchor-staff"
+                                    ? "#2563eb"
+                                    : category === "mr-mateo-moore"
+                                      ? "#9333ea"
+                                      : category === "dirt-roamers"
+                                        ? "#ea580c"
+                                        : category === "rank-n-soar"
+                                          ? "#16a34a"
+                                          : category === "partner-with-mateo"
+                                            ? "#0d9488"
+                                            : category === "marketing"
+                                              ? "#e11d48"
+                                              : category === "system"
+                                                ? "#475569"
+                                                : category === "journal"
+                                                  ? "#2563eb"
+                                                  : category === "brief"
+                                                    ? "#d97706"
+                                                    : "#4b5563",
+                        }}>
+                        {CATEGORIES[category].label}
+                    </span>
+                )}
+                {types.map((type) => (
+                    <span
+                        key={type}
+                        className="px-1.5 py-0.5 text-[10px] rounded-full text-white"
+                        style={{
+                            backgroundColor:
+                                type === "guide"
+                                    ? "#0ea5e9"
+                                    : type === "newsletter"
+                                      ? "#f59e0b"
+                                      : type === "sop"
+                                        ? "#f43f5e"
+                                        : type === "email-sequence"
+                                          ? "#14b8a6"
+                                          : type === "script"
+                                            ? "#ec4899"
+                                            : type === "notes"
+                                              ? "#6366f1"
+                                              : type === "journal"
+                                                ? "#3b82f6"
+                                                : type === "ideas"
+                                                  ? "#8b5cf6"
+                                                  : type === "research"
+                                                    ? "#10b981"
+                                                    : type === "template"
+                                                      ? "#06b6d4"
+                                                      : type === "social-media"
+                                                        ? "#d946ef"
+                                                        : type === "framework"
+                                                          ? "#84cc16"
+                                                          : "#6b7280",
+                        }}>
+                        {TYPES[type]?.label || type}
+                    </span>
+                ))}
+            </div>
+        </button>
+    );
 }
 
 /**
  * Home Page with Suspense Boundary
  */
 export default function Home() {
-  return (
-    <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
-      <HomeContent />
-    </Suspense>
-  );
+    return (
+        <Suspense
+            fallback={
+                <div className="flex items-center justify-center h-screen">
+                    Loading...
+                </div>
+            }>
+            <HomeContent />
+        </Suspense>
+    );
 }

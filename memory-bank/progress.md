@@ -56,6 +56,14 @@
 
 **Application:** Fully functional. No known bugs as of 2026-03-02.
 
+### ✅ FIXED: Markdown lists not rendering bullets/numbers (2026-03-02)
+
+**What happened:** Tailwind CSS v4 preflight resets `list-style: none` on all `ul`/`ol` elements globally. The `.prose` styles in `globals.css` restored `padding-left` but never restored `list-style-type`, so `<ul>` and `<ol>` tags were present in the HTML but no bullets or numbers were visible.
+
+**Fix:** Split `.prose ul, .prose ol` into separate rules and added `list-style-type: disc` to `.prose ul` and `list-style-type: decimal` to `.prose ol`. Also added nested list styles (`circle`, `square`) in `globals.css`.
+
+**File changed:** `src/app/globals.css`
+
 **Content:** Active. Molly pushes new documents regularly (daily journals, research as needed).
 
 **Development:** In maintenance mode. Next major work items are the Supabase migration and CRUD interface — both require Mateo's approval before starting.
@@ -101,20 +109,21 @@ tags: [notes, '2026-03-02']
 
 1. **Frontmatter YAML type coercion** — `gray-matter`/`js-yaml` (YAML 1.1) auto-converts date-like, numeric, and boolean YAML values to native JS types. Tags are now protected via `.map(String)` in `documents.ts`, but be aware other frontmatter fields may also be coerced (e.g. a bare `date: 2026-03-02` becomes a `Date` object, not a string — currently handled downstream but something to watch).
 
-2. **documents/ is flat** — All markdown files must be directly in `documents/`. Subdirectories are not traversed. (There is a `documents/briefs/` subdirectory that exists but its contents won't appear in the UI unless the document parser is updated to support recursive traversal.)
+2. ✅ **FIXED: documents/ is flat** — `documents/` now has company/focus subfolders, and `journals/` and `briefs/` are root-level directories. `src/lib/documents.ts` was refactored to use `SCAN_DIRECTORIES` for recursive multi-directory scanning. All 200+ documents are served from their new locations.
 
 3. **No write API** — Documents cannot be created or edited through the UI. This is intentional for now, pending the CRUD interface feature.
 
 ## Milestone History
 
-| Date          | Milestone                                                                                           |
-| ------------- | --------------------------------------------------------------------------------------------------- |
-| 2026-01-31    | Second Brain deployed on Vercel, pipeline working                                                   |
-| 2026-02-07    | Kanban board implemented, mobile nav fixed, email sequences created                                 |
-| 2026-02-07–21 | 25+ Dirt Roamers research documents created                                                         |
-| 2026-02-12    | Kanban data source confusion resolved (kanban.json vs KANBAN.md)                                    |
-| 2026-02-26–28 | Additional research updates (Land Portal affiliate, Land AI, skip tracing)                          |
-| 2026-03-02    | Workspace files synced, memory bank initialized                                                     |
-| 2026-03-02    | Accountability Grid refactored — dynamic config-driven habits, mobile-first, JSDoc                  |
-| 2026-03-02    | Meditation added as 4th habit; Feb 27–Mar 2 daily files updated                                     |
-| 2026-03-02    | **Kanban feature removed** — tasks archived to `documents/kanban-tasks-archive.md`; Trello now used |
+| Date          | Milestone                                                                                                                                                                                                                      |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 2026-01-31    | Second Brain deployed on Vercel, pipeline working                                                                                                                                                                              |
+| 2026-02-07    | Kanban board implemented, mobile nav fixed, email sequences created                                                                                                                                                            |
+| 2026-02-07–21 | 25+ Dirt Roamers research documents created                                                                                                                                                                                    |
+| 2026-02-12    | Kanban data source confusion resolved (kanban.json vs KANBAN.md)                                                                                                                                                               |
+| 2026-02-26–28 | Additional research updates (Land Portal affiliate, Land AI, skip tracing)                                                                                                                                                     |
+| 2026-03-02    | Workspace files synced, memory bank initialized                                                                                                                                                                                |
+| 2026-03-02    | Accountability Grid refactored — dynamic config-driven habits, mobile-first, JSDoc                                                                                                                                             |
+| 2026-03-02    | Meditation added as 4th habit; Feb 27–Mar 2 daily files updated                                                                                                                                                                |
+| 2026-03-02    | **Kanban feature removed** — tasks archived to `documents/system/kanban-tasks-archive.md`; Trello now used                                                                                                                     |
+| 2026-03-02    | **Documents reorganization** — `documents/` split into 7 company/focus subfolders; `journals/` and `briefs/` moved to project root; `documents.ts` refactored for recursive multi-dir scanning; 204 files tagged and organized |
