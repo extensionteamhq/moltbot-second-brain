@@ -82,31 +82,36 @@ Happy organizing! 🧠
   }
 
   const files = fs.readdirSync(DOCUMENTS_DIR).filter(f => f.endsWith('.md'));
-  
-  const documents = files.map(filename => {
+
+  const documents = files.flatMap(filename => {
     const filePath = path.join(DOCUMENTS_DIR, filename);
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const { data, content } = matter(fileContent);
-    const stats = fs.statSync(filePath);
-    
-    const slug = filename.replace('.md', '');
-    const excerpt = content.slice(0, 150).replace(/[#*`]/g, '').trim() + '...';
-    
-    // Date priority: created > date > file birthtime (keep as full ISO timestamp)
-    const created = data.created || data.date || stats.birthtime.toISOString();
-    // Updated priority: updated > file mtime (keep as full ISO timestamp)
-    const updated = data.updated || stats.mtime.toISOString();
-    
-    return {
-      slug,
-      title: data.title || slug,
-      content,
-      tags: data.tags || ['notes'],
-      date: data.date || created, // Keep date for backward compatibility
-      created,
-      updated,
-      excerpt,
-    };
+    try {
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      const { data, content } = matter(fileContent);
+      const stats = fs.statSync(filePath);
+
+      const slug = filename.replace('.md', '');
+      const excerpt = content.slice(0, 150).replace(/[#*`]/g, '').trim() + '...';
+
+      // Date priority: created > date > file birthtime (keep as full ISO timestamp)
+      const created = data.created || data.date || stats.birthtime.toISOString();
+      // Updated priority: updated > file mtime (keep as full ISO timestamp)
+      const updated = data.updated || stats.mtime.toISOString();
+
+      return [{
+        slug,
+        title: data.title || slug,
+        content,
+        tags: (data.tags || ['notes']).map(String),
+        date: data.date || created, // Keep date for backward compatibility
+        created,
+        updated,
+        excerpt,
+      }];
+    } catch (err) {
+      console.error(`[documents] Failed to parse ${filename}:`, err);
+      return [];
+    }
   });
 
   // Sort by date, newest first
