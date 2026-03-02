@@ -58,11 +58,14 @@
 
 ### ✅ FIXED: Markdown lists not rendering bullets/numbers (2026-03-02)
 
-**What happened:** Tailwind CSS v4 preflight resets `list-style: none` on all `ul`/`ol` elements globally. The `.prose` styles in `globals.css` restored `padding-left` but never restored `list-style-type`, so `<ul>` and `<ol>` tags were present in the HTML but no bullets or numbers were visible.
+**What happened:** Tailwind CSS v4 preflight resets `list-style: none` on all `ul`/`ol` elements globally. Even though `.prose` styles in `globals.css` had `padding-left`, they never restored `list-style-type`, so `<ul>`/`<ol>` tags were present in HTML but no bullets or numbers were visible. A CSS-only fix in `globals.css` was unreliable due to Tailwind v4 cascade layer ordering.
 
-**Fix:** Split `.prose ul, .prose ol` into separate rules and added `list-style-type: disc` to `.prose ul` and `list-style-type: decimal` to `.prose ol`. Also added nested list styles (`circle`, `square`) in `globals.css`.
+**Fix:** Two-part fix:
 
-**File changed:** `src/app/globals.css`
+1. Added `list-style-type: disc/decimal` to `.prose ul`/`.prose ol` in `globals.css` (CSS fallback)
+2. Added a `components` prop to `<ReactMarkdown>` in `src/app/page.tsx` that applies Tailwind utility classes (`list-disc`, `list-decimal`) directly to rendered `<ul>`, `<ol>`, and `<li>` elements — these utility classes live in `@layer utilities` which overrides `@layer base` (preflight), making this approach cascade-safe
+
+**Files changed:** `src/app/globals.css`, `src/app/page.tsx`
 
 **Content:** Active. Molly pushes new documents regularly (daily journals, research as needed).
 

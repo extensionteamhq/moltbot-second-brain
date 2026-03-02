@@ -519,7 +519,25 @@ date: ${selectedDoc.date}
 
                         {/* Document Content */}
                         <div className="prose prose-sm md:prose-base">
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                    ul: ({ children }) => (
+                                        <ul className="list-disc pl-6 my-4 space-y-1">
+                                            {children}
+                                        </ul>
+                                    ),
+                                    ol: ({ children }) => (
+                                        <ol className="list-decimal pl-6 my-4 space-y-1">
+                                            {children}
+                                        </ol>
+                                    ),
+                                    li: ({ children }) => (
+                                        <li className="leading-relaxed">
+                                            {children}
+                                        </li>
+                                    ),
+                                }}>
                                 {selectedDoc.content}
                             </ReactMarkdown>
                         </div>
