@@ -6,13 +6,13 @@ Molly (Mateo's AI assistant) resets memory between sessions. This Second Brain r
 
 ## Problems It Solves
 
-| Problem                           | Solution                                                 |
-| --------------------------------- | -------------------------------------------------------- |
-| AI memory resets between sessions | Documents committed to repo; Molly reads them on startup |
-| Research gets lost or scattered   | All research docs in `documents/` with tags and search   |
-| Task tracking is fragmented       | Kanban board in `data/kanban.json`, rendered in UI       |
-| Workspace files need versioning   | Git history tracks every change Molly makes              |
-| Mateo needs mobile access         | Responsive UI deployed on Vercel                         |
+| Problem                           | Solution                                                                         |
+| --------------------------------- | -------------------------------------------------------------------------------- |
+| AI memory resets between sessions | Documents committed to repo; Molly reads them on startup                         |
+| Research gets lost or scattered   | All research docs in `documents/` with tags and search                           |
+| Task tracking is fragmented       | Moved to **Trello** (external); old Kanban archived in `kanban-tasks-archive.md` |
+| Workspace files need versioning   | Git history tracks every change Molly makes                                      |
+| Mateo needs mobile access         | Responsive UI deployed on Vercel                                                 |
 
 ## How It Works
 
@@ -20,7 +20,7 @@ Molly (Mateo's AI assistant) resets memory between sessions. This Second Brain r
 2. **Molly commits + pushes** to the GitHub repo (`cd ~/clawd/projects/second-brain && git push`)
 3. **Vercel auto-deploys** within ~60 seconds
 4. **Mateo browses** documents via the web UI — search, filter by tag, read full content
-5. **Kanban board** at `/projects` shows current task state for both Molly's and Mateo's projects
+5. **Task management** is handled externally in **Trello** (Kanban feature removed from this app)
 
 ## User Experience Goals
 
@@ -28,12 +28,14 @@ Molly (Mateo's AI assistant) resets memory between sessions. This Second Brain r
 - **Mobile-first** — Mateo uses his phone; hamburger sidebar for document navigation on mobile
 - **Markdown fidelity** — Code blocks, tables, task lists all render properly
 - **Fast** — Vercel edge deployment, server-side rendering via Next.js
+- **Accountability** — Daily habit grid at `/accountability` for tracking Mateo's habits
 
 ## Key User: Mateo Moore
 
 - Accesses via phone and laptop
 - Primary need: find research docs and review Molly's work
-- Secondary need: check Kanban task status
+- Secondary need: check accountability grid
+- Task management is done in Trello (external)
 - Doesn't create documents through the UI (Molly does that via git push)
 
 ## Document Categories (Tags)
@@ -45,7 +47,7 @@ Molly (Mateo's AI assistant) resets memory between sessions. This Second Brain r
 - `research` — Research reports
 - `email-sequences` — Email templates
 - `anchor-staff` — Consulting agency docs
-- `project` / `kanban` — Project management docs
+- `archive` — Archived data (e.g. old Kanban tasks)
 - `memory` — Daily memory logs
 
 ## Businesses Represented in Documents

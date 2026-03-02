@@ -11,8 +11,6 @@
 - ✅ **Document download** — Download any doc as `.md` file
 - ✅ **Responsive layout** — Works on mobile and desktop
 - ✅ **Mobile sidebar nav** — Hamburger menu in header toggles document list on mobile (fixed 2026-02-07)
-- ✅ **Kanban board** (`/projects`) — Drag-and-drop task management, two projects, 5-column workflow
-- ✅ **Kanban persistence** — `data/kanban.json` as source of truth; `localStorage` for UI changes
 - ✅ **Auto-deploy pipeline** — Git push → Vercel deploy → live in ~60 seconds
 - ✅ **Frontmatter parsing** — `title`, `tags`, `date`, `created`, `updated` all supported
 - ✅ **Documents API** — `GET /api/documents` returns all documents + tags
@@ -48,7 +46,7 @@
     - Phase 3: Delete (soft delete with trash, bulk operations)
     - Phase 4: Enhanced (tag management UI, templates, import/export)
 
-### Medium Priority (For Consideration)
+### Medium Priority (For Consideration — tracked in Trello)
 
 - ⏳ **Cloudflare Tunnel** — Secure Clawdbot dashboard access (port 37842)
 - ⏳ **Land Sourcing Tool Comparison** — Landportal vs landinsights decision matrix
@@ -103,25 +101,20 @@ tags: [notes, '2026-03-02']
 
 1. **Frontmatter YAML type coercion** — `gray-matter`/`js-yaml` (YAML 1.1) auto-converts date-like, numeric, and boolean YAML values to native JS types. Tags are now protected via `.map(String)` in `documents.ts`, but be aware other frontmatter fields may also be coerced (e.g. a bare `date: 2026-03-02` becomes a `Date` object, not a string — currently handled downstream but something to watch).
 
-2. **Kanban UI ≠ kanban.json** — Changes dragged in the browser UI write to `localStorage` only. Permanent changes require editing `data/kanban.json` and pushing to GitHub. This is a known limitation, not a bug.
+2. **documents/ is flat** — All markdown files must be directly in `documents/`. Subdirectories are not traversed. (There is a `documents/briefs/` subdirectory that exists but its contents won't appear in the UI unless the document parser is updated to support recursive traversal.)
 
-3. **documents/ is flat** — All markdown files must be directly in `documents/`. Subdirectories are not traversed. (There is a `documents/briefs/` subdirectory that exists but its contents won't appear in the UI unless the document parser is updated to support recursive traversal.)
-
-4. **No write API** — Documents cannot be created or edited through the UI. This is intentional for now, pending the CRUD interface feature.
-
-5. **documents/KANBAN.md is not synced** — This file is for human reference only. The actual Kanban data is in `data/kanban.json`. (Mistake was made 2026-02-12; Mateo explicitly said "make sure this doesn't happen again".)
-
-6. **localStorage Kanban overwrites JSON** — If a user drags tasks in the browser, those localStorage values take precedence over the JSON file for that browser session. When Molly pushes updates to `kanban.json`, users may need to clear localStorage to see the new state.
+3. **No write API** — Documents cannot be created or edited through the UI. This is intentional for now, pending the CRUD interface feature.
 
 ## Milestone History
 
-| Date          | Milestone                                                                          |
-| ------------- | ---------------------------------------------------------------------------------- |
-| 2026-01-31    | Second Brain deployed on Vercel, pipeline working                                  |
-| 2026-02-07    | Kanban board implemented, mobile nav fixed, email sequences created                |
-| 2026-02-07–21 | 25+ Dirt Roamers research documents created                                        |
-| 2026-02-12    | Kanban data source confusion resolved (kanban.json vs KANBAN.md)                   |
-| 2026-02-26–28 | Additional research updates (Land Portal affiliate, Land AI, skip tracing)         |
-| 2026-03-02    | Workspace files synced, memory bank initialized                                    |
-| 2026-03-02    | Accountability Grid refactored — dynamic config-driven habits, mobile-first, JSDoc |
-| 2026-03-02    | Meditation added as 4th habit; Feb 27–Mar 2 daily files updated                    |
+| Date          | Milestone                                                                                           |
+| ------------- | --------------------------------------------------------------------------------------------------- |
+| 2026-01-31    | Second Brain deployed on Vercel, pipeline working                                                   |
+| 2026-02-07    | Kanban board implemented, mobile nav fixed, email sequences created                                 |
+| 2026-02-07–21 | 25+ Dirt Roamers research documents created                                                         |
+| 2026-02-12    | Kanban data source confusion resolved (kanban.json vs KANBAN.md)                                    |
+| 2026-02-26–28 | Additional research updates (Land Portal affiliate, Land AI, skip tracing)                          |
+| 2026-03-02    | Workspace files synced, memory bank initialized                                                     |
+| 2026-03-02    | Accountability Grid refactored — dynamic config-driven habits, mobile-first, JSDoc                  |
+| 2026-03-02    | Meditation added as 4th habit; Feb 27–Mar 2 daily files updated                                     |
+| 2026-03-02    | **Kanban feature removed** — tasks archived to `documents/kanban-tasks-archive.md`; Trello now used |

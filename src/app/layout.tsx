@@ -8,37 +8,35 @@ import "./globals.css";
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata
  */
 export const metadata: Metadata = {
-  title: "Second Brain",
-  description: "Your personal knowledge base and project manager",
-  keywords: ["knowledge base", "notes", "documents", "project management", "kanban"],
+    title: "Second Brain",
+    description: "Your personal knowledge base and project manager",
+    keywords: ["knowledge base", "notes", "documents", "project management"],
 };
 
 /**
  * Root Layout Component
- * 
+ *
  * Provides the base HTML structure and consistent layout for all pages.
  * Includes the global header navigation component.
- * 
+ *
  * @component
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - Child page content
  * @returns {JSX.Element} The root layout structure
  */
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className="antialiased">
-        <SidebarProvider>
-          <Header />
-          <main className="pt-14">
-            {children}
-          </main>
-        </SidebarProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body className="antialiased">
+                <SidebarProvider>
+                    <Header />
+                    <main className="pt-14">{children}</main>
+                </SidebarProvider>
+            </body>
+        </html>
+    );
 }

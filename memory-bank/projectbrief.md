@@ -13,22 +13,25 @@ A personal knowledge base and project management tool for **Mateo Moore**, built
 ## Core Purpose
 
 1. **Document browser** — Searchable, tag-filtered knowledge base of markdown files
-2. **Kanban board** — Project management for Mateo's and Molly's tasks
-3. **Persistent memory** — Molly's daily journals, research docs, SOPs, and workspace files are committed here so they survive session resets
+2. **Persistent memory** — Molly's daily journals, research docs, SOPs, and workspace files are committed here so they survive session resets
+3. **Accountability tracking** — Daily habit grid for Mateo's personal accountability
 
 ## Core Requirements
 
 - Any `.md` file placed in `documents/` automatically appears in the UI
 - Documents use YAML frontmatter (`title`, `tags`, `date`/`created`/`updated`)
-- Kanban state lives in `data/kanban.json` — this is the source of truth (NOT `documents/KANBAN.md`)
 - Molly pushes updates; Vercel deploys within ~60 seconds
 - Must be mobile-friendly
 
+## Task Management
+
+Task management has moved to **Trello** (external). The old Kanban board feature (`data/kanban.json`, `src/components/KanbanBoard.tsx`) was removed. All tasks that were in the Kanban board are archived in `documents/kanban-tasks-archive.md`.
+
 ## Scope
 
-- **In scope:** Document viewing, search, tag filtering, Kanban board management, mobile nav
+- **In scope:** Document viewing, search, tag filtering, accountability grid, mobile nav
 - **Future scope:** Supabase DB migration, CRUD interface for creating/editing docs in-browser
-- **Out of scope:** Multi-user auth, real-time collaboration
+- **Out of scope:** Kanban/task management (moved to Trello), multi-user auth, real-time collaboration
 
 ## Owner
 

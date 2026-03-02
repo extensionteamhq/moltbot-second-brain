@@ -4,7 +4,6 @@
 
 ```
 documents/*.md  ──→  src/lib/documents.ts  ──→  GET /api/documents  ──→  UI (src/app/page.tsx)
-data/kanban.json  ──→  src/app/projects/page.tsx  ──→  KanbanBoard component
 
 data/accountability/config.json  ─┐
 data/accountability/YYYY-MM-DD.json  ─┤  GET /api/accountability  ──→  /accountability page
@@ -95,31 +94,14 @@ tags: [notes, 2026, 2026-03-02]
 - All tags coerced via `.map(String)` — non-string tags are safely converted
 - `matter()` wrapped in try/catch — a single malformed file is skipped, not fatal
 
-## Kanban System
+## Task Management
 
-### CRITICAL: Data Source
+The Kanban board feature was **removed** on 2026-03-02 and replaced with **Trello** (external). All tasks that were in `data/kanban.json` are archived in `documents/kanban-tasks-archive.md`. The following files were deleted:
 
-- **Source of truth:** `data/kanban.json`
-- **Reference only (not synced):** `documents/KANBAN.md`
-- Molly must edit `data/kanban.json` directly and push to GitHub
-- This was a known mistake (2026-02-12): pushing to KANBAN.md instead of kanban.json
-
-### Kanban Data Shape
-
-```typescript
-interface StoredData {
-    projects: Project[];
-    activeProjectId: string | null;
-}
-// Projects: "molly-tasks" | "mateo-tasks"
-// Columns: backlog | for-consideration | research-plan | implementing | done
-```
-
-### Kanban Persistence
-
-- On the client side, KanbanBoard reads from `data/kanban.json` via the file system
-- Changes made in UI persist to `localStorage` under key `second-brain-kanban`
-- For permanent changes (Molly's updates), edit `data/kanban.json` and push
+- `data/kanban.json`
+- `src/components/KanbanBoard.tsx`
+- `documents/KANBAN.md`
+- `documents/molly-kanban.md`
 
 ## Accountability System
 
@@ -187,7 +169,6 @@ src/
 │   │   ├── accountability/route.ts  # Accountability REST endpoint
 │   │   └── documents/route.ts       # Documents REST endpoint
 │   ├── accountability/page.tsx      # Accountability Grid page (thin orchestrator)
-│   ├── projects/page.tsx            # Kanban board page
 │   ├── globals.css                  # Global Tailwind styles
 │   ├── layout.tsx                   # Root layout (Header)
 │   └── page.tsx                     # Documents page
@@ -197,7 +178,6 @@ src/
 │   │   ├── GridNavBar.tsx           # Week/month nav bar (mobile-first)
 │   │   └── HabitCell.tsx            # Single cell: ✅ / ❌ / –
 │   ├── Header.tsx                   # Navigation (hamburger on mobile)
-│   ├── KanbanBoard.tsx              # Full Kanban implementation
 │   └── index.ts                     # Barrel exports
 └── lib/
     ├── accountability.ts            # Accountability utilities + types
@@ -222,14 +202,13 @@ Live site updates (~60 seconds)
 
 ## Key Design Decisions
 
-| Decision                           | Rationale                                                      |
-| ---------------------------------- | -------------------------------------------------------------- |
-| File-based docs (no DB)            | Simple, git-native, no infrastructure to manage                |
-| Server-side document parsing       | Fresh on every request; no stale cache                         |
-| `data/kanban.json` for Kanban      | Structured data, easy for Molly to edit programmatically       |
-| `localStorage` for Kanban UI edits | Zero-backend drag-and-drop; persistent across browser sessions |
-| Vercel deployment                  | Zero-config, instant deploys on push                           |
-| Next.js App Router                 | Modern routing, server components, better performance          |
+| Decision                     | Rationale                                                        |
+| ---------------------------- | ---------------------------------------------------------------- |
+| File-based docs (no DB)      | Simple, git-native, no infrastructure to manage                  |
+| Server-side document parsing | Fresh on every request; no stale cache                           |
+| Trello for task management   | Kanban removed from app; Trello handles task tracking externally |
+| Vercel deployment            | Zero-config, instant deploys on push                             |
+| Next.js App Router           | Modern routing, server components, better performance            |
 
 ## Mobile Navigation Pattern
 

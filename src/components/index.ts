@@ -5,8 +5,7 @@
  * 
  * @module components
  * @example
- * import { Header, KanbanBoard } from '@/components';
+ * import { Header } from '@/components';
  */
 
 export { default as Header } from './Header';
-export { default as KanbanBoard } from './KanbanBoard';

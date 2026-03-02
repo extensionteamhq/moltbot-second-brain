@@ -45,7 +45,6 @@ pnpm lint
 moltbot-second-brain/
 ├── documents/                   # All markdown content (auto-served by API)
 ├── data/
-│   ├── kanban.json              # Kanban board state (source of truth)
 │   └── accountability/
 │       ├── config.json          # Habit schema (key, label, emoji) — add new habits here
 │       └── YYYY-MM-DD.json      # One file per day; fields: date + one bool/null per habit
@@ -55,7 +54,6 @@ moltbot-second-brain/
 │   │   │   ├── accountability/route.ts  # GET /api/accountability → { config, data }
 │   │   │   └── documents/route.ts       # GET /api/documents → { documents, tags }
 │   │   ├── accountability/page.tsx      # Accountability Grid page (thin orchestrator)
-│   │   ├── projects/page.tsx            # Kanban board page
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
@@ -65,7 +63,6 @@ moltbot-second-brain/
 │   │   │   ├── GridNavBar.tsx           # Week/month navigation bar (mobile-first)
 │   │   │   └── HabitCell.tsx            # Single cell renderer (✅/❌/–)
 │   │   ├── Header.tsx
-│   │   ├── KanbanBoard.tsx
 │   │   └── index.ts
 │   └── lib/
 │       ├── accountability.ts    # Typed utilities + JSDoc for accountability feature
@@ -141,7 +138,7 @@ moltbot-second-brain/
 
 1. **No write API** — Documents are read-only through the UI; writes happen via git push
 2. **No database** — All data is file-system based (Supabase migration is planned but not implemented)
-3. **Kanban UI edits use localStorage** — Changes made by dragging in the browser do not write back to `data/kanban.json`; only Molly's direct edits to `kanban.json` + git push are permanent
+3. **Kanban removed** — The Kanban board and `data/kanban.json` were removed on 2026-03-02. Task management moved to Trello (external). Tasks archived in `documents/kanban-tasks-archive.md`.
 4. **Documents directory is flat** — No subdirectory support (all `.md` files must be directly in `documents/`)
 5. **Next.js 16** — Not latest stable; upgrade not needed unless required by features
 
