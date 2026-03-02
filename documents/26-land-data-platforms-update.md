@@ -1,10 +1,3 @@
----
-title: "Land Data Platform Comparison — February 2026 Update"
-tags: [dirt-roamers, research, land-data, tools, feb2026]
-created: 2026-02-27T07:00:00+00:00
-updated: 2026-02-27T07:00:00+00:00
----
-
 # Land Data Platform Comparison — February 2026 Update
 
 *Research Date: February 27, 2026*

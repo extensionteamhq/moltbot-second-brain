@@ -1,14 +1,8 @@
 ---
-title: 'Partner With Mateo: Affiliate Resources Page Outline'
-tags:
-  - affiliate
-  - marketing
-  - subto
-  - gator
-  - top-tier-tc
-  - resources
-created: '2026-02-10T15:40:26+00:00'
-updated: '2026-02-12T18:15:00+00:00'
+title: "Affiliate Resources Outline"
+tags: [project, sync]
+created: 2026-03-02T13:00:00+00:00
+updated: 2026-03-02T13:00:00+00:00
 ---
 
 # Partner With Mateo: Affiliate Resources Page Outline

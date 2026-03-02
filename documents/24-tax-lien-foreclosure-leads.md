@@ -1,10 +1,3 @@
----
-title: "Tax Lien & Foreclosure Lead Sourcing Guide"
-tags: [dirt-roamers, lead-generation, tax-liens, foreclosure, land-investing, auto]
-created: 2026-02-22T07:00:00+00:00
-updated: 2026-02-22T07:00:00+00:00
----
-
 # Tax Lien & Foreclosure Lead Sourcing Guide
 
 **Created:** 2026-02-22  
@@ -365,11 +358,11 @@ Start with PropStream ($99/mo) for distressed property lists, supplement with fr
 
 ## Related Documents
 
-- [Probate Lead Sourcing](/?doc=23-probate-lead-sourcing) - Complementary motivated seller source
-- [Skip Tracing Alternatives](/?doc=04-skip-tracing-alternatives) - Contact info providers
-- [Outreach Scripts & VA Hiring](/?doc=08-outreach-scripts-va-hiring) - Campaign messaging
-- [GoHighLevel Setup](/?doc=06-gohighlevel-land-investor-setup) - CRM pipeline setup
-- [GHL Automation Workflows](/?doc=16-ghl-automation-workflows) - Automated follow-up campaigns
+- [[23-probate-lead-sourcing]] - Complementary motivated seller source
+- [[04-skip-tracing-alternatives]] - Contact info providers
+- [[08-outreach-scripts-va-hiring]] - Campaign messaging
+- [[06-gohighlevel-land-investor-setup]] - CRM pipeline setup
+- [[16-ghl-automation-workflows]] - Automated follow-up campaigns
 
 ---
 
