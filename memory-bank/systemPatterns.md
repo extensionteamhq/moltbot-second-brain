@@ -5,6 +5,10 @@
 ```
 documents/*.md  ──→  src/lib/documents.ts  ──→  GET /api/documents  ──→  UI (src/app/page.tsx)
 data/kanban.json  ──→  src/app/projects/page.tsx  ──→  KanbanBoard component
+
+data/accountability/config.json  ─┐
+data/accountability/YYYY-MM-DD.json  ─┤  GET /api/accountability  ──→  /accountability page
+src/lib/accountability.ts  (utils)  ─┘       ↳ AccountabilityGrid, GridNavBar, HabitCell
 ```
 
 ## Document System
@@ -117,22 +121,87 @@ interface StoredData {
 - Changes made in UI persist to `localStorage` under key `second-brain-kanban`
 - For permanent changes (Molly's updates), edit `data/kanban.json` and push
 
+## Accountability System
+
+### Data Format
+
+Each day is a separate JSON file: `data/accountability/YYYY-MM-DD.json`
+
+```json
+{
+    "date": "2026-03-02",
+    "bible": true,
+    "reading": null,
+    "gym": false,
+    "meditation": null
+}
+```
+
+- `true` = completed
+- `false` = missed
+- `null` = no data
+
+### Habit Schema (config-driven)
+
+`data/accountability/config.json` defines all habit columns:
+
+```json
+{
+    "habits": [
+        { "key": "bible", "label": "Bible", "emoji": "📖" },
+        { "key": "reading", "label": "Reading", "emoji": "📚" },
+        { "key": "gym", "label": "Gym", "emoji": "🏋️" },
+        { "key": "meditation", "label": "Meditation", "emoji": "🧘" }
+    ]
+}
+```
+
+**To add a new habit:** Add one entry to `config.json`. No UI or API code changes required. Old daily files show `–` automatically for the missing key.
+
+### API Response Shape
+
+```typescript
+interface AccountabilityApiResponse {
+    config: { habits: HabitConfig[] }; // from config.json
+    data: AccountabilityEntry[]; // sorted daily records
+}
+```
+
+### Utility Library (`src/lib/accountability.ts`)
+
+All date math, habit parsing, and totals computation live here with full JSDoc. Key exports:
+
+- `getHabitStatus(entry, habitKey)` → `true | false | null`
+- `computeTotals(days, habits, entries)` → `Record<habitKey, count>`
+- `getDisplayDays(date, viewMode)` → `Date[]`
+- `navigateDate(date, viewMode, direction)` → `Date`
+- `getViewTitle(date, viewMode)` → formatted string
+- `formatDateKey(date)` → `"YYYY-MM-DD"` (local time, not UTC)
+
 ## Component Architecture
 
 ```
 src/
 ├── app/
-│   ├── api/documents/route.ts   # Documents REST endpoint
-│   ├── projects/page.tsx        # Kanban board page
-│   ├── globals.css              # Global Tailwind styles
-│   ├── layout.tsx               # Root layout (Header)
-│   └── page.tsx                 # Documents page
+│   ├── api/
+│   │   ├── accountability/route.ts  # Accountability REST endpoint
+│   │   └── documents/route.ts       # Documents REST endpoint
+│   ├── accountability/page.tsx      # Accountability Grid page (thin orchestrator)
+│   ├── projects/page.tsx            # Kanban board page
+│   ├── globals.css                  # Global Tailwind styles
+│   ├── layout.tsx                   # Root layout (Header)
+│   └── page.tsx                     # Documents page
 ├── components/
-│   ├── Header.tsx               # Navigation (hamburger on mobile)
-│   ├── KanbanBoard.tsx          # Full Kanban implementation
-│   └── index.ts                 # Barrel exports
+│   ├── accountability/
+│   │   ├── AccountabilityGrid.tsx   # Grid table (columns from config)
+│   │   ├── GridNavBar.tsx           # Week/month nav bar (mobile-first)
+│   │   └── HabitCell.tsx            # Single cell: ✅ / ❌ / –
+│   ├── Header.tsx                   # Navigation (hamburger on mobile)
+│   ├── KanbanBoard.tsx              # Full Kanban implementation
+│   └── index.ts                     # Barrel exports
 └── lib/
-    └── documents.ts             # Document parsing utilities
+    ├── accountability.ts            # Accountability utilities + types
+    └── documents.ts                 # Document parsing utilities
 ```
 
 ## Deployment Pipeline

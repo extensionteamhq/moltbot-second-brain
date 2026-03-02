@@ -2,5 +2,6 @@
     "date": "2026-02-27",
     "bible": true,
     "reading": true,
-    "gym": null
+    "gym": false,
+    "meditation": null
 }

@@ -43,26 +43,36 @@ pnpm lint
 
 ```
 moltbot-second-brain/
-├── documents/           # All markdown content (auto-served by API)
+├── documents/                   # All markdown content (auto-served by API)
 ├── data/
-│   ├── kanban.json      # Kanban board state (source of truth)
-│   └── accountability/  # Accountability check-in JSON files
+│   ├── kanban.json              # Kanban board state (source of truth)
+│   └── accountability/
+│       ├── config.json          # Habit schema (key, label, emoji) — add new habits here
+│       └── YYYY-MM-DD.json      # One file per day; fields: date + one bool/null per habit
 ├── src/
 │   ├── app/
-│   │   ├── api/documents/route.ts
-│   │   ├── projects/page.tsx
+│   │   ├── api/
+│   │   │   ├── accountability/route.ts  # GET /api/accountability → { config, data }
+│   │   │   └── documents/route.ts       # GET /api/documents → { documents, tags }
+│   │   ├── accountability/page.tsx      # Accountability Grid page (thin orchestrator)
+│   │   ├── projects/page.tsx            # Kanban board page
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   ├── components/
+│   │   ├── accountability/
+│   │   │   ├── AccountabilityGrid.tsx   # Grid table — columns driven by config
+│   │   │   ├── GridNavBar.tsx           # Week/month navigation bar (mobile-first)
+│   │   │   └── HabitCell.tsx            # Single cell renderer (✅/❌/–)
 │   │   ├── Header.tsx
 │   │   ├── KanbanBoard.tsx
 │   │   └── index.ts
 │   └── lib/
+│       ├── accountability.ts    # Typed utilities + JSDoc for accountability feature
 │       └── documents.ts
 ├── public/
 ├── scripts/
-├── memory-bank/         # Cline memory bank (this directory)
+├── memory-bank/                 # Cline memory bank (this directory)
 ├── package.json
 ├── tsconfig.json
 ├── next.config.ts

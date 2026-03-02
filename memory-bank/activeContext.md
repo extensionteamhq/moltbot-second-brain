@@ -2,7 +2,7 @@
 
 ## Current Date
 
-2026-03-02
+2026-03-02 (updated 2026-03-02)
 
 ## Current Work Focus
 
@@ -14,6 +14,17 @@ The memory bank was just initialized (today). The project itself is a functionin
 
 ## Recent Changes
 
+- **2026-03-02:** **Accountability Grid full refactor** — decomposed monolithic 270-line page into focused components driven by a dynamic habit schema:
+    - Created `data/accountability/config.json` — defines habits (key, label, emoji); adding a new habit only requires adding one entry here
+    - Created `src/lib/accountability.ts` — full JSDoc typed utility library (date math, habit parsing, totals computation)
+    - Refactored `src/app/api/accountability/route.ts` — now returns `{ config, data }` so UI columns are schema-driven
+    - Created `src/components/accountability/HabitCell.tsx` — renders ✅ / ❌ / – for one cell
+    - Created `src/components/accountability/AccountabilityGrid.tsx` — dynamic columns from config, horizontal scroll for many habits
+    - Created `src/components/accountability/GridNavBar.tsx` — mobile-first nav, 44px touch targets, stacks on mobile
+    - Refactored `src/app/accountability/page.tsx` — thin orchestrator (~130 lines)
+    - Added **Meditation** (🧘) as 4th habit to `config.json`
+    - Updated daily files Feb 27–Mar 2 with `"meditation": null`
+- **2026-03-02:** Logged accountability data: Feb 27 (gym missed), Feb 28/Mar 1/Mar 2 (bible ✅, reading/gym/meditation = no data)
 - **2026-03-02:** Fixed two runtime bugs in `src/lib/documents.ts` (see Known Issues in `progress.md`):
     1. **YAMLException crash** — Deleted malformed `documents/memory-*.md` (literal `*` in filename, invalid `created: *T12:00:00+00:00`). Added try/catch so bad files are skipped, not fatal.
     2. **`tag.toLowerCase is not a function`** — `js-yaml` was auto-converting date/number-like YAML tag values to non-string JS types. Fixed by coercing all tags with `.map(String)` in `getDocuments()`.
@@ -76,12 +87,28 @@ The memory bank was just initialized (today). The project itself is a functionin
 
 ## Key Files to Know
 
-| File                             | Purpose                                      |
-| -------------------------------- | -------------------------------------------- |
-| `src/lib/documents.ts`           | All document parsing logic                   |
-| `data/kanban.json`               | Kanban state (source of truth)               |
-| `src/components/KanbanBoard.tsx` | Kanban UI component                          |
-| `src/app/api/documents/route.ts` | Documents API endpoint                       |
-| `documents/MEMORY.md`            | Molly's long-term memory (workspace context) |
-| `documents/USER.md`              | Mateo's profile, projects, preferences       |
-| `documents/SOUL.md`              | Molly's behavioral guidelines                |
+| File                                                   | Purpose                                      |
+| ------------------------------------------------------ | -------------------------------------------- |
+| `src/lib/documents.ts`                                 | All document parsing logic                   |
+| `src/lib/accountability.ts`                            | Accountability typed utilities + JSDoc       |
+| `data/kanban.json`                                     | Kanban state (source of truth)               |
+| `data/accountability/config.json`                      | Habit schema — add new habits here           |
+| `data/accountability/YYYY-MM-DD.json`                  | Daily habit records                          |
+| `src/components/accountability/AccountabilityGrid.tsx` | Grid UI (columns driven by config)           |
+| `src/components/accountability/GridNavBar.tsx`         | Navigation bar (week/month, prev/next)       |
+| `src/components/accountability/HabitCell.tsx`          | Single habit/day cell renderer               |
+| `src/app/api/accountability/route.ts`                  | Accountability API endpoint                  |
+| `src/components/KanbanBoard.tsx`                       | Kanban UI component                          |
+| `src/app/api/documents/route.ts`                       | Documents API endpoint                       |
+| `documents/MEMORY.md`                                  | Molly's long-term memory (workspace context) |
+| `documents/USER.md`                                    | Mateo's profile, projects, preferences       |
+| `documents/SOUL.md`                                    | Molly's behavioral guidelines                |
+
+## How to Add a New Habit to the Accountability Grid
+
+1. Add an entry to `data/accountability/config.json`:
+    ```json
+    { "key": "my_habit", "label": "My Habit", "emoji": "🎯" }
+    ```
+2. Include `"my_habit": true/false/null` in new daily JSON files going forward.
+3. Old daily files automatically show `–` for the missing key — no backfill needed.

@@ -1,321 +1,153 @@
-'use client';
+/**
+ * @fileoverview Accountability Grid page.
+ *
+ * Thin orchestrator that:
+ * 1. Fetches habit config + daily entries from `GET /api/accountability`
+ * 2. Manages navigation state (view mode, current reference date)
+ * 3. Computes the set of days to display and the per-habit totals
+ * 4. Delegates all rendering to the decomposed sub-components
+ *
+ * @module app/accountability
+ */
 
-import { useState, useEffect, use } from 'react';
-import Link from 'next/link';
+"use client";
 
-interface AccountabilityEntry {
-  date: string;
-  bible?: boolean;
-  reading?: boolean;
-  gym?: boolean | null;
-  checkin?: {
-    workout?: { asked: boolean; response?: string };
-    morning_reading?: { asked: boolean; response?: string };
-  };
-  checkinType?: string;
-  response?: { bible?: string; gym?: string };
-  [key: string]: unknown;
-}
+import { useState, useEffect, useCallback } from "react";
 
-type ViewMode = 'week' | 'month';
+import {
+    type AccountabilityEntry,
+    type HabitConfig,
+    type ViewMode,
+    computeTotals,
+    getDisplayDays,
+    navigateDate,
+} from "@/lib/accountability";
+import { AccountabilityGrid } from "@/components/accountability/AccountabilityGrid";
+import { GridNavBar } from "@/components/accountability/GridNavBar";
 
+// ---------------------------------------------------------------------------
+// Page component
+// ---------------------------------------------------------------------------
+
+/**
+ * Accountability Grid page component.
+ *
+ * Renders a navigable calendar grid where each row is a day and each column
+ * is a trackable habit. The habit columns are driven by `config.json`, so
+ * no UI changes are needed when adding or removing habits.
+ */
 export default function AccountabilityPage() {
-  const [data, setData] = useState<AccountabilityEntry[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState<ViewMode>('week');
+    const [habits, setHabits] = useState<HabitConfig[]>([]);
+    const [entries, setEntries] = useState<AccountabilityEntry[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetch('/api/accountability')
-      .then(res => res.json())
-      .then(json => {
-        setData(json.data || []);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Failed to load accountability data:', err);
-        setLoading(false);
-      });
-  }, []);
+    const [viewMode, setViewMode] = useState<ViewMode>("week");
+    const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
 
-  const getWeekRange = (date: Date) => {
-    const start = new Date(date);
-    start.setDate(start.getDate() - start.getDay() + 1); // Monday
-    const end = new Date(start);
-    end.setDate(end.getDate() + 6); // Sunday
-    return { start, end };
-  };
+    // ── Data fetching ──────────────────────────────────────────────────────
 
-  const getMonthRange = (date: Date) => {
-    const start = new Date(date.getFullYear(), date.getMonth(), 1);
-    const end = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    return { start, end };
-  };
+    useEffect(() => {
+        let cancelled = false;
 
-  const formatDate = (date: Date) => {
-    return date.toISOString().split('T')[0];
-  };
+        fetch("/api/accountability")
+            .then((res) => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then((json) => {
+                if (cancelled) return;
+                setHabits(json.config?.habits ?? []);
+                setEntries(json.data ?? []);
+                setLoading(false);
+            })
+            .catch((err: unknown) => {
+                if (cancelled) return;
+                console.error("[AccountabilityPage] fetch failed:", err);
+                setError("Failed to load accountability data.");
+                setLoading(false);
+            });
 
-  const getDaysInRange = (start: Date, end: Date) => {
-    const days: Date[] = [];
-    const current = new Date(start);
-    while (current <= end) {
-      days.push(new Date(current));
-      current.setDate(current.getDate() + 1);
-    }
-    return days;
-  };
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
-  const getEntryForDate = (dateStr: string): AccountabilityEntry | undefined => {
-    return data.find(d => d.date === dateStr);
-  };
+    // ── Navigation handlers ────────────────────────────────────────────────
 
-  const parseResponse = (entry: AccountabilityEntry): { bible: boolean | null; reading: boolean | null; gym: boolean | null } => {
-    let bible: boolean | null = null;
-    let reading: boolean | null = null;
-    let gym: boolean | null = null;
-    
-    // Format: {bible: true/false, reading: true/false, gym: true/false} - SIMPLE FORMAT
-    if ((entry as any).bible !== undefined && typeof (entry as any).bible === 'boolean') {
-      bible = (entry as any).bible;
-    }
-    if ((entry as any).reading !== undefined && typeof (entry as any).reading === 'boolean') {
-      reading = (entry as any).reading;
-    }
-    if ((entry as any).gym !== undefined && typeof (entry as any).gym === 'boolean') {
-      gym = (entry as any).gym;
-    }
-    
-    // Format: {checkin: {workout: {...}, morning_reading: {...}}}
-    if (entry.checkin?.morning_reading?.response) {
-      const resp = entry.checkin.morning_reading.response.toLowerCase();
-      bible = resp.includes('yes') || resp.includes('✅') || resp === 'sup' || resp.includes('true');
-    }
-    if (entry.checkin?.workout?.response) {
-      const resp = entry.checkin.workout.response.toLowerCase();
-      gym = resp.includes('yes') || resp.includes('✅') || resp === 'sup' || resp.includes('true');
-    }
-    
-    // Format: {response: {bible: ..., gym: ...}}
-    if (entry.response?.bible !== undefined) bible = !!entry.response.bible;
-    if (entry.response?.gym !== undefined) gym = !!entry.response.gym;
-    
-    // Format: {workout: { completed: true/false }, morningReading: { completed: true/false }}
-    if ((entry as any).workout?.completed !== undefined) gym = !!(entry as any).workout?.completed;
-    if ((entry as any).morningReading?.completed !== undefined) bible = !!(entry as any).morningReading?.completed;
-    
-    // Format: {workout: true/false, morningReading: true/false}
-    if (entry.workout !== undefined && typeof entry.workout === 'boolean') gym = entry.workout;
-    if ((entry as any).morningReading !== undefined && typeof (entry as any).morningReading === 'boolean') bible = (entry as any).morningReading;
-    
-    // Format: {bible_reading: true/false, workout: true/false}
-    if ((entry as any).bible_reading !== undefined && typeof (entry as any).bible_reading === 'boolean') bible = (entry as any).bible_reading;
-    
-    // Format: {responses: {workout: ..., morningReading: ...}}
-    if ((entry as any).responses?.morningReading !== undefined) bible = (entry as any).responses?.morningReading;
-    if ((entry as any).responses?.workout !== undefined) gym = (entry as any).responses?.workout;
-    
-    // Format: {responses: {morning_reading_bible: ...}}
-    if ((entry as any).responses?.morning_reading_bible !== undefined) bible = (entry as any).responses?.morning_reading_bible;
-    
-    // Check response string for "yes" or "no"
-    const responseStr = (entry as any).response;
-    if (typeof responseStr === 'string') {
-      const lower = responseStr.toLowerCase();
-      if (lower.includes('bible') || lower.includes('reading')) {
-        bible = lower.includes('yes') && !lower.includes('no');
-      }
-      if (lower.includes('gym') || lower.includes('workout')) {
-        gym = lower.includes('yes') && !lower.includes('no');
-      }
-    }
-    
-    return { bible, reading, gym };
-  };
-
-  const navigate = (direction: number) => {
-    const newDate = new Date(currentDate);
-    if (viewMode === 'week') {
-      newDate.setDate(newDate.getDate() + (direction * 7));
-    } else {
-      newDate.setMonth(newDate.getMonth() + direction);
-    }
-    setCurrentDate(newDate);
-  };
-
-  const goToToday = () => {
-    setCurrentDate(new Date());
-  };
-
-  const getTitle = () => {
-    if (viewMode === 'week') {
-      const { start, end } = getWeekRange(currentDate);
-      const startMonth = start.toLocaleString('default', { month: 'short' });
-      const endMonth = end.toLocaleString('default', { month: 'short' });
-      if (startMonth === endMonth) {
-        return `${startMonth} ${start.getDate()} - ${end.getDate()}, ${start.getFullYear()}`;
-      }
-      return `${startMonth} ${start.getDate()} - ${endMonth} ${end.getDate()}, ${start.getFullYear()}`;
-    } else {
-      return currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-    }
-  };
-
-  const getDisplayDays = () => {
-    if (viewMode === 'week') {
-      const { start, end } = getWeekRange(currentDate);
-      return getDaysInRange(start, end);
-    } else {
-      const { start, end } = getMonthRange(currentDate);
-      return getDaysInRange(start, end);
-    }
-  };
-
-  const displayDays = getDisplayDays();
-
-  const parsedDefault = { bible: null, reading: null, gym: null };
-  const totals = displayDays.reduce((acc, day) => {
-    const dateStr = formatDate(day);
-    const entry = getEntryForDate(dateStr);
-    const parsed = entry ? parseResponse(entry) : parsedDefault;
-    
-    if (parsed.bible === true) acc.bible++;
-    if (parsed.reading === true) acc.reading++;
-    if (parsed.gym === true) acc.gym++;
-    
-    return acc;
-  }, { bible: 0, reading: 0, gym: 0 });
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="text-[var(--muted)]">Loading...</div>
-      </div>
+    /** Advance or retreat the current reference date by one period. */
+    const handleNavigate = useCallback(
+        (direction: 1 | -1) => {
+            setCurrentDate((prev) => navigateDate(prev, viewMode, direction));
+        },
+        [viewMode],
     );
-  }
 
-  return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold">Accountability Grid</h1>
-        <button
-          onClick={goToToday}
-          className="px-3 py-1.5 text-sm bg-[var(--card)] hover:bg-[var(--border)] rounded-lg transition"
-        >
-          Today
-        </button>
-      </div>
+    /** Reset the reference date to today. */
+    const handleGoToToday = useCallback(() => {
+        setCurrentDate(new Date());
+    }, []);
 
-      {/* Navigation */}
-      <div className="flex items-center justify-between mb-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2 hover:bg-[var(--card)] rounded-lg transition"
-        >
-          ← Prev
-        </button>
-        
-        <div className="flex items-center gap-4">
-          <div className="flex bg-[var(--card)] rounded-lg p-1">
-            <button
-              onClick={() => setViewMode('week')}
-              className={`px-3 py-1 text-sm rounded-md transition ${
-                viewMode === 'week' ? 'bg-[var(--accent)] text-white' : ''
-              }`}
-            >
-              Week
-            </button>
-            <button
-              onClick={() => setViewMode('month')}
-              className={`px-3 py-1 text-sm rounded-md transition ${
-                viewMode === 'month' ? 'bg-[var(--accent)] text-white' : ''
-              }`}
-            >
-              Month
-            </button>
-          </div>
-          <span className="text-lg font-semibold">{getTitle()}</span>
-        </div>
+    /** Switch between week and month view. */
+    const handleViewModeChange = useCallback((mode: ViewMode) => {
+        setViewMode(mode);
+    }, []);
 
-        <button
-          onClick={() => navigate(1)}
-          className="p-2 hover:bg-[var(--card)] rounded-lg transition"
-        >
-          Next →
-        </button>
-      </div>
+    // ── Derived state ──────────────────────────────────────────────────────
 
-      {/* Grid */}
-      <div className="bg-[var(--card)] rounded-xl overflow-hidden border border-[var(--border)]">
-        <div className="grid grid-cols-5 border-b border-[var(--border)]">
-          <div className="p-3 text-sm font-semibold text-[var(--muted)]">Day</div>
-          <div className="p-3 text-sm font-semibold text-center">📖<br/>Bible</div>
-          <div className="p-3 text-sm font-semibold text-center">📚<br/>Reading</div>
-          <div className="p-3 text-sm font-semibold text-center">🏋️<br/>Gym</div>
-        </div>
-        
-        {displayDays.map((day, idx) => {
-          const dateStr = formatDate(day);
-          const entry = getEntryForDate(dateStr);
-          const parsed = entry ? parseResponse(entry) : { bible: null, reading: null, gym: null };
-          const isToday = formatDate(new Date()) === dateStr;
-          
-          return (
-            <div 
-              key={dateStr} 
-              className={`grid grid-cols-5 border-b border-[var(--border)] last:border-b-0 ${
-                isToday ? 'bg-[var(--accent)]/10' : ''
-              }`}
-            >
-              <div className="p-3 text-sm">
-                <div className="font-medium">
-                  {day.toLocaleString('default', { weekday: 'short' })}
-                </div>
-                <div className={`text-xs ${isToday ? 'text-[var(--accent)] font-bold' : 'text-[var(--muted)]'}`}>
-                  {day.getDate()}
-                </div>
-              </div>
-              <div className="p-3 flex items-center justify-center">
-                {parsed.bible === true && <span className="text-green-500 text-xl">✅</span>}
-                {parsed.bible === false && <span className="text-red-500 text-xl">❌</span>}
-                {parsed.bible === null && <span className="text-[var(--muted)]">-</span>}
-              </div>
-              <div className="p-3 flex items-center justify-center">
-                {parsed.reading === true && <span className="text-green-500 text-xl">✅</span>}
-                {parsed.reading === false && <span className="text-red-500 text-xl">❌</span>}
-                {parsed.reading === null && <span className="text-[var(--muted)]">-</span>}
-              </div>
-              <div className="p-3 flex items-center justify-center">
-                {parsed.gym === true && <span className="text-green-500 text-xl">✅</span>}
-                {parsed.gym === false && <span className="text-red-500 text-xl">❌</span>}
-                {parsed.gym === null && <span className="text-[var(--muted)]">-</span>}
-              </div>
+    const displayDays = getDisplayDays(currentDate, viewMode);
+    const totals = computeTotals(displayDays, habits, entries);
+
+    // ── Render states ──────────────────────────────────────────────────────
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[50vh]">
+                <p className="text-[var(--muted)] text-sm animate-pulse">
+                    Loading…
+                </p>
             </div>
-          );
-        })}
+        );
+    }
 
-        {/* Totals Row */}
-        <div className="grid grid-cols-5 bg-[var(--sidebar)] border-t-2 border-[var(--border)]">
-          <div className="p-3 text-sm font-bold">TOTAL</div>
-          <div className="p-3 text-center font-bold text-green-500">
-            {totals.bible}/{displayDays.length}
-          </div>
-          <div className="p-3 text-center font-bold text-green-500">
-            {(totals.reading || 0)}/{displayDays.length}
-          </div>
-          <div className="p-3 text-center font-bold text-green-500">
-            {(totals.gym || 0)}/{displayDays.length}
-          </div>
+    if (error) {
+        return (
+            <div className="flex items-center justify-center min-h-[50vh]">
+                <p className="text-red-500 text-sm">{error}</p>
+            </div>
+        );
+    }
+
+    // ── Main render ────────────────────────────────────────────────────────
+
+    return (
+        <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
+            {/* Page title */}
+            <h1 className="text-2xl font-bold mb-6">Accountability Grid</h1>
+
+            {/* Navigation bar */}
+            <GridNavBar
+                viewMode={viewMode}
+                currentDate={currentDate}
+                onViewModeChange={handleViewModeChange}
+                onNavigate={handleNavigate}
+                onGoToToday={handleGoToToday}
+            />
+
+            {/* Habit grid */}
+            <AccountabilityGrid
+                habits={habits}
+                displayDays={displayDays}
+                entries={entries}
+                totals={totals}
+            />
+
+            {/* Legend */}
+            <div className="mt-5 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[var(--muted)]">
+                <span>✅ Completed</span>
+                <span>❌ Missed</span>
+                <span>– No data</span>
+            </div>
         </div>
-      </div>
-
-      {/* Legend */}
-      <div className="mt-6 flex items-center gap-6 text-sm text-[var(--muted)]">
-        <span>✅ = Completed</span>
-        <span>❌ = Missed</span>
-        <span>- = No data</span>
-      </div>
-    </div>
-  );
+    );
 }

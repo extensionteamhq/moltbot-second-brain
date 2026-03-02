@@ -16,6 +16,10 @@
 - ✅ **Auto-deploy pipeline** — Git push → Vercel deploy → live in ~60 seconds
 - ✅ **Frontmatter parsing** — `title`, `tags`, `date`, `created`, `updated` all supported
 - ✅ **Documents API** — `GET /api/documents` returns all documents + tags
+- ✅ **Accountability Grid** (`/accountability`) — week/month calendar grid, dynamic habit columns, mobile-first layout, navigation bar
+- ✅ **Accountability config-driven habits** — `data/accountability/config.json` defines columns; no UI code changes needed to add/remove habits
+- ✅ **Accountability API** — `GET /api/accountability` returns `{ config, data }` with habit schema + sorted daily records
+- ✅ **Accountability utility library** — `src/lib/accountability.ts` with full JSDoc, typed helpers for date math, habit parsing, and totals
 
 ### Content (Documents)
 
@@ -111,11 +115,13 @@ tags: [notes, '2026-03-02']
 
 ## Milestone History
 
-| Date          | Milestone                                                                  |
-| ------------- | -------------------------------------------------------------------------- |
-| 2026-01-31    | Second Brain deployed on Vercel, pipeline working                          |
-| 2026-02-07    | Kanban board implemented, mobile nav fixed, email sequences created        |
-| 2026-02-07–21 | 25+ Dirt Roamers research documents created                                |
-| 2026-02-12    | Kanban data source confusion resolved (kanban.json vs KANBAN.md)           |
-| 2026-02-26–28 | Additional research updates (Land Portal affiliate, Land AI, skip tracing) |
-| 2026-03-02    | Workspace files synced, memory bank initialized                            |
+| Date          | Milestone                                                                          |
+| ------------- | ---------------------------------------------------------------------------------- |
+| 2026-01-31    | Second Brain deployed on Vercel, pipeline working                                  |
+| 2026-02-07    | Kanban board implemented, mobile nav fixed, email sequences created                |
+| 2026-02-07–21 | 25+ Dirt Roamers research documents created                                        |
+| 2026-02-12    | Kanban data source confusion resolved (kanban.json vs KANBAN.md)                   |
+| 2026-02-26–28 | Additional research updates (Land Portal affiliate, Land AI, skip tracing)         |
+| 2026-03-02    | Workspace files synced, memory bank initialized                                    |
+| 2026-03-02    | Accountability Grid refactored — dynamic config-driven habits, mobile-first, JSDoc |
+| 2026-03-02    | Meditation added as 4th habit; Feb 27–Mar 2 daily files updated                    |

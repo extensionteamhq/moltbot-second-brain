@@ -1,0 +1,24 @@
+{
+    "habits": [
+        {
+            "key": "bible",
+            "label": "Bible",
+            "emoji": "📖"
+        },
+        {
+            "key": "reading",
+            "label": "Reading",
+            "emoji": "📚"
+        },
+        {
+            "key": "gym",
+            "label": "Gym",
+            "emoji": "🏋️"
+        },
+        {
+            "key": "meditation",
+            "label": "Meditation",
+            "emoji": "🧘"
+        }
+    ]
+}
